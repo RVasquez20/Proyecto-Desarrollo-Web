@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Farmacia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Farmacia</h2>
+
+<div class="jumbotron" align="center">
+    <h1>Seleccione la consulta que desea ver</h1>
+
+    <p>
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Productos", "Index", "ProductoI")</li>
+            <li>@Html.ActionLink("Lotes Productos", "Index", "LoteProductoI")</li>
+            <li>@Html.ActionLink("Marca", "Index", "MarcaI")</li>
+            <li>@Html.ActionLink("Compras Detalles", "Index", "ComprasDetalleI")</li>
+            <li>@Html.ActionLink("Compras", "Index", "CompraI")</li>
+            <li>@Html.ActionLink("Proveedores", "Index", "ProveedorI")</li>
+            <li>@Html.ActionLink("Ventas Detalles", "Index", "VentasDetalleI")</li>
+            <li>@Html.ActionLink("Ventas", "Index", "VentaI")</li>
+        </ul>
+    </p>
+</div>
+
+
+<p></p>
+

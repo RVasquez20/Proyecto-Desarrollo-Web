@@ -169,8 +169,34 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CargoIController.cs" />
+    <Compile Include="Controllers\ClinicaIController.cs" />
+    <Compile Include="Controllers\CompraIController.cs" />
+    <Compile Include="Controllers\ComprasDetalleIController.cs" />
+    <Compile Include="Controllers\ConsultaController.cs" />
+    <Compile Include="Controllers\ConsultaIController.cs" />
+    <Compile Include="Controllers\DiagnosticoIController.cs" />
+    <Compile Include="Controllers\EmpleadoIController.cs" />
+    <Compile Include="Controllers\EmpleadosController.cs" />
+    <Compile Include="Controllers\ExamenConsultaIController.cs" />
+    <Compile Include="Controllers\ExamenIController.cs" />
+    <Compile Include="Controllers\FarmaciaController.cs" />
+    <Compile Include="Controllers\HabitacionIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoteProductoIController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MarcaIController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\MenuIController.cs" />
+    <Compile Include="Controllers\PacienteHabitacionIController.cs" />
+    <Compile Include="Controllers\PacientesController.cs" />
+    <Compile Include="Controllers\ProductoIController.cs" />
+    <Compile Include="Controllers\ProveedorIController.cs" />
+    <Compile Include="Controllers\RecetaIController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UsuarioIController.cs" />
+    <Compile Include="Controllers\VentaIController.cs" />
+    <Compile Include="Controllers\VentasDetalleIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,8 +239,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -236,6 +260,32 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Pacientes\Index.cshtml" />
+    <Content Include="Views\Home\Farmacia.cshtml" />
+    <Content Include="Views\Home\Empleado.cshtml" />
+    <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\Home\Consulta.cshtml" />
+    <Content Include="Views\MenuI\Index.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\UsuarioI\Index.cshtml" />
+    <Content Include="Views\ConsultaI\Index.cshtml" />
+    <Content Include="Views\DiagnosticoI\Index.cshtml" />
+    <Content Include="Views\ExamenConsultaI\Index.cshtml" />
+    <Content Include="Views\ExamenI\Index.cshtml" />
+    <Content Include="Views\RecetaI\Index.cshtml" />
+    <Content Include="Views\HabitacionI\Index.cshtml" />
+    <Content Include="Views\PacienteHabitacionI\Index.cshtml" />
+    <Content Include="Views\EmpleadoI\Index.cshtml" />
+    <Content Include="Views\CargoI\Index.cshtml" />
+    <Content Include="Views\ClinicaI\Index.cshtml" />
+    <Content Include="Views\ProductoI\Index.cshtml" />
+    <Content Include="Views\LoteProductoI\Index.cshtml" />
+    <Content Include="Views\MarcaI\Index.cshtml" />
+    <Content Include="Views\ComprasDetalleI\Index.cshtml" />
+    <Content Include="Views\CompraI\Index.cshtml" />
+    <Content Include="Views\ProveedorI\Index.cshtml" />
+    <Content Include="Views\VentasDetalleI\Index.cshtml" />
+    <Content Include="Views\VentaI\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

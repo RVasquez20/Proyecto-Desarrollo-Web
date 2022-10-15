@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Habitacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Vista habitacion</h2>
+<hr />
+<style>
+    #contenedor {
+        width: 100%;
+        height: auto;
+        border-style: double;
+    }
+
+    #izquierda {
+        float: left;
+        border-style: double;
+        border-color: indianred;
+        width: 50%;
+        height: auto;
+    }
+
+    #derecho {
+        float: right;
+        border-style: double;
+        border-color: yellowgreen;
+        width: 50%;
+        height: auto;
+    }
+
+    #formulario {
+        width: 50%;
+        height: auto;
+    }
+</style>
+
+<table class="table table-striped table-hover">
+    <thead>
+    <th> campo </th>
+    <th> campo </th>
+    <th> campo </th>
+    <th> campo </th>
+    <th> campo </th>
+    <th> campo </th>
+    <th> campo </th>
+    <th> campo </th>
+
+
+
+    <tbody id=" ">
+
+        <tr data-idestudiante="<%= estudiante.id_estudiante %>">
+            <td><%=  %></td>
+            <td><%= %></td>
+            <td><%= %></td>
+            <td><%=  %></td>
+            <td><%=  %></td>
+            <td><%= %></td>
+            <td><%=  %></td>
+            <td><%=  %></td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+<p>
+    <a class="btn btn-default">Agregar</a>
+    <a class="btn btn-default">Eliminar</a>
+    <a class="btn btn-default">Modificar</a>
+</p>

@@ -24,7 +24,7 @@ namespace Web_Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TblUsuario>>> GetTblUsuarios()
         {
-            return await _context.TblUsuarios.ToListAsync();
+            return Ok(await _context.TblUsuarios.ToListAsync());
         }
 
         // PUT: api/Usuarios/5

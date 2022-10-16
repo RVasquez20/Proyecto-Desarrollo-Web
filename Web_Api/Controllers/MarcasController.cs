@@ -55,7 +55,7 @@ namespace Web_Api.Controllers
                 }
             }
 
-            return Ok(PostTblMarca);
+            return Ok(tblMarca);
         }
 
         // POST: api/Marcas

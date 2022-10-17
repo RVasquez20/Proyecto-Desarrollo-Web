@@ -12,7 +12,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Authorize]
+   
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -55,41 +55,41 @@ namespace WebApplication1.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
 
-            // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
-            // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.User, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
-                    return View(model);
-            }
-        }
+        //    // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
+        //    // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
+        //    //var result = await SignInManager.PasswordSignInAsync(model.User, model.Password, model.RememberMe, shouldLockout: false);
+        //    //switch (result)
+        //    //{
+        //    //    case SignInStatus.Success:
+        //    //        return RedirectToLocal(returnUrl);
+        //    //    case SignInStatus.LockedOut:
+        //    //        return View("Lockout");
+        //    //    case SignInStatus.RequiresVerification:
+        //    //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //    //    case SignInStatus.Failure:
+        //    //    default:
+        //    //        ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
+        //    //        return View(model);
+        //    //}
+        //    return View(model);
+        //}
 
         //
         // GET: /Account/VerifyCode
@@ -391,8 +391,8 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            Session["User"] = null;
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -481,5 +481,26 @@ namespace WebApplication1.Controllers
             }
         }
         #endregion
+
+        [HttpPost]
+        public async Task<ActionResult> signIn(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            //peticion post a la api para ver si el usuario y contra son validos
+
+            if (model.User == "admin" && model.Password == "123")
+            {
+                Session["User"] = model.User;
+                return RedirectToAction("Index","Home");
+            }
+            else
+            {
+                ModelState.AddModelError("","Usuario o pass no valida");
+                return View("Login");
+            }
+        }
     }
 }

@@ -22,9 +22,34 @@ namespace Web_Api.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblUsuario>>> GetTblUsuarios()
+        public async Task<ActionResult> GetTblUsuarios()
         {
-            return Ok(await _context.TblUsuarios.ToListAsync());
+            var listadoUsuarios = _context.TblUsuarios.ToList()
+                .Join(_context.TblRoles,
+                usuario=>usuario.IdRol,
+                rol=>rol.IdRol,
+                (usuario, rol) => new
+                {
+                    IdUsuario=usuario.IdUsuario,
+                    IdEmpleado=usuario.IdEmpleado,
+                    IdRol = usuario.IdRol,
+                    Username=usuario.Username,
+                    Password = usuario.Password,
+                    Rol=rol.Rol
+                }).ToList().Join(_context.TblEmpleados,
+                usuario=>usuario.IdEmpleado,
+                empleado=>empleado.IdEmpleado,
+                (usuario, empleado) => new
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    IdEmpleado = usuario.IdEmpleado,
+                    IdRol = usuario.IdRol,
+                    Username = usuario.Username,
+                    Password = usuario.Password,
+                    Rol = usuario.Rol,
+                    Empleado=empleado.Nombre
+                }).ToList();
+            return Ok(listadoUsuarios);
         }
 
         // PUT: api/Usuarios/5

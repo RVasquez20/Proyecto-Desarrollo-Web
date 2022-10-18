@@ -22,9 +22,39 @@ namespace Web_Api.Controllers
 
         // GET: api/Empleado
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblEmpleado>>> GetTblEmpleados()
+        public async Task<ActionResult> GetTblEmpleados()
         {
-            return Ok(await _context.TblEmpleados.ToListAsync());
+            var listadoEmpleados = _context.TblEmpleados.ToList().Join(_context.TblCargos,
+                empleado => empleado.IdCargo,
+                cargo => cargo.IdCargo,
+                (empleado, cargo) => new
+                {
+                    IdEmpleado = empleado.IdEmpleado,
+                    CodigoEmpleado=empleado.CodigoEmpleado,
+                    Nombre = empleado.Nombre,
+                    Apellido = empleado.Apellido,
+                    Direccion = empleado.Direccion,
+                    Telefono = empleado.Telefono,
+                    IdCargo = empleado.IdCargo,
+                    IdClinica = empleado.IdClinica,
+                    Cargo = cargo.Cargo
+                }).ToList().Join(_context.TblClinicas,
+                empleado => empleado.IdClinica,
+                clinica => clinica.IdClinica,
+                (empleado, clinica) => new
+                {
+                    IdEmpleado = empleado.IdEmpleado,
+                    CodigoEmpleado = empleado.CodigoEmpleado,
+                    Nombre = empleado.Nombre,
+                    Apellido = empleado.Apellido,
+                    Direccion = empleado.Direccion,
+                    Telefono = empleado.Telefono,
+                    IdCargo = empleado.IdCargo,
+                    IdClinica = empleado.IdClinica,
+                    Cargo = empleado.Cargo,
+                    Clinica = clinica.Nombre
+                }).ToList();
+            return Ok(listadoEmpleados);
         }
 
 

@@ -16,6 +16,8 @@ namespace Web_Api.Models
         {
         }
 
+        public virtual DbSet<TblAccess> TblAccesses { get; set; } = null!;
+        public virtual DbSet<TblAccessRole> TblAccessRoles { get; set; } = null!;
         public virtual DbSet<TblCargo> TblCargos { get; set; } = null!;
         public virtual DbSet<TblClinica> TblClinicas { get; set; } = null!;
         public virtual DbSet<TblCompra> TblCompras { get; set; } = null!;
@@ -28,7 +30,6 @@ namespace Web_Api.Models
         public virtual DbSet<TblHabitacione> TblHabitaciones { get; set; } = null!;
         public virtual DbSet<TblLoteProducto> TblLoteProductos { get; set; } = null!;
         public virtual DbSet<TblMarca> TblMarcas { get; set; } = null!;
-        public virtual DbSet<TblMenu> TblMenus { get; set; } = null!;
         public virtual DbSet<TblPaciente> TblPacientes { get; set; } = null!;
         public virtual DbSet<TblPacientesHabitacione> TblPacientesHabitaciones { get; set; } = null!;
         public virtual DbSet<TblProducto> TblProductos { get; set; } = null!;
@@ -47,6 +48,47 @@ namespace Web_Api.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TblAccess>(entity =>
+            {
+                entity.HasKey(e => e.IdAccess);
+
+                entity.ToTable("TBL_Access");
+
+                entity.Property(e => e.IdAccess).HasColumnName("idAccess");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Url)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("URL");
+            });
+
+            modelBuilder.Entity<TblAccessRole>(entity =>
+            {
+                entity.HasKey(e => e.IdAccessRoles);
+
+                entity.ToTable("TBL_AccessRoles");
+
+                entity.Property(e => e.IdAccessRoles).HasColumnName("idAccessRoles");
+
+                entity.Property(e => e.IdAccess).HasColumnName("idAccess");
+
+                entity.Property(e => e.IdRol).HasColumnName("idRol");
+
+                entity.HasOne(d => d.IdAccessNavigation)
+                    .WithMany(p => p.TblAccessRoles)
+                    .HasForeignKey(d => d.IdAccess)
+                    .HasConstraintName("FK_TBL_AccessRoles_TBL_Access");
+
+                entity.HasOne(d => d.IdRolNavigation)
+                    .WithMany(p => p.TblAccessRoles)
+                    .HasForeignKey(d => d.IdRol)
+                    .HasConstraintName("FK_TBL_AccessRoles_TBL_Roles");
+            });
+
             modelBuilder.Entity<TblCargo>(entity =>
             {
                 entity.HasKey(e => e.IdCargo)
@@ -338,36 +380,6 @@ namespace Web_Api.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TblMenu>(entity =>
-            {
-                entity.HasKey(e => e.IdMenu)
-                    .HasName("PK_Menus");
-
-                entity.ToTable("TBL_Menus");
-
-                entity.Property(e => e.IdMenu).HasColumnName("idMenu");
-
-                entity.Property(e => e.Empleados)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Habitaciones)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Historial)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Inventario)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Pacientes)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-            });
-
             modelBuilder.Entity<TblPaciente>(entity =>
             {
                 entity.HasKey(e => e.IdPaciente)
@@ -503,23 +515,15 @@ namespace Web_Api.Models
 
             modelBuilder.Entity<TblRole>(entity =>
             {
-                entity.HasKey(e => e.IdRol)
-                    .HasName("PK_Roles");
+                entity.HasKey(e => e.IdRol);
 
                 entity.ToTable("TBL_Roles");
 
                 entity.Property(e => e.IdRol).HasColumnName("idRol");
 
-                entity.Property(e => e.IdMenu).HasColumnName("idMenu");
-
                 entity.Property(e => e.Rol)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.IdMenuNavigation)
-                    .WithMany(p => p.TblRoles)
-                    .HasForeignKey(d => d.IdMenu)
-                    .HasConstraintName("FK_Roles_Menus");
             });
 
             modelBuilder.Entity<TblUsuario>(entity =>
@@ -554,7 +558,7 @@ namespace Web_Api.Models
                 entity.HasOne(d => d.IdRolNavigation)
                     .WithMany(p => p.TblUsuarios)
                     .HasForeignKey(d => d.IdRol)
-                    .HasConstraintName("FK_Usuario_ROLES");
+                    .HasConstraintName("FK_TBL_Usuarios_TBL_Roles");
             });
 
             modelBuilder.Entity<TblVenta>(entity =>

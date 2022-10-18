@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Web_Api.Models;
 
@@ -22,9 +23,82 @@ namespace Web_Api.Controllers
 
         // GET: api/Consultas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblConsulta>>> GetTblConsultas()
+        public async Task<ActionResult> GetTblConsultas()
         {
-            return Ok(await _context.TblConsultas.ToListAsync());
+            var listado = _context.TblConsultas.ToList().Join(_context.TblPacientes,
+                consulta => consulta.IdPaciente,
+                paciente => paciente.IdPaciente,
+                (consulta, paciente) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = paciente.Nombre
+                }).ToList().Join(_context.TblEmpleados,
+                consulta => consulta.IdEmpleado,
+                empleado => empleado.IdEmpleado,
+                (consulta, empleado) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = empleado.Nombre
+                }).ToList().Join(_context.TblClinicas,
+                consulta => consulta.IdClinica,
+                clinica => clinica.IdClinica,
+                (consulta, clinica) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = consulta.Empleado,
+                    Clinica = clinica.Nombre
+                }).ToList().Join(_context.TblDiagnosticos,
+                consulta => consulta.IdDiagnostico,
+                diagnosticos => diagnosticos.IdDiagnostico,
+                (consulta, diagnosticos) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = consulta.Empleado,
+                    Clinica = consulta.Clinica,
+                    Diagnostico = diagnosticos.Titulo
+                }).ToList().Join(_context.TblRecetas,
+                consulta => consulta.IdReceta,
+                recetas => recetas.IdReceta,
+                (consulta, recetas) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = consulta.Empleado,
+                    Clinica = consulta.Clinica,
+                    Diagnostico = consulta.Diagnostico,
+                    Receta = recetas.Serie
+                }).ToList();
+
+
+            return Ok(listado);
         }
 
 

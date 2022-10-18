@@ -14,9 +14,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//Add DataBase
 builder.Services.AddDbContext<ClinicaMedicaContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Clinica-Medica"));
+});
+//Add Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 });
 var app = builder.Build();
 
@@ -29,6 +38,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAllOrigins");
 //app.UseAuthentication();
 //app.UseAuthorization();
 

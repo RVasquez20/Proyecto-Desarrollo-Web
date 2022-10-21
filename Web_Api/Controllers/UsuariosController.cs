@@ -125,5 +125,36 @@ namespace Web_Api.Controllers
 
             return Ok(oUser);
         }
+
+        [HttpGet]
+        [Route("ListaAccesos/{id}")]
+        public async Task<IActionResult> ListadoAccesos(int id)
+        {
+
+            var listaAccesos = _context.TblUsuarios.Where(user => user.IdUsuario == id).Join(_context.TblRoles,
+                usuario => usuario.IdRol,
+                rol => rol.IdRol,
+                (usuario, rol) => new
+                {
+                    Id_rol=rol.IdRol
+                }).ToList().Join(_context.TblAccessRoles,
+                rol=>rol.Id_rol,
+                acc=>acc.IdRol,
+                (rol, acc) => new
+                {
+                    IdAccess=acc.IdAccess
+                }).ToList().Join(_context.TblAccesses,
+                acc=>acc.IdAccess,
+                accesos=>accesos.IdAccess,
+                (acc, accesos) =>new TblAccess
+                {
+                    IdAccess=accesos.IdAccess,
+                    Name=accesos.Name,
+                    Url=accesos.Url
+                }).ToList();
+
+            return Ok(listaAccesos);
+        }
+
     }
 }

@@ -51,7 +51,7 @@ namespace WebApplication1.Models
     {
         [Required]
         [Display(Name = "Usuario")]
-        
+
         public string User { get; set; }
 
         [Required]
@@ -121,8 +121,26 @@ namespace WebApplication1.Models
     public class Roles
     {
         public int id_rol { get; set; }
-        public string nombre { get; set; }
+        public string ROL { get; set; }
 
+    }
+    public class RolesViewModel
+    {
+        public int id_rol { get; set; }
+        public string ROL { get; set; }
+
+    }
+    public class RolesAccess{
+        public int idRolesAccess { get; set; }
+        public int IdRol { get; set; }
+        public int IdAccess { get; set; }
+     }
+
+    public class Access
+    {
+        public int IdAccess { get; set; }
+        public string Name { get; set; }
+        public string URL { get; set; }
     }
     public class UsuariosViewModel
     {

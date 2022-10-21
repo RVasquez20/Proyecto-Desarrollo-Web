@@ -28,30 +28,41 @@
                         Gestion Menus
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item">@Html.ActionLink("Menu", "Index", "MenuI")</li>
-                    </ul>
+
+                        @if (Session["Home"] != null)
+                        {
+                            <li class="dropdown-item">@Html.ActionLink("Home", "Index", "Home")</li>
+                        }
+                            <li class="dropdown-item">@Html.ActionLink("Menu", "Index", "Menu")</li>
+
+                        </ul>
                 </div>
                 <div class="dropdown dropdown-toggle-split">
                     <a class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Gestion Usuarios
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item">@Html.ActionLink("Roles", "Index", "Role")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Usuario", "Index", "UsuarioI")</li>
-                    </ul>
+                        
+                            <li class="dropdown-item">@Html.ActionLink("Roles", "Index", "Role")</li>
+                        
+                            @if (Session["Usuarios"] != null)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Usuario", "Index", "Usuario")</li>
+                            }
+                            </ul>
                 </div>
                 <div class="dropdown dropdown-toggle-split">
                     <a class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Gestion Consultas
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item">@Html.ActionLink("Consulta", "Index", "ConsultaI")</li>
-                        <li class="dropdown-item"><img src="~/images/imagen.png"></img></li>
+                        <li class="dropdown-item">@Html.ActionLink("Consulta", "Index", "Consulta")</li>
+   
                         <li class="dropdown-item">@Html.ActionLink("Paciente", "Index", "Pacientes")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Diagnostico", "Index", "DiagnosticoI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Examen", "Index", "ExamenI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Receta", "Index", "RecetaI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Habitacion", "Index", "HabitacionI")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Diagnostico", "Index", "Diagnostico")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Examen", "Index", "Examen")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Receta", "Index", "Receta")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Habitacion", "Index", "Habitacion")</li>
                     </ul>
                 </div>
                 <div class="dropdown dropdown-toggle-split">
@@ -59,9 +70,9 @@
                         Gestion Empleados
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item">@Html.ActionLink("Empleados", "Index", "EmpleadoI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Cargos", "Index", "CargoI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Clinicas", "Index", "ClinicaI")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Empleados", "Index", "Empleados")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Cargos", "Index", "Cargo")</li>
+                        <li class="dropdown-item">@Html.ActionLink("Clinicas", "Index", "Clinica")</li>
                     </ul>
                 </div>
                 <div class="dropdown dropdown-toggle-split">
@@ -69,13 +80,19 @@
                         Gestion Farmacias
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item">@Html.ActionLink("Productos", "Index", "ProductoI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Lotes Productos", "Index", "LoteProductoI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Marca", "Index", "MarcaI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Compras", "Index", "CompraI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Proveedores", "Index", "ProveedorI")</li>
-                        <li class="dropdown-item">@Html.ActionLink("Ventas", "Index", "VentaI")</li>
-                    </ul>
+                        @if (Session["Productos"] != null)
+                        {
+                            <li class="dropdown-item"><a href='Session["Productos"]'>Productos</a></li>
+                        }
+                            <li class="dropdown-item">@Html.ActionLink("Lotes Productos", "Index", "LoteProducto")</li>
+                            @if (Session["Marcas"] != null)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Marca", "Index", "Marca")</li>
+                            }
+                                <li class="dropdown-item">@Html.ActionLink("Compras", "Index", "Compra")</li>
+                                <li class="dropdown-item">@Html.ActionLink("Proveedores", "Index", "Proveedor")</li>
+                                <li class="dropdown-item">@Html.ActionLink("Ventas", "Index", "Venta")</li>
+                            </ul>
                 </div>
                 <div>
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))

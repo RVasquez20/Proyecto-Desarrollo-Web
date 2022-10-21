@@ -1,0 +1,25 @@
+﻿@model WebApplication1.Models.LoteProductos
+@{
+    ViewBag.Title = "Agregar Lote de Productos";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+{
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Descripcion)
+    @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+</div>
+
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.noLote)
+    @Html.TextBoxFor(m => m.noLote, new { @class = "form-control" })
+</div>
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.FechaExpiracion)
+    @Html.TextBoxFor(m => m.FechaExpiracion, new { @class = "form-control",type="date" })
+</div>
+<button type="submit" class="btn btn-primary">Agregar Lote</button>
+}
+

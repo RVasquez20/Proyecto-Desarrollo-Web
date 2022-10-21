@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,7 +14,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-   
+    
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -392,6 +394,10 @@ namespace WebApplication1.Controllers
         public ActionResult LogOff()
         {
             Session["User"] = null;
+            Session["Usuarios"] = null;
+            Session["Home"] = null;
+            Session["Productos"] = null;
+            Session["Marcas"] = null;
             return RedirectToAction("Login", "Account");
         }
 
@@ -489,11 +495,127 @@ namespace WebApplication1.Controllers
             {
                 return View(model);
             }
+            //modificar el objeto model para que la pass vaya cifrada
             //peticion post a la api para ver si el usuario y contra son validos
-
-            if (model.User == "admin" && model.Password == "123")
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    client.GetAsync("");
+            //desealizacion de la response
+            //}
+            var dataUsers = new List<Usuarios>()
             {
-                Session["User"] = model.User;
+
+                new Usuarios()
+                {
+                    id_usuario=1,
+                    nombre="pepito",
+                    username="Juana22",
+                    pass="1234",
+                    id_rol=1
+                },
+                 new Usuarios()
+                {
+                    id_usuario=2,
+                    nombre="juana",
+                    username="Juan22",
+                    pass="1234",
+                    id_rol=2
+                }
+            };
+            //peticion get para obtener listado de roles
+            var dataRoles = new List<Roles>()
+            {
+                new Roles()
+                {
+                    id_rol=1,
+                    ROL="admin"
+                },
+                new Roles()
+                {
+                    id_rol=2,
+                    ROL="Medico"
+                }
+            };
+            var dataAccRol = new List<RolesAccess>()
+            {
+                new RolesAccess()
+                {
+                    idRolesAccess=1,
+                    IdRol=1,
+                    IdAccess=1
+                }
+                , new RolesAccess()
+                {
+                    idRolesAccess=2,
+                    IdRol=1,
+                    IdAccess=2
+                }, new RolesAccess()
+                {
+                    idRolesAccess=3,
+                    IdRol=1,
+                    IdAccess=3
+                }, new RolesAccess()
+                {
+                    idRolesAccess=4,
+                    IdRol=1,
+                    IdAccess=4
+                }, new RolesAccess()
+                {
+                    idRolesAccess=5,
+                    IdRol=2,
+                    IdAccess=2
+                }, new RolesAccess()
+                {
+                    idRolesAccess=6,
+                    IdRol=2,
+                    IdAccess=3
+                }
+            };
+            var dataAcces = new List<Access>()
+            {
+                new Access()
+                {
+                    IdAccess=1,
+                    Name="Usuarios",
+                    URL="~/UsuarioI/Index"
+                },
+                 
+                  new Access()
+                {
+                    IdAccess=2,
+                    Name="Home",
+                    URL="~/Home/Index"
+                },
+                   new Access()
+                {
+                    IdAccess=3,
+                    Name="Productos",
+                    URL="~/ProductoI/Index"
+                },
+                new Access()
+                {
+                    IdAccess=4,
+                    Name="Marcas",
+                    URL="~/MarcaI/Index"
+                }
+            };
+            Usuarios oUser = null;
+            foreach (var item in dataUsers)
+            {
+                if (item.username.Equals(model.User)&&item.pass.Equals(model.Password))
+                {
+                    oUser = item;
+                }
+            }
+            if (oUser != null)
+            {
+                
+                Session["User"] = oUser.username;
+                var accesos = getMenu(oUser.id_usuario);
+                foreach (var acceso in accesos)
+                {
+                    Session[acceso.Name]=acceso.URL;
+                }
                 return RedirectToAction("Index","Home");
             }
             else
@@ -501,6 +623,133 @@ namespace WebApplication1.Controllers
                 ModelState.AddModelError("","Usuario o pass no valida");
                 return View("Login");
             }
+        }
+
+        public List<Access> getMenu(int idUser)
+        {
+            var dataUsers = new List<Usuarios>()
+            {
+
+                new Usuarios()
+                {
+                    id_usuario=1,
+                    nombre="pepito",
+                    username="Juana22",
+                    pass="1234",
+                    id_rol=1
+                },
+                 new Usuarios()
+                {
+                    id_usuario=2,
+                    nombre="juana",
+                    username="Juan22",
+                    pass="1234",
+                    id_rol=2
+                }
+            };
+            var dataRoles = new List<Roles>()
+            {
+                new Roles()
+                {
+                    id_rol=1,
+                    ROL="admin"
+                },
+                new Roles()
+                {
+                    id_rol=2,
+                    ROL="Medico"
+                }
+            };
+            var dataAccRol = new List<RolesAccess>()
+            {
+                new RolesAccess()
+                {
+                    idRolesAccess=1,
+                    IdRol=1,
+                    IdAccess=1
+                }
+                , new RolesAccess()
+                {
+                    idRolesAccess=2,
+                    IdRol=1,
+                    IdAccess=2
+                }, new RolesAccess()
+                {
+                    idRolesAccess=3,
+                    IdRol=1,
+                    IdAccess=3
+                }, new RolesAccess()
+                {
+                    idRolesAccess=4,
+                    IdRol=1,
+                    IdAccess=4
+                }, new RolesAccess()
+                {
+                    idRolesAccess=5,
+                    IdRol=2,
+                    IdAccess=2
+                }, new RolesAccess()
+                {
+                    idRolesAccess=6,
+                    IdRol=2,
+                    IdAccess=3
+                }
+            };
+            var dataAcces = new List<Access>()
+            {
+                new Access()
+                {
+                    IdAccess=1,
+                    Name="Usuarios",
+                    URL="~/UsuarioI/Index"
+                },
+
+                  new Access()
+                {
+                    IdAccess=2,
+                    Name="Home",
+                    URL="~/Home/Index"
+                },
+                   new Access()
+                {
+                    IdAccess=3,
+                    Name="Productos",
+                    URL="~/ProductoI/Index"
+                },
+                new Access()
+                {
+                    IdAccess=4,
+                    Name="Marcas",
+                    URL="~/MarcaI/Index"
+                }
+            };
+            var listadoAccesos = dataUsers.Where(x => x.id_usuario==idUser)
+                .Join(dataRoles,
+                u=>u.id_rol,
+                rol=>rol.id_rol,
+                (u, rol) => new
+                {
+                    id_rol=rol.id_rol
+                }).ToList()
+                .Join(dataAccRol,
+                r=>r.id_rol,
+                ar=>ar.IdRol,
+                (r, ar) => new
+                {
+                    id_rol=r.id_rol,
+                    IdAccess=ar.IdAccess
+                }).ToList()
+                .Join(dataAcces,
+                rar=>rar.IdAccess,
+                a=>a.IdAccess,
+                (rar, a) => new Access
+                {
+                    IdAccess=rar.IdAccess,
+                    Name=a.Name,
+                    URL=a.URL
+                }).ToList();
+
+                return listadoAccesos;
         }
     }
 }

@@ -1,0 +1,23 @@
+﻿@model WebApplication1.Models.HabitacionesViewModel
+@{
+    ViewBag.Title = "Agregar Habitacion";
+    List<SelectListItem> listaClinica = ViewBag.listadoClinica;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+{
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.no_habitacion)
+        @Html.TextBoxFor(m => m.no_habitacion, new { @class = "form-control" })
+    </div>
+
+    @Html.DropDownList("Clinicas", listaClinica, "Seleccionar una clinica", new { @class = "form-control" })
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.CantidadPacientes)
+        @Html.TextBoxFor(m => m.CantidadPacientes, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Habitaciones</button>
+}

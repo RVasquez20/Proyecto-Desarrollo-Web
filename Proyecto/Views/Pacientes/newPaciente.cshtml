@@ -1,0 +1,31 @@
+﻿@model WebApplication1.Models.Pacientes
+@{
+    ViewBag.Title = "Agregar Paciente";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+{
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.no_afiliado)
+        @Html.TextBoxFor(m => m.no_afiliado, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.nombre)
+        @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.direccion)
+        @Html.TextBoxFor(m => m.direccion, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.telefono)
+        @Html.TextBoxFor(m => m.telefono, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar Paciente</button>
+}

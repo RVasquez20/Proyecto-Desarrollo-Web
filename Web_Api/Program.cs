@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen();
 //Add DataBase
 builder.Services.AddDbContext<ClinicaMedicaContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Clinica-Medica"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Clinica-Medica"), option => option.EnableRetryOnFailure());
 });
 //Add Cors
 builder.Services.AddCors(options =>

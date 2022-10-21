@@ -22,9 +22,34 @@ namespace Web_Api.Controllers
 
         // GET: api/PacientesHabitaciones
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblPacientesHabitacione>>> GetTblPacientesHabitaciones()
+        public async Task<ActionResult> GetTblPacientesHabitaciones()
         {
-            return Ok(await _context.TblPacientesHabitaciones.ToListAsync());
+                var listado = _context.TblPacientesHabitaciones.ToList().Join(_context.TblPacientes,
+                    PacientesHabitaciones => PacientesHabitaciones.IdPaciente,
+                    Paciente => Paciente.IdPaciente,
+                    (PacientesHabitaciones, Paciente) => new
+                    {
+                        IdPacHab=PacientesHabitaciones.IdPacHab,
+                        IdPaciente = PacientesHabitaciones.IdPaciente,
+                        IdHabitacion = PacientesHabitaciones.IdHabitacion,
+                        Paciente = Paciente.Nombre
+
+                    }).ToList().Join(_context.TblHabitaciones,
+                    PacientesHabitaciones => PacientesHabitaciones.IdHabitacion,
+                    Habitaciones => Habitaciones.IdHabitacion,
+                    (PacientesHabitaciones, Habitaciones) => new
+                    {
+                        IdPacHab = PacientesHabitaciones.IdPacHab,
+                        IdPaciente = PacientesHabitaciones.IdPaciente,
+                        IdHabitacion = PacientesHabitaciones.IdHabitacion,
+                        Paciente = PacientesHabitaciones.Paciente,
+                        NumHabitacion = Habitaciones.NoHabitacion
+                    }).ToList();
+
+
+                return Ok(listado);
+
+           
         }
 
         // PUT: api/PacientesHabitaciones/5

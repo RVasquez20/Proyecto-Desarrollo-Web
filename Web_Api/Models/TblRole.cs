@@ -7,14 +7,14 @@ namespace Web_Api.Models
     {
         public TblRole()
         {
+            TblAccessRoles = new HashSet<TblAccessRole>();
             TblUsuarios = new HashSet<TblUsuario>();
         }
 
         public int IdRol { get; set; }
         public string Rol { get; set; } = null!;
-        public int? IdMenu { get; set; }
 
-        public virtual TblMenu? IdMenuNavigation { get; set; }
+        public virtual ICollection<TblAccessRole> TblAccessRoles { get; set; }
         public virtual ICollection<TblUsuario> TblUsuarios { get; set; }
     }
 }

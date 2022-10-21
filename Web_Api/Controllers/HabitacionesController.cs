@@ -24,7 +24,86 @@ namespace Web_Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TblHabitacione>>> GetTblHabitaciones()
         {
+
             return Ok(await _context.TblHabitaciones.ToListAsync());
+        }
+        //Habitaciones Disponibles
+
+        [HttpGet]
+        [Route("HabitacionesDisponibles")]
+        public async Task<IActionResult> getHabitacionesDisponibles()
+        {
+            
+            var habs = _context.TblHabitaciones.Select(x=>x.IdHabitacion).ToList();
+            var listadoHab = _context.TblHabitaciones.Join(_context.TblPacientesHabitaciones,
+                h => h.IdHabitacion,
+                p => p.IdHabitacion,
+                (h, p) => new
+                {
+                    IdHabitacion = h.IdHabitacion
+                }).GroupBy(x=>x.IdHabitacion).Select(y=>y.Key).ToList();
+
+            var listDetail = _context.TblHabitaciones.Join(_context.TblPacientesHabitaciones,
+                h => h.IdHabitacion,
+                p => p.IdHabitacion,
+                (h, p) => new
+                {
+                    IdHabitacion = h.IdHabitacion,
+                    NoHabitacion = h.NoHabitacion,
+                    IdClinica = h.IdClinica,
+                    CantidadMaxPacientes = h.CantidadMaxPacientes
+
+                }).Join(_context.TblClinicas,
+                h => h.IdClinica,
+                c => c.IdClinica,
+                (h, c) => new
+                {
+                    IdHabitacion = h.IdHabitacion,
+                    NoHabitacion = h.NoHabitacion,
+                    IdClinica = h.IdClinica,
+                    Clinica = c.Nombre,
+                    CantidadMaxPacientes = h.CantidadMaxPacientes
+                }).GroupBy(
+                hab => hab.IdHabitacion,
+                (b, h) => new
+                {
+                    Key = b,
+                    Count = h.Count()
+                });
+            var listAllDetail = _context.TblHabitaciones.Join(_context.TblClinicas,
+              h => h.IdClinica,
+              c => c.IdClinica,
+              (h, c) => new
+              {
+                  IdHabitacion = h.IdHabitacion,
+                  NoHabitacion = h.NoHabitacion,
+                  IdClinica = h.IdClinica,
+                  Clinica = c.Nombre,
+                  CantidadMaxPacientes = h.CantidadMaxPacientes
+              }).ToList();
+
+          IDictionary<int,int> keyCount=new Dictionary<int,int>();
+            foreach (var resultado in listDetail) {  
+                keyCount.Add(resultado.Key, resultado.Count);
+            }    
+
+
+            var result = new List<object>();
+            foreach (var h in habs)
+                {
+                   if (listadoHab.Contains(h))
+                    {
+                        if (keyCount[h] < 4)
+                        {
+                            result.Add(listAllDetail.Where(x => x.IdHabitacion == h).FirstOrDefault());
+                        }
+                   }
+                    else
+                    {
+                        result.Add(listAllDetail.Where(x => x.IdHabitacion == h).FirstOrDefault());
+                    }
+                }
+                return Ok(result);
         }
 
 

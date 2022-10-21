@@ -22,9 +22,60 @@ namespace Web_Api.Controllers
 
         // GET: api/Productoes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblProducto>>> GetTblProductos()
+        public async Task<ActionResult> GetTblProductos()
         {
-            return Ok(await _context.TblProductos.ToListAsync());
+            var listado = _context.TblProductos.ToList().Join(_context.TblMarcas,
+                producto => producto.IdMarca,
+                marca => marca.IdMarca,
+                (producto, marca) => new
+                {
+                    IdProducto = producto.IdProducto,
+                    IdLoteProducto = producto.IdLoteProducto,
+                    IdClinica = producto.IdClinica,
+                    Nombre = producto.Nombre,
+                    IdMarca = producto.IdMarca,
+                    Descripcion = producto.Descripcion,
+                    Precio = producto.Precio,
+                    Existencia = producto.Existencia,
+                    Imagen = producto.Imagen,
+                    Marca = marca.Marca
+                }).ToList().Join(_context.TblClinicas,
+                producto => producto.IdClinica,
+                clinica => clinica.IdClinica,
+                (producto, clinica) => new
+                {
+                    IdProducto = producto.IdProducto,
+                    IdLoteProducto = producto.IdLoteProducto,
+                    IdClinica = producto.IdClinica,
+                    Nombre = producto.Nombre,
+                    IdMarca = producto.IdMarca,
+                    Descripcion = producto.Descripcion,
+                    Precio = producto.Precio,
+                    Existencia = producto.Existencia,
+                    Imagen = producto.Imagen,
+                    Marca = producto.Marca,
+                    Clinica = clinica.Nombre
+                }).ToList().Join(_context.TblLoteProductos,
+                producto => producto.IdLoteProducto,
+                lote => lote.IdLoteProducto,
+                (producto, lote) => new
+                {
+                    IdProducto = producto.IdProducto,
+                    IdLoteProducto = producto.IdLoteProducto,
+                    IdClinica = producto.IdClinica,
+                    Nombre = producto.Nombre,
+                    IdMarca = producto.IdMarca,
+                    Descripcion = producto.Descripcion,
+                    Precio = producto.Precio,
+                    Existencia = producto.Existencia,
+                    Imagen = producto.Imagen,
+                    Marca = producto.Marca,
+                    Clinica = producto.Clinica,
+                    Lote = lote.NoLote
+                }).ToList();
+
+
+            return Ok(listado);
         }
 
 
@@ -127,5 +178,95 @@ namespace Web_Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
+        /**
+         * App movil
+         * 
+         */
+        [HttpGet]
+        [Route("ListadoProductos")]
+        public async Task<ActionResult> GetListadoProductos()
+        {
+            var listado = _context.TblProductos.ToList().Join(_context.TblMarcas,
+                producto => producto.IdMarca,
+                marca => marca.IdMarca,
+                (producto, marca) => new
+                {
+                    IdProducto = producto.IdProducto,
+                    Nombre = producto.Nombre,
+                    Descripcion = producto.Descripcion,
+                    IdMarca = producto.IdMarca,
+                    Precio = producto.Precio,
+                    Imagen = producto.Imagen,
+                    Marca = marca.Marca
+                }).ToList();
+
+
+            return Ok(listado);
+        }
+
+        [HttpGet("{id}")]
+        [Route("DetalleProducto")]
+        [HttpGet]
+        public async Task<ActionResult> GetDetalleProducto(int id)
+        {
+            var listado = _context.TblProductos.ToList()
+                .Where(p => p.IdProducto == id)
+                .Join(_context.TblMarcas,
+                producto => producto.IdMarca,
+                marca => marca.IdMarca,
+                (producto, marca) => new
+                {
+                    IdProducto = producto.IdProducto,
+                    IdLoteProducto = producto.IdLoteProducto,
+                    IdClinica = producto.IdClinica,
+                    Nombre = producto.Nombre,
+                    IdMarca = producto.IdMarca,
+                    Descripcion = producto.Descripcion,
+                    Precio = producto.Precio,
+                    Existencia = producto.Existencia,
+                    Imagen = producto.Imagen,
+                    Marca = marca.Marca
+                }).ToList().Join(_context.TblClinicas,
+                producto => producto.IdClinica,
+                clinica => clinica.IdClinica,
+                (producto, clinica) => new
+                {
+                    IdProducto = producto.IdProducto,
+                    IdLoteProducto = producto.IdLoteProducto,
+                    IdClinica = producto.IdClinica,
+                    Nombre = producto.Nombre,
+                    IdMarca = producto.IdMarca,
+                    Descripcion = producto.Descripcion,
+                    Precio = producto.Precio,
+                    Existencia = producto.Existencia,
+                    Imagen = producto.Imagen,
+                    Marca = producto.Marca,
+                    Clinica = clinica.Nombre
+                }).ToList().Join(_context.TblLoteProductos,
+                producto => producto.IdLoteProducto,
+                lote => lote.IdLoteProducto,
+                (producto, lote) => new
+                {
+                    IdProducto = producto.IdProducto,
+                    IdLoteProducto = producto.IdLoteProducto,
+                    IdClinica = producto.IdClinica,
+                    Nombre = producto.Nombre,
+                    IdMarca = producto.IdMarca,
+                    Descripcion = producto.Descripcion,
+                    Precio = producto.Precio,
+                    Existencia = producto.Existencia,
+                    Imagen = producto.Imagen,
+                    Marca = producto.Marca,
+                    Clinica = producto.Clinica,
+                    Lote = lote.NoLote
+                }).ToList();
+
+
+            return Ok(listado);
+        }
+
     }
 }

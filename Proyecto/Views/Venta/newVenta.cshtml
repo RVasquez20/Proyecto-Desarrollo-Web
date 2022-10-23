@@ -1,0 +1,26 @@
+﻿@model WebApplication1.Models.Venta
+@{
+    ViewBag.Title = "Agregar Venta";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+{
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.serie)
+        @Html.TextBoxFor(m => m.serie, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.numero)
+        @Html.TextBoxFor(m => m.numero, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.fecha)
+        @Html.TextBoxFor(m => m.fecha, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar Descripcion</button>
+}

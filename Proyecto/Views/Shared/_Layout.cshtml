@@ -11,7 +11,7 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -82,7 +82,7 @@
                     <ul class="dropdown-menu">
                         @if (Session["Productos"] != null)
                         {
-                            <li class="dropdown-item"><a href='Session["Productos"]'>Productos</a></li>
+                            <li class="dropdown-item">@Html.ActionLink("Productos", "Index", "Producto")</li>
                         }
                             <li class="dropdown-item">@Html.ActionLink("Lotes Productos", "Index", "LoteProducto")</li>
                             @if (Session["Marcas"] != null)

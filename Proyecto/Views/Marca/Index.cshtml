@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>Marca</th>
+                    <th>Gestiones</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,8 +26,8 @@
                 <tr>
                     <td>@item.Marca</td>
                     <td>
-                        <input onclick="document.location.href='@Url.Content("~/Diagnostico/deleteDiagnostic/" + item.IdMarca)'" type="button" value="Eliminar" class="btn btn-danger" />
-                        <input onclick="document.location.href='@Url.Content("~/Diagnostico/modifyDiagnostic/" + item.IdMarca)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="document.location.href='@Url.Content("~/Marca/modificarMarca/" + item.IdMarca)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarMarca('@item.IdMarca','@item.Marca');" type="button" value="Eliminar" class="btn btn-danger" />
                     </td>
                 </tr>
                 }
@@ -40,17 +41,17 @@ else
         <h2>No hay Marcas</h2>
     </div>
 }
-    <script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Esta Diagnostico?????")) {
-            url = "@Url.Content("~/Diagnostico/deleteDiagnostic/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Diagnostico/Index")"
+<script>
+        function EliminarMarca(id,Marca) {
+        if (confirm(`Esta Seguro de Eliminar A Esta Marca: ${Marca} ?????` )) {
+            url = "@Url.Content("~/Marca/eliminarMarca/")" + id;
+            $.get(url).done((data) => {
+                if (data == "Exito") {
+                    document.location.href = "@Url.Content("~/Marca/Index")";
                 } else {
-                    alert("Ocurrio un Error :c");
+                    alert("Hubo un error");
                 }
             });
         }
     }
-    </script>
+</script>

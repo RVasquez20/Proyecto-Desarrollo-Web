@@ -1,72 +1,63 @@
-﻿
+﻿@using WebApplication1.Models
+@model List<ComprasViewModel>
 @{
     ViewBag.Title = "Compras";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Vista Compra</h2>
+<h2>@ViewBag.Title</h2>
 <hr />
-<style>
-    #contenedor {
-        width: 100%;
-        height: auto;
-        border-style: double;
+
+
+@if (Model != null)
+{
+    <div class="container mt-3">
+        <h2>Compra</h2>
+        @Html.ActionLink("Nuevo", "newCompra", "Compra", new { @class = "btn btn-primary" })
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>No. Orden</th>
+                    <th>Fecha Orden</th>
+                    <th>Fecha</th>
+                    <th>Proveedor</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.no_orden</td>
+                        <td>@item.fecha_orden</td>
+                        <td>@item.fecha</td>
+                        <td>@item.proveedor</td>
+                        <td>
+                            <input onclick="document.location.href='@Url.Content("~/Compra/deleteCompra/" + item.idCompra)'" type="button" value="Eliminar" class="btn btn-danger" />
+                            <input onclick="document.location.href='@Url.Content("~/Compra/modifyCompra/" + item.idCompra)'" type="button" value="Editar" class="btn btn-warning" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Diagnosticos</h2>
+    </div>
+}
+<script>
+    function EliminarUsuario(id) {
+        if (confirm("Esta Seguro de Eliminar A Esta Habitacion?????")) {
+            url = "@Url.Content("~/Compra/deleteCompra/")" + "/" + id;
+            $.get(url).done((data)=>{
+                if (data == 1) {
+                    document.location.href = "@Url.Content("~/Compra/Index")"
+                } else {
+                    alert("Ocurrio un Error :c");
+                }
+            });
+        }
     }
-
-    #izquierda {
-        float: left;
-        border-style: double;
-        border-color: indianred;
-        width: 50%;
-        height: auto;
-    }
-
-    #derecho {
-        float: right;
-        border-style: double;
-        border-color: yellowgreen;
-        width: 50%;
-        height: auto;
-    }
-
-    #formulario {
-        width: 50%;
-        height: auto;
-    }
-</style>
-
-<table class="table table-striped table-hover">
-    <thead>
-    <th> campo </th>
-    <th> campo </th>
-    <th> campo </th>
-    <th> campo </th>
-    <th> campo </th>
-    <th> campo </th>
-    <th> campo </th>
-    <th> campo </th>
-
-
-
-    <tbody id=" ">
-
-        <tr data-idestudiante="<%= estudiante.id_estudiante %>">
-            <td><%=  %></td>
-            <td><%= %></td>
-            <td><%= %></td>
-            <td><%=  %></td>
-            <td><%=  %></td>
-            <td><%= %></td>
-            <td><%=  %></td>
-            <td><%=  %></td>
-
-        </tr>
-
-    </tbody>
-</table>
-
-<p>
-    <a class="btn btn-default">Agregar</a>
-    <a class="btn btn-default">Eliminar</a>
-    <a class="btn btn-default">Modificar</a>
-</p>
+</script>

@@ -26,10 +26,9 @@
                     <tr>
                         <td>@item.Cargo</td>
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Cargo/deleteCargo/" + item.IdCargo)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Cargo/modifyCargo/" + item.IdCargo)'" type="button" value="Editar" class="btn btn-warning" />
-                        </td>
-                    </tr>
+                            <input onclick="document.location.href='@Url.Content("~/Cargo/modificarCargo/" + item.IdCargo)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="EliminarCArgo('@item.IdCargo','@item.Cargo');" type="button" value="Eliminar" class="btn btn-danger" />
+</tr>
                 }
             </tbody>
         </table>
@@ -38,20 +37,20 @@
 else
 {
     <div class="container mt-3">
-        <h2>No hay usuarios</h2>
+        <h2>No hay cargos</h2>
     </div>
 }
-<script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Este Usuario?????")) {
-            url = "@Url.Content("~/Cargo/deleteCargo/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Cargo/Index")"
+           <script>
+    function EliminarCArgo(id,Cargo) {
+        if (confirm(`Esta Seguro de Eliminar A Este cargo : ${Cargo} ?????` )) {
+            url = "@Url.Content("~/Cargo/eliminarCargo/")" + id;
+            $.get(url).done((data) => {
+                if (data == "Exito") {
+                    document.location.href = "@Url.Content("~/Cargo/Index")";
                 } else {
-                    alert("Ocurrio un Error :c");
+                    alert("Hubo un error");
                 }
             });
         }
     }
-</script>
+           </script>

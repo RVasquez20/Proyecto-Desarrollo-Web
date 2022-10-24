@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Text;
+using System.Threading.Tasks;
 using WebApplication1.Models;
 using WebApplication1.permisos;
 
@@ -11,30 +13,107 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class DiagnosticoController : Controller
     {
-        // GET: DiagosticoI
-        public ActionResult Index()
-        {
-            var lista = new List<Diagnosticos>()
-            {
-                new Diagnosticos()
-                {
-                    idDiagnostico = 1,
-                    titulo = "General",
-                    descripcion = "General"
-                },
-                new Diagnosticos()
-                {
-                    idDiagnostico = 2,
-                    titulo = "Interno",
-                    descripcion = "Interno"
-                }
-            };
-            return View(lista);
-        }
+        //recibir una lista de una api 
+        private readonly string _url = "https://63560ad8da523ceadc0a79f5.mockapi.io/apis/diagnostico";
+        public async Task<ActionResult> Index()
 
+        {
+
+            //https://63560ad8da523ceadc0a79f5.mockapi.io/apis/diagnostico
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_url);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoDiagnostico = JsonConvert.DeserializeObject<List<Diagnosticos>>(responseString);
+                return View(listadoDiagnostico);
+            }
+
+
+
+        }
         public ActionResult newDiagnostico()
         {
             return View();
         }
+        //agregar a el json
+        [HttpPost]
+        //siempre debe ser un model
+        public async Task<ActionResult> agregarDiagnostico(Diagnosticos model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Error");
+            }
+            using (var http = new HttpClient())
+            {
+                var DiagnosticoSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(DiagnosticoSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PostAsync(_url, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Error");
+                }
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        //trae la vista con los datos cargados
+        [HttpGet]
+        [Route("modificar/(id)")]
+        public async Task<ActionResult> modificarDiagnostico(int id)
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_url + "/" + id);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var diagnostico = JsonConvert.DeserializeObject<Diagnosticos>(responseString);
+                return View(diagnostico);
+            }
+
+        }
+
+        //modifica los datos de la bd
+        [HttpPost]
+        public async Task<ActionResult>modificarDiagnostico(Diagnosticos model)
+        {
+            using (var http = new HttpClient())
+            {
+                var diagnosticoSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(diagnosticoSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PutAsync(_url + "/" + model.idDiagnostico, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Error");
+                }
+                return RedirectToAction("Index");
+            }
+
+        }
+        //elimina los datos de la bd
+        [HttpGet]
+        [Route("eliminar/(id)")]
+        public async Task<string> eliminarDiagnostico(int id)
+        {
+            using (var http = new HttpClient())
+
+            {
+                var response = await http.DeleteAsync(_url + "/" + id);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return "Error";
+                }
+                return "Exito";
+            }
+        }
+
     }
 }

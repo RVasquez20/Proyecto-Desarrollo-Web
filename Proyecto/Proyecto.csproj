@@ -230,7 +230,6 @@
     <Compile Include="Controllers\ComprasDetalleController.cs" />
     <Compile Include="Controllers\ConsultaController.cs" />
     <Compile Include="Controllers\ConsultaMenuController.cs" />
-    <Compile Include="Controllers\Continent.cs" />
     <Compile Include="Controllers\DiagnosticoController.cs" />
     <Compile Include="Controllers\EmpleadoMenuController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
@@ -488,6 +487,8 @@
     <Content Include="Views\Producto\newProducto.cshtml" />
     <Content Include="Views\Consulta\newConsulta.cshtml" />
     <Content Include="Views\Marca\modificarMarca.cshtml" />
+    <Content Include="Views\Cargo\modificarCargo.cshtml" />
+    <Content Include="Views\Diagnostico\modificarDiagnostico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

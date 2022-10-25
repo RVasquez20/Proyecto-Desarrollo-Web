@@ -11,6 +11,7 @@
     <WebStackScaffolding_DbContextTypeFullName>Web_Api.Models.ClinicaMedicaContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\blitxy\Documents\GitHub\Proyecto-Desarrollo-Web\Web_Api\Properties\PublishProfiles\Apiclinicacr.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

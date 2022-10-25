@@ -27,6 +27,20 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblCargos.ToListAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblCargo>> GetTblCargos(int id)
+        {
+            var Cargo = await _context.TblCargos.FindAsync(id);
+
+            if (Cargo == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Cargo);
+        }
+
+
 
         // PUT: api/Cargo/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

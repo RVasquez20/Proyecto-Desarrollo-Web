@@ -27,6 +27,19 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblProveedors.ToListAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblProveedor>> GetTblProveedors(int id)
+        {
+            var Proveedores = await _context.TblProveedors.FindAsync(id);
+
+            if (Proveedores == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(Proveedores);
+        }
+
         // PUT: api/Proveedors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

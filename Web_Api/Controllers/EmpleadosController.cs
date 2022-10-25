@@ -58,6 +58,21 @@ namespace Web_Api.Controllers
         }
 
 
+      
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblEmpleado>> GetTblEmpleados(int id)
+        {
+            var Empleado = await _context.TblEmpleados.FindAsync(id);
+
+            if (Empleado == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Empleado);
+        }
+
+
         // PUT: api/Empleado/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

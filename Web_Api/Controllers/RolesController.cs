@@ -27,6 +27,25 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblRoles.ToListAsync());
         }
 
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblRole>> GetTblRoles(int id)
+        {
+            var roles = await _context.TblRoles.FindAsync(id);
+
+            if (roles == null)
+            {
+                return NotFound("No se encontro el registro");
+            }
+
+            return Ok(roles);
+
+        }
+
+       
+
+
+
         // PUT: api/Roles/5 modificar
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

@@ -27,6 +27,20 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblClinicas.ToListAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblClinica>> GetTblClinicas(int id)
+        {
+            var Clinica = await _context.TblClinicas.FindAsync(id);
+
+            if (Clinica == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Clinica);
+        }
+
+
         // PUT: api/Clinicas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

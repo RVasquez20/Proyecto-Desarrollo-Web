@@ -27,6 +27,20 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblComprasDetalles.ToListAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblComprasDetalle>> GetTblAccessRoles(int id)
+        {
+            var CompraDetalle = await _context.TblComprasDetalles.FindAsync(id);
+
+            if (CompraDetalle == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(CompraDetalle);
+        }
+
+
         // POST: api/ComprasDetalle
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

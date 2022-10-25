@@ -101,6 +101,19 @@ namespace Web_Api.Controllers
             return Ok(listado);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblConsulta>> GetTblConsultas(int id)
+        {
+            var Consultas = await _context.TblConsultas.FindAsync(id);
+
+            if (Consultas == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Consultas);
+        }
+
 
         // PUT: api/Consultas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

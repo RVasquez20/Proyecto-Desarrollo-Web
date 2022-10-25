@@ -27,6 +27,21 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblLoteProductos.ToListAsync());
         }
 
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblLoteProducto>> GetTblHabitaciones(int id)
+        {
+            var LoteProductos = await _context.TblLoteProductos.FindAsync(id);
+
+            if (LoteProductos == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(LoteProductos);
+        }
+
+
         // PUT: api/LoteProducto/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

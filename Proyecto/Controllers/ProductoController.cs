@@ -85,15 +85,15 @@ namespace WebApplication1.Controllers
             });
             ViewBag.listadoLoteProducto = listadoLoteProducto;
 
-            var dataClinica = new List<ClinicaViewModel>()
+            var dataClinica = new List<Clinica>()
             {
-                new ClinicaViewModel()
+                new Clinica()
                 {
                     idClinica=1,
                     nombre="Clinica 1",
                     direccion = "Clinica 1"
                 },
-                new ClinicaViewModel()
+                new Clinica()
                 {
                     idClinica=1,
                     nombre="Clinica 2",

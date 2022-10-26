@@ -11,17 +11,15 @@ using WebApplication1.permisos;
 namespace WebApplication1.Controllers
 {
     [ValidateSession]
-    public class CargoController : Controller
+    public class cargoController : Controller
     {
         //recibir una lista de una api 
         private readonly string _url = "https://63560ad8da523ceadc0a79f5.mockapi.io/apis/cargo";
-        private string cargoSerializada;
-
         public async Task<ActionResult> Index()
 
         {
 
-            //https://6354d269483f5d2df3a72628.mockapi.io/api/prueba
+            //https://63560ad8da523ceadc0a79f5.mockapi.io/apis/cargo
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -37,14 +35,14 @@ namespace WebApplication1.Controllers
 
 
         }
-        public ActionResult newCargos()
+        public ActionResult newCargo()
         {
             return View();
         }
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarCargo(Cargos model)
+        public async Task<ActionResult>AgregarCargo(Cargos model)
         {
             if (!ModelState.IsValid)
             {
@@ -52,8 +50,8 @@ namespace WebApplication1.Controllers
             }
             using (var http = new HttpClient())
             {
-                var cargoSerializada = JsonConvert.SerializeObject(model);
-                var content = new StringContent(cargoSerializada, Encoding.UTF8, "application/json");
+                var CargoSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(CargoSerializada, Encoding.UTF8, "application/json");
                 var response = await http.PostAsync(_url, content);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -67,7 +65,7 @@ namespace WebApplication1.Controllers
         //trae la vista con los datos cargados
         [HttpGet]
         [Route("modificar/(id)")]
-        public async Task<ActionResult> modificarCArgo(int id)
+        public async Task<ActionResult> modificarCargo(int id)
         {
             using (var http = new HttpClient())
             {
@@ -80,7 +78,7 @@ namespace WebApplication1.Controllers
                 var cargo = JsonConvert.DeserializeObject<Cargos>(responseString);
                 return View(cargo);
             }
-
+            
         }
 
         //modifica los datos de la bd
@@ -89,7 +87,7 @@ namespace WebApplication1.Controllers
         {
             using (var http = new HttpClient())
             {
-                var marcaSerializada = JsonConvert.SerializeObject(model);
+                var cargoSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(cargoSerializada, Encoding.UTF8, "application/json");
                 var response = await http.PutAsync(_url + "/" + model.IdCargo, content);
                 if (!response.IsSuccessStatusCode)

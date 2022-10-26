@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApplication1.Models
 {
-    public class ClinicaViewModel
+    public class Clinica
      {
         public int? idClinica { get; set; }
         public string nombre { get; set; }

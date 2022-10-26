@@ -27,7 +27,7 @@
                         <td>@item.Cargo</td>
                         <td>
                             <input onclick="document.location.href='@Url.Content("~/Cargo/modificarCargo/" + item.IdCargo)'" type="button" value="Editar" class="btn btn-warning" />
-                            <input onclick="EliminarCArgo('@item.IdCargo','@item.Cargo');" type="button" value="Eliminar" class="btn btn-danger" />
+                            <input onclick="EliminarCargo('@item.IdCargo','@item.Cargo');" type="button" value="Eliminar" class="btn btn-danger" />
 </tr>
                 }
             </tbody>
@@ -41,7 +41,7 @@ else
     </div>
 }
            <script>
-    function EliminarCArgo(id,Cargo) {
+    function EliminarCargo(id,Cargo) {
         if (confirm(`Esta Seguro de Eliminar A Este cargo : ${Cargo} ?????` )) {
             url = "@Url.Content("~/Cargo/eliminarCargo/")" + id;
             $.get(url).done((data) => {

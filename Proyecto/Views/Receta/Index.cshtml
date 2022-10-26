@@ -1,14 +1,14 @@
 ﻿@using WebApplication1.Models
 @model List<Receta>
-@{
+    @{
     ViewBag.Title = "Receta";
-}
+    }
 
-<h2>@ViewBag.Title</h2>
-<hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
 
 
-@if (Model != null)
+    @if (Model != null)
 {
     <div class="container mt-3">
         <h2>Receta</h2>
@@ -20,19 +20,19 @@
                     <th>fecha_emision</th>
                     <th>Gestiones</th>
 
-</thead>
+            </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.serie_receta</td>
-                        <td>@item.fecha_emision</td>
-                        
-                        <td>
-                            <input onclick="document.location.href='@Url.Content("~/Receta/deleteReceta/" + item.idReceta)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Receta/modifyReceta/" + item.idReceta)'" type="button" value="Editar" class="btn btn-warning" />
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@item.serie_receta</td>
+                    <td>@item.fecha_emision</td>
+
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Receta/modificarReceta/" + item.idReceta)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarReceta('@item.idReceta', '@item.idReceta');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -44,17 +44,17 @@ else
         <h2>No hay Receta</h2>
     </div>
 }
-<script>
-    function EliminarReceta(id) {
-        if (confirm("Esta Seguro de Eliminar A Esta Receta?????")) {
-            url = "@Url.Content("~/Receta/deleteReceta/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Receta/Index")"
+    <script>
+    function eliminarReceta(id, Receta) {
+        if (confirm(`Esta Seguro de Eliminar A Esta Receta: ${Receta} ?????` )) {
+            url = "@Url.Content("~/Receta/eliminarReceta/")" + id;
+            $.get(url).done((data) => {
+                if (data == "Exito") {
+                    document.location.href = "@Url.Content("~/Receta/Index")";
                 } else {
-                    alert("Ocurrio un Error :c");
+                    alert("Hubo un error");
                 }
             });
         }
     }
-</script>
+    </script>

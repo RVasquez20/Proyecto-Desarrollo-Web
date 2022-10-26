@@ -489,6 +489,11 @@
     <Content Include="Views\Marca\modificarMarca.cshtml" />
     <Content Include="Views\Cargo\modificarCargo.cshtml" />
     <Content Include="Views\Diagnostico\modificarDiagnostico.cshtml" />
+    <Content Include="Views\Clinica\modificarClinica.cshtml" />
+    <Content Include="Views\Examen\modificarExamen.cshtml" />
+    <Content Include="Views\Proveedor\modificarProveedor.cshtml" />
+    <Content Include="Views\Pacientes\modificarPaciente.cshtml" />
+    <Content Include="Views\Receta\modificarReceta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

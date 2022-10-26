@@ -112,15 +112,15 @@ namespace WebApplication1.Controllers
             });
             ViewBag.listadoEmpleado = listadoEmpleado;
 
-            var dataClinica = new List<ClinicaViewModel>()
+            var dataClinica = new List<Clinica>()
             {
-                new ClinicaViewModel()
+                new Clinica()
                 {
                     idClinica = 1,
                     nombre = "Clinica 1",
                     direccion = "Direccion 1"
                 },
-                new ClinicaViewModel()
+                new Clinica()
                 {
                     idClinica = 2,
                     nombre = "Clinica 2",

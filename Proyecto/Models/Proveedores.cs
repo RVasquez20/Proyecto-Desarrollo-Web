@@ -7,7 +7,7 @@ namespace WebApplication1.Models
 {
     public class Proveedores
     {
-        public int idProveedor { get; set; }
+        public int? idProveedor { get; set; }
         public string nombre { get; set; }
         public string nit { get; set; }
         public string direccion { get; set; }

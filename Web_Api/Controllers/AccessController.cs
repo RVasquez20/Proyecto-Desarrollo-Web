@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +28,18 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblAccesses.ToListAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblAccess>> GetTblAccesses(int id)
+        {
+            var Access = await _context.TblAccesses.FindAsync(id);
+
+            if (Access == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Access);
+        }
 
         // PUT: api/Access/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

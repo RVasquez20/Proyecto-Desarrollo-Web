@@ -78,6 +78,20 @@ namespace Web_Api.Controllers
             return Ok(listado);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblProducto>> GetTblProductos(int id)
+        {
+            var Productos = await _context.TblProductos.FindAsync(id);
+
+            if (Productos == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(Productos);
+        }
+
+
 
         // PUT: api/Productoes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -207,9 +221,8 @@ namespace Web_Api.Controllers
             return Ok(listado);
         }
 
-        [HttpGet("{id}")]
-        [Route("DetalleProducto")]
         [HttpGet]
+        [Route("DetalleProducto/{id}")]
         public async Task<ActionResult> GetDetalleProducto(int id)
         {
             var listado = _context.TblProductos.ToList()

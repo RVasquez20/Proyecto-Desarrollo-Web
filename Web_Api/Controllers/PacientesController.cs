@@ -22,6 +22,7 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblPacientes.ToListAsync());
         }
 
+
         // PUT: api/Pacientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -51,6 +52,19 @@ namespace Web_Api.Controllers
             }
 
             return Ok(tblPaciente);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblPaciente>> GetTblPacientes(int id)
+        {
+            var Pacientes = await _context.TblPacientes.FindAsync(id);
+
+            if (Pacientes == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(Pacientes);
         }
 
         // POST: api/Pacientes

@@ -27,6 +27,21 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblVentasDetalles.ToListAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblVentasDetalle>> GetTblVentas(int id)
+        {
+            var VentasDetalles = await _context.TblVentasDetalles.FindAsync(id);
+
+            if (VentasDetalles == null)
+            {
+                return NotFound("No se encontro el registro");
+            }
+
+            return Ok(VentasDetalles);
+
+        }
+
+
         // POST: api/VentasDetalle
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

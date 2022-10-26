@@ -52,7 +52,19 @@ namespace Web_Api.Controllers
             return Ok(listado);
         }
 
-  
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblAccessRole>> GetTblAccessRoles(int id)
+        {
+            var AccessRole = await _context.TblAccessRoles.FindAsync(id);
+
+            if (AccessRole == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(AccessRole);
+        }
+
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTblAccessRole(int id, TblAccessRole tblAccessRole)

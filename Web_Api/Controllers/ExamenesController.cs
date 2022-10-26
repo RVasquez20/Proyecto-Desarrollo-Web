@@ -58,6 +58,23 @@ namespace Web_Api.Controllers
             return Ok(tblExamene);
         }
 
+
+ 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblExamene>> GetTblExamenes(int id)
+        {
+            var Examenes = await _context.TblExamenes.FindAsync(id);
+
+            if (Examenes == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(Examenes);
+        }
+
+
+
         // POST: api/Examenes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

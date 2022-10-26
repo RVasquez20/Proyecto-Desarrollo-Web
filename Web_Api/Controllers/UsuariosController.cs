@@ -52,6 +52,23 @@ namespace Web_Api.Controllers
             return Ok(listadoUsuarios);
         }
 
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblUsuario>> GetTblUsuarios(int id)
+        {
+            var Usuarios = await _context.TblUsuarios.FindAsync(id);
+
+            if (Usuarios == null)
+            {
+                return NotFound("No se encontro el registro");
+            }
+
+            return Ok(Usuarios);
+
+        }
+
+
+
         // PUT: api/Usuarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

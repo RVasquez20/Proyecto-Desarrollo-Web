@@ -38,6 +38,19 @@ namespace Web_Api.Controllers
             return Ok(tblCompra);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblCompra>> GetTblCompras(int id)
+        {
+            var Compra = await _context.TblCompras.FindAsync(id);
+
+            if (Compra == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Compra);
+        }
+
         // DELETE: api/Compras/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTblCompra(int id)

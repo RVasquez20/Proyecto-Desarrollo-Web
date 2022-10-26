@@ -107,6 +107,20 @@ namespace Web_Api.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblHabitacione>> GetTblHabitaciones(int id)
+        {
+            var Habitaciones = await _context.TblHabitaciones.FindAsync(id);
+
+            if (Habitaciones == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(Habitaciones);
+        }
+
+
         // PUT: api/Habitaciones/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

@@ -27,6 +27,23 @@ namespace Web_Api.Controllers
             return Ok(await _context.TblRecetas.ToListAsync());
         }
 
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblReceta>> GetTblRecetas(int id)
+        {
+            var Recetas = await _context.TblRecetas.FindAsync(id);
+
+            if (Recetas == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(Recetas);
+        }
+
+
+
         // PUT: api/Recetas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

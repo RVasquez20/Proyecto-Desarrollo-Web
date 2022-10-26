@@ -51,7 +51,7 @@ function HomeScreen({ navigation }) {
 }
 
 function DetailsScreen({ route, navigation }) {
-  const { item} = route.params;
+  const {item} = route.params;
   return (
     <SafeAreaView >
       <View style={{padding:16,margin:16,alignItems:'center'}}>

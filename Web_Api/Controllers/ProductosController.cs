@@ -210,9 +210,8 @@ namespace Web_Api.Controllers
             return Ok(listado);
         }
 
-        [HttpGet("{id}")]
-        [Route("DetalleProducto")]
         [HttpGet]
+        [Route("DetalleProducto/{id}")]
         public async Task<ActionResult> GetDetalleProducto(int id)
         {
             var listado = _context.TblProductos.ToList()

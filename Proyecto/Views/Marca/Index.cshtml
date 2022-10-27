@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<Marcas>
+@model List<TblMarca>
     @{
     ViewBag.Title = "Marcas";
     }
@@ -27,7 +27,7 @@
                     <td>@item.Marca</td>
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Marca/modificarMarca/" + item.IdMarca)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="EliminarMarca('@item.IdMarca','@item.Marca');" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="EliminarMarca('@item.IdMarca','@item.IdMarca');" type="button" value="Eliminar" class="btn btn-danger" />
                     </td>
                 </tr>
                 }
@@ -41,7 +41,7 @@ else
         <h2>No hay Marcas</h2>
     </div>
 }
-<script>
+    <script>
         function EliminarMarca(id,Marca) {
         if (confirm(`Esta Seguro de Eliminar A Esta Marca: ${Marca} ?????` )) {
             url = "@Url.Content("~/Marca/eliminarMarca/")" + id;
@@ -54,4 +54,8 @@ else
             });
         }
     }
-</script>
+    </script>
+
+
+
+    

@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
     public class VentaController : Controller
     {
         // GET: VentaI
-        public ActionResult Index()
+      /*  public ActionResult Index()
         {
             var lista = new List<Venta>()
             {
@@ -37,6 +37,6 @@ namespace WebApplication1.Controllers
         public ActionResult newVenta()
         {
             return View();
-        }
+        }*/
     }
 }

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
@@ -11,62 +14,68 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class EmpleadosController : Controller
     {
+        private readonly string _urlEmpleados = "https://apiclinica.azurewebsites.net/api/Empleados";
+        private readonly string _urlCargos = "https://apiclinica.azurewebsites.net/api/Cargo";
+        private readonly string _urlClinica = "https://apiclinica.azurewebsites.net/api/Clinicas";
         // GET: Empleados
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            //llamada a la api
-            var lista = new List<EmpleadosViewModel>()
+            using (var http = new HttpClient())
             {
-                new EmpleadosViewModel()
+                var response = await http.GetAsync(_urlEmpleados);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    idEmpleado=1,
-                    Nombre="Pepito",
-                    Apellido="Perez",
-                    IdCargo=1,
-                    Cargo="Medico"
-                },
-                 new EmpleadosViewModel()
-                {
-                    idEmpleado=2,
-                    Nombre="Pepito2",
-                    Apellido="Perez2",
-                    IdCargo=2,
-                    Cargo="Administrador"
+                    return View("Error");
                 }
-            };
-            
-            //
-            return View(lista);
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoEmpleados = JsonConvert.DeserializeObject<List<EmpleadosViewModel>>(responseString);
+                return View(listadoEmpleados);
+            }
         }
         
-        public ActionResult newEmployee()
+        public async Task<ActionResult> newEmployee()
         {
-            //api
-            var dataCargos = new List<Cargos>()
+            using (var http = new HttpClient())
             {
-                new Cargos()
+                var response = await http.GetAsync(_urlCargos);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    IdCargo=1,
-                    Cargo="Medico"
-                },
-                new Cargos()
-                {
-                    IdCargo=2,
-                    Cargo="Administrador"
+                    return View("Error");
                 }
-            };
-            ///
-            var listadoCargos = dataCargos.ConvertAll(r =>
-            {
-                return new SelectListItem()
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoCargo = JsonConvert.DeserializeObject<List<TblCargo>>(responseString);
+                var listadoCargos = listadoCargo.ConvertAll(r =>
                 {
-                    Text = r.Cargo,
-                    Value = r.IdCargo.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoCargos = listadoCargos;
-            return View();
+                    return new SelectListItem()
+                    {
+                        Text = r.Cargo,
+                        Value = r.IdCargo.ToString(),
+                        Selected = false
+                    };
+                });
+
+                var responseClinica = await http.GetAsync(_urlClinica);
+                if (responseClinica.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringClinicas = await responseClinica.Content.ReadAsStringAsync();
+                var listadoClinicas = JsonConvert.DeserializeObject<List<TblClinica>>(responseStringClinicas);
+                var listadoClinica = listadoClinicas.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdClinica.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoCargos = listadoCargos;
+                ViewBag.listadoClinicas = listadoClinica;
+                
+                return View();
+            }
+            
         }
     }
 }

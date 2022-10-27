@@ -1,14 +1,14 @@
 ﻿@using WebApplication1.Models
-@model List<Cargos>
-@{
+@model List<TblCargo>
+    @{
     ViewBag.Title = "Vista Cargos";
-}
+    }
 
-<h2>@ViewBag.Title</h2>
-<hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
 
 
-@if (Model != null)
+    @if (Model != null)
 {
     <div class="container mt-3">
         <h2>Cargo</h2>
@@ -23,12 +23,12 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.Cargo</td>
-                        <td>
-                            <input onclick="document.location.href='@Url.Content("~/Cargo/modificarCargo/" + item.IdCargo)'" type="button" value="Editar" class="btn btn-warning" />
-                            <input onclick="EliminarCargo('@item.IdCargo','@item.Cargo');" type="button" value="Eliminar" class="btn btn-danger" />
-</tr>
+                <tr>
+                    <td>@item.Cargo</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Cargo/modificarCargo/" + item.IdCargo)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarCargo('@item.IdCargo','@item.Cargo');" type="button" value="Eliminar" class="btn btn-danger" />
+                </tr>
                 }
             </tbody>
         </table>
@@ -40,10 +40,10 @@ else
         <h2>No hay cargos</h2>
     </div>
 }
-           <script>
+    <script>
     function EliminarCargo(id,Cargo) {
         if (confirm(`Esta Seguro de Eliminar A Este cargo : ${Cargo} ?????` )) {
-            url = "@Url.Content("~/Cargo/eliminarCargo/")" + id;
+        url = "@Url.Content("~/Cargo/eliminarCargo/")" + id;
             $.get(url).done((data) => {
                 if (data == "Exito") {
                     document.location.href = "@Url.Content("~/Cargo/Index")";
@@ -53,4 +53,11 @@ else
             });
         }
     }
-           </script>
+    </script>
+
+
+    public int IdCompras { get; set; }
+    public int? NoOrden { get; set; }
+    public DateTime? FechaOrden { get; set; }
+    public DateTime? Fecha { get; set; }
+    public int IdProveedor { get; set; }

@@ -12,10 +12,10 @@ namespace WebApplication1.Controllers
     public class UsuarioController : Controller
     {
         // GET: UsuarioI
-        public ActionResult Index()
+        /*public ActionResult Index()
         {
             //get para obtener listado de usuarios
-            var dataUsers = new List<Usuarios>()
+           var dataUsers = new List<Usuarios>()
             {
                 
                 new Usuarios()
@@ -100,6 +100,6 @@ namespace WebApplication1.Controllers
             });
             ViewBag.listadoRoles=listadoRoles;
             return View();
-        }
+        }*/
     }
 }

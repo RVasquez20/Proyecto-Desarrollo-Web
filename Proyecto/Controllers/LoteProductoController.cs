@@ -14,12 +14,10 @@ namespace WebApplication1.Controllers
     public class LoteProductoController : Controller
     {
         //recibir una lista de una api 
-        private readonly string _url = " https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/LoteProducto";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/LoteProducto";
         public async Task<ActionResult> Index()
 
         {
-
-            //https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/LoteProducto
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -28,7 +26,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoLoteProducto = JsonConvert.DeserializeObject<List<LoteProductos>>(responseString);
+                var listadoLoteProducto = JsonConvert.DeserializeObject<List<TblLoteProducto>>(responseString);
                 return View(listadoLoteProducto);
             }
 
@@ -42,7 +40,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarLoteProducto(LoteProductos model)
+        public async Task<ActionResult> agregarLoteProducto(TblLoteProducto model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +73,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var LoteProducto = JsonConvert.DeserializeObject<LoteProductos>(responseString);
+                var LoteProducto = JsonConvert.DeserializeObject<TblLoteProducto>(responseString);
                 return View(LoteProducto);
             }
 
@@ -83,13 +81,13 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarLoteProducto(LoteProductos model)
+        public async Task<ActionResult> modificarLoteProducto(TblLoteProducto model)
         {
             using (var http = new HttpClient())
             {
                 var LoteProductoSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(LoteProductoSerializada, Encoding.UTF8, "application/json");
-                var response = await http.PutAsync(_url + "/" + model.IdLoteProductos, content);
+                var response = await http.PutAsync(_url + "/" + model.IdLoteProducto, content);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

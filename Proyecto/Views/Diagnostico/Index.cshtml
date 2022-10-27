@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<Diagnosticos>
+@model List<TblDiagnostico>
 @{
     ViewBag.Title = "Diagnosticos";
 }
@@ -25,11 +25,11 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.titulo</td>
-                        <td>@item.descripcion</td>
+                        <td>@item.Titulo</td>
+                        <td>@item.Descripcion</td>
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Diagnostico/modificarDiagnostico/" + item.idDiagnostico)'" type="button" value="Editar" class="btn btn-warning" />
-                            <input onclick="EliminarDiagnostico('@item.idDiagnostico','@item.idDiagnostico');" type="button" value="Eliminar" class="btn btn-danger" />
+                            <input onclick="document.location.href='@Url.Content("~/Diagnostico/modificarDiagnostico/" + item.IdDiagnostico)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="eliminarDiagnostico('@item.IdDiagnostico','@item.Titulo');" type="button" value="Eliminar" class="btn btn-danger" />
                         </td>
                     </tr>
                 }
@@ -44,8 +44,8 @@ else
     </div>
 }
            <script>
-        function EliminarDiagnostico(id,Diagnostico) {
-        if (confirm(`Esta Seguro de Eliminar A Este cargo : ${Diagnostico} ?????` )) {
+        function eliminarDiagnostico(id,Diagnostico) {
+        if (confirm(`Esta Seguro de Eliminar Este Diagnostico : ${Diagnostico} ?????` )) {
             url = "@Url.Content("~/Diagnostico/eliminarDiagnostico/")" + id;
             $.get(url).done((data) => {
                 if (data == "Exito") {

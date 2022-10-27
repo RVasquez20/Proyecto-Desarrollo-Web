@@ -16,12 +16,11 @@ namespace WebApplication1.Controllers
     public class ProveedorController : Controller
     {
         //recibir una lista de una api 
-        private readonly string _url = "https://63572b429243cf412f942721.mockapi.io/prueba3/Proveedor";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/Proveedors";
         public async Task<ActionResult> Index()
 
         {
 
-            //https://63572b429243cf412f942721.mockapi.io/prueba3/
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -30,7 +29,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoProveedores = JsonConvert.DeserializeObject<List<Proveedores>>(responseString);
+                var listadoProveedores = JsonConvert.DeserializeObject<List<TblProveedor>>(responseString);
                 return View(listadoProveedores);
             }
 
@@ -44,7 +43,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarProveedor(Proveedores model)
+        public async Task<ActionResult> agregarProveedor(TblProveedor model)
         {
             if (!ModelState.IsValid)
             {
@@ -77,7 +76,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var proveedor = JsonConvert.DeserializeObject<Proveedores>(responseString);
+                var proveedor = JsonConvert.DeserializeObject<TblProveedor>(responseString);
                 return View(proveedor);
             }
 
@@ -85,13 +84,13 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarProveedor(Proveedores model)
+        public async Task<ActionResult> modificarProveedor(TblProveedor model)
         {
             using (var http = new HttpClient())
             {
                 var proveedorSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(proveedorSerializada, Encoding.UTF8, "application/json");
-                var response = await http.PutAsync(_url + "/" + model.idProveedor, content);
+                var response = await http.PutAsync(_url + "/" + model.IdProveedor, content);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

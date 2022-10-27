@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebApplication1.Models.TblHabitacione>
+
+@{
+    ViewBag.Title = "HabitacionesDisponibles";
+}
+
+<h2>HabitacionesDisponibles</h2>
+
+
+<div id="dataTable"></div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/lib/signalr.js/jquery.signalR.js"></script>
+
+<script src="/signalr/hubs"></script>
+<script type="text/javascript">
+    $(function () {
+        // Reference the hub.
+        var hubNotif = $.connection.habitacionesHub;
+
+        // Start the connection.
+        $.connection.hub.start().done(function () {
+            getAll();
+        });
+
+        // Notify while anyChanges.
+        hubNotif.client.updatedData = function () {
+            getAll();
+        };
+    });
+
+    function getAll() {
+        var model = $('#dataTable');
+       var url="@Url.Action("GetAllData", "Habitacion")";
+        $.get(url).done((data) => {
+            model.empty().append(data);
+        });
+    }
+</script>

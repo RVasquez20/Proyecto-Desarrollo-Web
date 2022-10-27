@@ -1,14 +1,14 @@
 ﻿@using WebApplication1.Models
-@model List<ConsultaViewModel>
-@{
+@model List<TblConsulta>
+    @{
     ViewBag.Title = "Consulta";
-}
+    }
 
-<h2>@ViewBag.Title</h2>
-<hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
 
 
-@if (Model != null)
+    @if (Model != null)
 {
     <div class="container mt-3">
         <h2>Consulta</h2>
@@ -28,18 +28,18 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.nombre</td>
-                        <td>@item.Paciente</td>
-                        <td>@item.Empleado</td>
-                        <td>@item.Clinica</td>
-                        <td>@item.Diagnostico</td>
-                        <td>@item.Receta</td>
-                        <td>
-                            <input onclick="document.location.href='@Url.Content("~/Consulta/deleteConsulta/" + item.idConsulta)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Consulta/modifyConsulta/" + item.idConsulta)'" type="button" value="Editar" class="btn btn-warning" />
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@item.IdConsulta</td>
+                    <td>@item.IdPaciente</td>
+                    <td>@item.IdEmpleado</td>
+                    <td>@item.IdClinica</td>
+                    <td>@item.IdDiagnostico</td>
+                    <td>@item.IdReceta</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Consulta/deleteConsulta/" + item.IdConsulta)'" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="document.location.href='@Url.Content("~/Consulta/modifyConsulta/" + item.IdConsulta)'" type="button" value="Editar" class="btn btn-warning" />
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -51,7 +51,7 @@ else
         <h2>No hay usuarios</h2>
     </div>
 }
-<script>
+    <script>
     function EliminarUsuario(id) {
         if (confirm("Esta Seguro de Eliminar A Esta Paciente?????")) {
             url = "@Url.Content("~/Consulta/deleteConsulta/")" + "/" + id;
@@ -64,10 +64,10 @@ else
             });
         }
     }
-</script>
+    </script>
 
 
-
+    
 
 
 

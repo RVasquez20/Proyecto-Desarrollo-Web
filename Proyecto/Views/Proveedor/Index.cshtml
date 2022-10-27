@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<Proveedores>
+@model List<TblProveedor>
     @{
     ViewBag.Title = "Proveedor";
     }
@@ -27,13 +27,13 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                    <td>@item.nombre</td>
-                    <td>@item.nit</td>
-                    <td>@item.direccion</td>
-                    <td>@item.telefono</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Nit</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.Telefono</td>
                     <td>
-                        <input onclick="document.location.href='@Url.Content("~/Proveedor/modificarProveedor/" + item.idProveedor)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="eliminarProveedor('@item.idProveedor', '@item.idProveedor');" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="document.location.href='@Url.Content("~/Proveedor/modificarProveedor/" + item.IdProveedor)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarProveedor('@item.IdProveedor', '@item.IdProveedor');" type="button" value="Eliminar" class="btn btn-danger" />
                     </td>
                 </tr>
                 }
@@ -64,4 +64,4 @@ else
 
 
 
-
+    

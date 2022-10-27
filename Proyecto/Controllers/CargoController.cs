@@ -13,13 +13,11 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class cargoController : Controller
     {
-        //recibir una lista de una api 
-        private readonly string _url = "https://63560ad8da523ceadc0a79f5.mockapi.io/apis/cargo";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/Cargo";
         public async Task<ActionResult> Index()
 
         {
-
-            //https://63560ad8da523ceadc0a79f5.mockapi.io/apis/cargo
+           
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -28,7 +26,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoCargos = JsonConvert.DeserializeObject<List<Cargos>>(responseString);
+                var listadoCargos = JsonConvert.DeserializeObject<List<TblCargo>>(responseString);
                 return View(listadoCargos);
             }
 
@@ -42,7 +40,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult>AgregarCargo(Cargos model)
+        public async Task<ActionResult>AgregarCargo(TblCargo model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +73,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var cargo = JsonConvert.DeserializeObject<Cargos>(responseString);
+                var cargo = JsonConvert.DeserializeObject<TblCargo>(responseString);
                 return View(cargo);
             }
             
@@ -83,7 +81,7 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarCargo(Cargos model)
+        public async Task<ActionResult> modificarCargo(TblCargo model)
         {
             using (var http = new HttpClient())
             {

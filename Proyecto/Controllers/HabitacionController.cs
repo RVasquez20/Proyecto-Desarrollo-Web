@@ -15,13 +15,12 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class HabitacionController : Controller
     {
-        //recibir una lista de una api 
-        private readonly string _url = "https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/LoteProducto";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/Habitaciones";
+        private readonly string _urlClinica = "https://apiclinica.azurewebsites.net/api/Clinicas";
+        private readonly string _urlHabsDispo= "https://apiclinica.azurewebsites.net/api/Habitaciones/HabitacionesDisponibles";
         public async Task<ActionResult> Index()
 
         {
-
-            //https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -30,35 +29,67 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoHabitacion = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseString);
+                var listadoHabitacion = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseString);
                 return View(listadoHabitacion);
             }
 
 
 
         }
+        public async Task<ActionResult> HabitacionesDisponibles()
 
-        
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_urlHabsDispo);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoHabitacion = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseString);
+                return View(listadoHabitacion);
+            }
+
+
+
+        }
+        [HttpGet]
+        public async Task<ActionResult> GetAllData()
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_urlHabsDispo);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoHabitacion = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseString);
+                return PartialView("_DataList", listadoHabitacion);
+            }
+        }
+
         public async Task<ActionResult> newHabitaciones()
         {
 
 
             using (var http = new HttpClient())
             {
-                var response = await http.GetAsync(_url);
+                var response = await http.GetAsync(_urlClinica);
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoHabitacion = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseString);
+                var listadoClinicas = JsonConvert.DeserializeObject<List<TblClinica>>(responseString);
 
-               var listadoClinica = listadoHabitacion.ConvertAll(r =>
+               var listadoClinica = listadoClinicas.ConvertAll(r =>
                {
                    return new SelectListItem()
                    {
-                       Text = r.nombre,
-                       Value = r.idClinica.ToString(),
+                       Text = r.Nombre,
+                       Value = r.IdClinica.ToString(),
                        Selected = false
                    };
                });
@@ -70,7 +101,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarHabitacion(HabitacionesViewModel model)
+        public async Task<ActionResult> agregarHabitacion(TblHabitacione model)
         {
             if (!ModelState.IsValid)
             {
@@ -103,7 +134,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var habitacion = JsonConvert.DeserializeObject<HabitacionesViewModel>(responseString);
+                var habitacion = JsonConvert.DeserializeObject<TblHabitacione>(responseString);
                 return View(habitacion);
             }
 
@@ -111,13 +142,13 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarHabitacion(HabitacionesViewModel model)
+        public async Task<ActionResult> modificarHabitacion(TblHabitacione model)
         {
             using (var http = new HttpClient())
             {
                 var habitacionSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(habitacionSerializada, Encoding.UTF8, "application/json");
-                var response = await http.PutAsync(_url + "/" + model.idHabitacion, content);
+                var response = await http.PutAsync(_url + "/" + model.IdHabitacion, content);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

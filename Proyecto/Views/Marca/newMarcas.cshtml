@@ -1,5 +1,5 @@
-﻿@using WebApplication1.Models
-@model Marcas
+﻿@using WebApplication1.TblMarca
+@model Marca
 @{
     ViewBag.Title = "Agregar Marca";
 }
@@ -8,7 +8,7 @@
 
 @using (Html.BeginForm("agregarMarca", "Marca", FormMethod.Post))
 {
-    @Html.HiddenFor(m=>m.IdMarca)
+@Html.HiddenFor(m=>m.IdMarca)
 <div class="mb-3 mt-3">
     @Html.LabelFor(m => m.Marca)
     @Html.TextBoxFor(m => m.Marca, new { @class = "form-control" })

@@ -1,5 +1,4 @@
-﻿@using WebApplication1.Models
-@model Diagnosticos
+﻿@using WebApplication1.models.TblDiagnostico
 @{
     ViewBag.Title = "newDiagnostico";
 }
@@ -9,14 +8,14 @@
 @using (Html.BeginForm("agregarDiagnostico", "Diagnostico", FormMethod.Post))
 {
 <div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.titulo)
-    @Html.TextBoxFor(m => m.titulo, new { @class = "form-control" })
+    @Html.LabelFor(m => m.Titulo)
+    @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
 </div>
 
 <div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.descripcion)
-    @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
+    @Html.LabelFor(m => m.Descripcion)
+    @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
 </div>
 
-<button type="submit" class="btn btn-primary">Agregar Descripcion</button>
+<button type="submit" class="btn btn-primary">Agregar Diagnostico</button>
 }

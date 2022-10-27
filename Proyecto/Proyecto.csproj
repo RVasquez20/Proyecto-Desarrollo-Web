@@ -47,6 +47,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Authorization.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Connections.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Connections.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Connections.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.SignalR.Common, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNetCore.SignalR.Common.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -153,6 +171,9 @@
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.IdentityModel.Tokens.Jwt.5.5.0\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Pipelines, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.Pipelines.4.5.2\lib\netstandard2.0\System.IO.Pipelines.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -162,6 +183,10 @@
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Channels, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Channels.4.5.0\lib\netstandard2.0\System.Threading.Channels.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -294,18 +319,13 @@
     <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ComprasDetalleController.cs" />
     <Compile Include="Controllers\ConsultaController.cs" />
-    <Compile Include="Controllers\ConsultaMenuController.cs" />
     <Compile Include="Controllers\DiagnosticoController.cs" />
-    <Compile Include="Controllers\EmpleadoMenuController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
-    <Compile Include="Controllers\ExamenConsultaIController.cs" />
     <Compile Include="Controllers\ExamenController.cs" />
-    <Compile Include="Controllers\FarmaciaController.cs" />
     <Compile Include="Controllers\HabitacionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoteProductoController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
-    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PacienteHabitacionController.cs" />
     <Compile Include="Controllers\PacientesController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
@@ -314,10 +334,10 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VentaController.cs" />
-    <Compile Include="Controllers\VentasDetalleIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\HabitacionesHub.cs" />
     <Compile Include="Models\ActualizarExistencias.cs" />
     <Compile Include="Models\TblAccess.cs" />
     <Compile Include="Models\TblAccessRole.cs" />
@@ -479,6 +499,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -497,24 +519,16 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Pacientes\Index.cshtml" />
     <Content Include="Views\Home\Farmacia.cshtml" />
     <Content Include="Views\Home\Empleado.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Home\Consulta.cshtml" />
-    <Content Include="Views\Menu\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Consulta\Index.cshtml" />
     <Content Include="Views\Diagnostico\Index.cshtml" />
-    <Content Include="Views\ExamenConsulta\Index.cshtml" />
     <Content Include="Views\Examen\Index.cshtml" />
     <Content Include="Views\Receta\Index.cshtml" />
     <Content Include="Views\Habitacion\Index.cshtml" />
@@ -525,10 +539,8 @@
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\LoteProducto\Index.cshtml" />
     <Content Include="Views\Marca\Index.cshtml" />
-    <Content Include="Views\ComprasDetalle\Index.cshtml" />
     <Content Include="Views\Compra\Index.cshtml" />
     <Content Include="Views\Proveedor\Index.cshtml" />
-    <Content Include="Views\VentasDetalle\Index.cshtml" />
     <Content Include="Views\Venta\Index.cshtml" />
     <Content Include="Views\Usuario\newUser.cshtml" />
     <Content Include="Views\Empleados\newEmployee.cshtml" />
@@ -539,7 +551,6 @@
     <Content Include="Views\Examen\newExamen.cshtml" />
     <Content Include="Views\LoteProducto\newLoteProductos.cshtml" />
     <Content Include="Views\Marca\newMarcas.cshtml" />
-    <Content Include="Views\Habitacion\newHabitaciones.cshtml" />
     <Content Include="Views\Receta\NewReceta.cshtml" />
     <Content Include="Views\Proveedor\newProveedor.cshtml" />
     <Content Include="Views\Compra\newCompra.cshtml" />
@@ -555,13 +566,14 @@
     <Content Include="Views\Pacientes\modificarPaciente.cshtml" />
     <Content Include="Views\Receta\modificarReceta.cshtml" />
     <Content Include="Views\LoteProducto\modificarLoteProducto.cshtml" />
-    <Content Include="Views\Habitacion\modificarHabitacion.cshtml" />
+    <Content Include="Views\PacienteHabitacion\newPacienteHab.cshtml" />
+    <Content Include="Views\Habitacion\HabitacionesDisponibles.cshtml" />
+    <Content Include="Views\Habitacion\_DataList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\Products\" />
     <Folder Include="Services\" />
-    <Folder Include="Views\EmpleadoMenu\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

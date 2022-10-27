@@ -1,5 +1,5 @@
-﻿@using WebApplication1.Models
-@model Clinica
+﻿@model WebApplication1.Models.TblClinica
+
 @{
     ViewBag.Title = "Agregar Clinica";
 }
@@ -9,14 +9,14 @@
 @using (Html.BeginForm("agregarClinica", "Clinica", FormMethod.Post))
 {
 
-    @Html.HiddenFor(m=>m.idClinica)
+    @Html.HiddenFor(m=>m.IdClinica)
 <div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.nombre)
-    @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
+    @Html.LabelFor(m => m.Nombre)
+    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
 </div>
 <div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.direccion)
-    @Html.TextBoxFor(m => m.direccion, new { @class = "form-control" })
+    @Html.LabelFor(m => m.Direccion)
+    @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
 </div>
 
 

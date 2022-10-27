@@ -27,4 +27,15 @@ namespace WebApplication1.Models
         public string Password { get; set; }
 
     }
+
+    public class UsuariosViewModel
+    {
+        public int IdUsuario { get; set; }
+        public int? IdEmpleado { get; set; }
+        public string Empleado { get; set; }
+        public string Rol { get; set; }
+        public int? IdRol { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
 }

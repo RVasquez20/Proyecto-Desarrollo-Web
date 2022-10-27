@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<Pacientes>
+@model List<TblPaciente>
     @{
     ViewBag.Title = "Pacientes";
     }
@@ -27,13 +27,13 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                    <td>@item.no_afiliado</td>
-                    <td>@item.nombre</td>
-                    <td>@item.direccion</td>
-                    <td>@item.telefono</td>
+                    <td>@item.NoAfiliacion</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.Telefono</td>
                     <td>
-                        <input onclick="document.location.href='@Url.Content("~/Pacientes/modificarPaciente/" + item.idPaciente)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="EliminarPaciente('@item.idPaciente','@item.idPaciente');" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="document.location.href='@Url.Content("~/Pacientes/modificarPaciente/" + item.IdPaciente)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarPaciente('@item.IdPaciente','@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
                     <td>
                 </tr>
                 }
@@ -48,7 +48,7 @@ else
     </div>
 }
     <script>
-    function EliminarPaciente(id,Pacientes) {
+    function eliminarPaciente(id,Pacientes) {
         if (confirm(`Esta Seguro de Eliminar A Este Paciente: ${Pacientes} ?????` )) {
             url = "@Url.Content("~/Pacientes/eliminarPaciente/")" + id;
             $.get(url).done((data) => {

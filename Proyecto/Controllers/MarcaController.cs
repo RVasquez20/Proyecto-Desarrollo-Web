@@ -14,12 +14,10 @@ namespace WebApplication1.Controllers
     public class MarcaController : Controller
     {
         //recibir una lista de una api 
-        private readonly string _url = "https://6354d269483f5d2df3a72628.mockapi.io/api/prueba";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/Marcas";
         public async Task<ActionResult> Index()
 
         {
-
-            //https://6354d269483f5d2df3a72628.mockapi.io/api/prueba
             using (var http =new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -28,7 +26,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoMarcas = JsonConvert.DeserializeObject<List<Marcas>>(responseString);
+                var listadoMarcas = JsonConvert.DeserializeObject<List<TblMarca>>(responseString);
                 return View(listadoMarcas);
             }
 
@@ -42,7 +40,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarMarca(Marcas model)
+        public async Task<ActionResult> agregarMarca(TblMarca model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +73,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString =await  response.Content.ReadAsStringAsync();
-                var marca = JsonConvert.DeserializeObject<Marcas>(responseString);
+                var marca = JsonConvert.DeserializeObject<TblMarca>(responseString);
                 return View(marca);
             }
             
@@ -83,7 +81,7 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarMarca(Marcas model)
+        public async Task<ActionResult> modificarMarca(TblMarca model)
         {
             using (var http = new HttpClient())
             {

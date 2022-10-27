@@ -15,12 +15,10 @@ namespace WebApplication1.Controllers
     {
 
         //recibir una lista de una api 
-        private readonly string _url = "https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/Recetas";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/Recetas";
         public async Task<ActionResult> Index()
 
         {
-
-            //https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/Recetas
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -29,7 +27,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoRecetas = JsonConvert.DeserializeObject<List<Receta>>(responseString);
+                var listadoRecetas = JsonConvert.DeserializeObject<List<TblReceta>>(responseString);
                 return View(listadoRecetas);
             }
 
@@ -43,7 +41,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarReceta(Receta model)
+        public async Task<ActionResult> agregarReceta(TblReceta model)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +74,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var receta = JsonConvert.DeserializeObject<Receta>(responseString);
+                var receta = JsonConvert.DeserializeObject<TblReceta>(responseString);
                 return View(receta);
             }
 
@@ -84,13 +82,13 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarReceta(Receta model)
+        public async Task<ActionResult> modificarReceta(TblReceta model)
         {
             using (var http = new HttpClient())
             {
                 var recetaSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(recetaSerializada, Encoding.UTF8, "application/json");
-                var response = await http.PutAsync(_url + "/" + model.idReceta, content);
+                var response = await http.PutAsync(_url + "/" + model.IdReceta, content);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

@@ -14,12 +14,10 @@ namespace WebApplication1.Controllers
     public class ExamenController : Controller
     {
         //recibir una lista de una api 
-        private readonly string _url = "https://63572b429243cf412f942721.mockapi.io/prueba3/Examen";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/Examenes";
         public async Task<ActionResult> Index()
 
         {
-
-            //https://63572b429243cf412f942721.mockapi.io/prueba3/Examen
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -28,7 +26,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoExamenes = JsonConvert.DeserializeObject<List<Examen>>(responseString);
+                var listadoExamenes = JsonConvert.DeserializeObject<List<TblExamene>>(responseString);
                 return View(listadoExamenes);
             }
 
@@ -42,7 +40,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarExamen(Examen model)
+        public async Task<ActionResult> agregarExamen(TblExamene model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +73,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var examen = JsonConvert.DeserializeObject<Examen>(responseString);
+                var examen = JsonConvert.DeserializeObject<TblExamene>(responseString);
                 return View(examen);
             }
 
@@ -83,13 +81,13 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarexamen(Examen model)
+        public async Task<ActionResult> modificarexamen(TblExamene model)
         {
             using (var http = new HttpClient())
             {
                 var examenSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(examenSerializada, Encoding.UTF8, "application/json");
-                var response = await http.PutAsync(_url + "/" + model.idExamen, content);
+                var response = await http.PutAsync(_url + "/" + model.IdExamen, content);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

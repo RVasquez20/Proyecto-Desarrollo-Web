@@ -1,14 +1,14 @@
 ﻿@using WebApplication1.Models
-@model List<ComprasViewModel>
-@{
+@model List<TblCompra>
+    @{
     ViewBag.Title = "Compras";
-}
+    }
 
-<h2>@ViewBag.Title</h2>
-<hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
 
 
-@if (Model != null)
+    @if (Model != null)
 {
     <div class="container mt-3">
         <h2>Compra</h2>
@@ -26,16 +26,16 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.no_orden</td>
-                        <td>@item.fecha_orden</td>
-                        <td>@item.fecha</td>
-                        <td>@item.proveedor</td>
-                        <td>
-                            <input onclick="document.location.href='@Url.Content("~/Compra/deleteCompra/" + item.idCompra)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Compra/modifyCompra/" + item.idCompra)'" type="button" value="Editar" class="btn btn-warning" />
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@item.NoOrden</td>
+                    <td>@item.FechaOrden</td>
+                    <td>@item.Fecha</td>
+                    <td>@item.IdProveedor</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Compra/deleteCompra/" + item.IdCompras)'" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="document.location.href='@Url.Content("~/Compra/modifyCompra/" + item.IdCompras)'" type="button" value="Editar" class="btn btn-warning" />
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -47,7 +47,7 @@ else
         <h2>No hay Diagnosticos</h2>
     </div>
 }
-<script>
+    <script>
     function EliminarUsuario(id) {
         if (confirm("Esta Seguro de Eliminar A Esta Habitacion?????")) {
             url = "@Url.Content("~/Compra/deleteCompra/")" + "/" + id;
@@ -60,4 +60,6 @@ else
             });
         }
     }
-</script>
+    </script>
+
+

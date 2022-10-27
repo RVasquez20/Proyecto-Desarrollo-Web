@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class ConsultaController : Controller
     {
-        // GET: Consulta
+     /*   // GET: Consulta
         public ActionResult Consulta()
         {
             var lista = new List<ConsultaViewModel>()
@@ -189,6 +189,6 @@ namespace WebApplication1.Controllers
                 };
             });
             return View();
-        }
+        }*/
     }
 }

@@ -1,4 +1,5 @@
-﻿@model WebApplication1.Models.ConsultaViewModel
+﻿
+@model WebApplication1.Models.TblConsulta
 @{
     ViewBag.Title = "Agregar Consulta";
     List<SelectListItem> listadoPaciente = ViewBag.listadoPaciente;
@@ -12,33 +13,36 @@
 
 @using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
 {
-    <div class="mb-3 mt-3">
-        @Html.LabelFor(m => m.nombre)
-        @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
-    </div>
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.IdPaciente)
+    @Html.TextBoxFor(m => m.IdPaciente, new { @class = "form-control" })
+</div>
 
-    <div class="mb-3 mt-3">
-        @Html.DropDownList("Paciente", listadoPaciente, "Seleccionar un Paciente", new { @class = "form-control" })
-    </div>
+<div class="mb-3 mt-3">
+    @Html.DropDownList("IdPaciente", listadoPaciente, "Seleccionar un Paciente", new { @class = "form-control" })
+</div>
 
-    <div class="mb-3 mt-3">
-        @Html.DropDownList("Empleado", listadoEmpleado, "Seleccionar un Empleado", new { @class = "form-control" })
-    </div>
+<div class="mb-3 mt-3">
+    @Html.DropDownList("IdEmpleado", listadoEmpleado, "Seleccionar un Empleado", new { @class = "form-control" })
+</div>
 
 
-    <div class="mb-3 mt-3">
-        @Html.DropDownList("Clinica", listadoClinica, "Seleccionar una Clinica", new { @class = "form-control" })
-    </div>
+<div class="mb-3 mt-3">
+    @Html.DropDownList("IdClinica", listadoClinica, "Seleccionar una Clinica", new { @class = "form-control" })
+</div>
 
-    <div class="mb-3 mt-3">
-        @Html.DropDownList("Diagnostico", listadoDiagnostico, "Seleccionar un Diagnostico", new { @class = "form-control" })
-    </div>
+<div class="mb-3 mt-3">
+    @Html.DropDownList("IdDiagnostico", listadoDiagnostico, "Seleccionar un Diagnostico", new { @class = "form-control" })
+</div>
 
-    <div class="mb-3 mt-3">
-        @Html.DropDownList("Receta", listadoReceta, "Seleccionar una Receta", new { @class = "form-control" })
-    </div>
+<div class="mb-3 mt-3">
+    @Html.DropDownList("IdReceta", listadoReceta, "Seleccionar una Receta", new { @class = "form-control" })
+</div>
 
-    <button type="submit" class="btn btn-primary">Agregar Consulta</button>
+<button type="submit" class="btn btn-primary">Agregar </button>
 }
+
+
+
 
 

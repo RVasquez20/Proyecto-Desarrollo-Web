@@ -14,12 +14,10 @@ namespace WebApplication1.Controllers
     public class PacientesController : Controller
     {
         //recibir una lista de una api 
-        private readonly string _url = "https://63572b429243cf412f942721.mockapi.io/prueba3/Paciente";
+        private readonly string _url = "https://apiclinica.azurewebsites.net/api/Pacientes";
         public async Task<ActionResult> Index()
 
         {
-
-            //https://63572b429243cf412f942721.mockapi.io/prueba3/Paciente
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -28,7 +26,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoPacientes = JsonConvert.DeserializeObject<List<Pacientes>>(responseString);
+                var listadoPacientes = JsonConvert.DeserializeObject<List<TblPaciente>>(responseString);
                 return View(listadoPacientes);
             }
 
@@ -42,7 +40,7 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-        public async Task<ActionResult> agregarPacientes(Pacientes model)
+        public async Task<ActionResult> agregarPacientes(TblPaciente model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +73,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var pacientes = JsonConvert.DeserializeObject<Pacientes>(responseString);
+                var pacientes = JsonConvert.DeserializeObject<TblPaciente>(responseString);
                 return View(pacientes);
             }
 
@@ -83,13 +81,13 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarPaciente(Pacientes model)
+        public async Task<ActionResult> modificarPaciente(TblPaciente model)
         {
             using (var http = new HttpClient())
             {
                 var pacienteSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(pacienteSerializada, Encoding.UTF8, "application/json");
-                var response = await http.PutAsync(_url + "/" + model.idPaciente, content);
+                var response = await http.PutAsync(_url + "/" + model.IdPaciente, content);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

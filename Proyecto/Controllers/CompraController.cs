@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
     public class CompraController : Controller
     {
         // GET: CompraI
-        public ActionResult Index()
+      /*  public ActionResult Index()
         {
             var lista = new List<ComprasViewModel>()
             {
@@ -70,6 +70,6 @@ namespace WebApplication1.Controllers
             });
             ViewBag.listadoProveedor = listadoProveedor;
             return View();
-        }
+        }*/
     }
 }

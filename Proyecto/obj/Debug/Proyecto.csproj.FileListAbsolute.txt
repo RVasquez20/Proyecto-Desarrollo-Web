@@ -898,6 +898,9 @@ C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto
 C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto\bin\System.ValueTuple.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.AssemblyReference.cache
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.SuggestedBindingRedirects.cache
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.CoreCompileInputs.cache
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\WebApplication1.dll.config
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\WebApplication1.dll
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\WebApplication1.pdb
@@ -1096,9 +1099,24 @@ C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-We
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.AssemblyReference.cache
-C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.SuggestedBindingRedirects.cache
-C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.CoreCompileInputs.cache
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.CopyComplete
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\WebApplication1.dll
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\WebApplication1.pdb
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.Authorization.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\System.IO.Pipelines.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\System.Threading.Channels.dll
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNet.SignalR.Core.pdb
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.Authorization.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.Connections.Abstractions.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.Http.Features.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\Microsoft.AspNetCore.SignalR.Common.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\System.IO.Pipelines.xml
+C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\bin\System.Threading.Channels.xml

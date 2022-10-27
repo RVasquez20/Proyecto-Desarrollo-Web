@@ -8,40 +8,46 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+@using (Html.BeginForm("AddProduct", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-        <div class="mb-3 mt-3">
-            @Html.DropDownList("Lote Producto", listaLoteProducto, "Seleccionar un Lote", new { @class = "form-control" })
+    <div class="mb-3 mt-3">
+        @Html.DropDownList("IdLoteProducto", listaLoteProducto, "Seleccionar un Lote", new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.DropDownList("IdClinica", listaClinica, "Seleccionar una Clinica", new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.DropDownList("IdMarca", listaMarca, "Seleccionar una Marca", new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Descripcion)
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Precio)
+        @Html.TextBoxFor(m => m.Precio, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Existencia)
+        @Html.TextBoxFor(m => m.Existencia, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImagenFile, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ImagenFile, new { type = "file" })
+            @Html.ValidationMessageFor(model => model.ImagenFile, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="mb-3 mt-3">
-            @Html.DropDownList("Clinicas", listaClinica, "Seleccionar una Clinica", new { @class = "form-control" })
-        </div>
-
-        <div class="mb-3 mt-3">
-            @Html.LabelFor(m => m.nombre)
-            @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
-        </div>
-
-        <div class="mb-3 mt-3">
-             @Html.DropDownList("Marca", listaMarca, "Seleccionar una Marca", new { @class = "form-control" })
-        </div>
-
-        <div class="mb-3 mt-3">
-            @Html.LabelFor(m => m.descripcion)
-            @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
-        </div>
-
-        <div class="mb-3 mt-3">
-            @Html.LabelFor(m => m.precio)
-            @Html.TextBoxFor(m => m.precio, new { @class = "form-control" })
-        </div>
-
-        <div class="mb-3 mt-3">
-            @Html.LabelFor(m => m.existencia)
-            @Html.TextBoxFor(m => m.existencia, new { @class = "form-control" })
-        </div>
-
-
-        <button type="submit" class="btn btn-primary">Agregar Producto</button>
-        }
+    <button type="submit" class="btn btn-primary">Agregar Producto</button>
+}

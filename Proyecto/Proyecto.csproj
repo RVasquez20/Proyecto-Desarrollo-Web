@@ -304,7 +304,6 @@
     <Compile Include="Controllers\HabitacionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoteProductoController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PacienteHabitacionController.cs" />
@@ -319,24 +318,31 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Cargos.cs" />
-    <Compile Include="Models\Compras.cs" />
-    <Compile Include="Models\Consulta.cs" />
-    <Compile Include="Models\Productos.cs" />
-    <Compile Include="Models\Proveedores.cs" />
-    <Compile Include="Models\Receta.cs" />
-    <Compile Include="Models\Clinica.cs" />
-    <Compile Include="Models\Diagnosticos.cs" />
-    <Compile Include="Models\Empleados.cs" />
-    <Compile Include="Models\Examen.cs" />
-    <Compile Include="Models\Habitaciones.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LoteProductos.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Marcas.cs" />
-    <Compile Include="Models\Pacientes.cs" />
-    <Compile Include="Models\Ventas.cs" />
+    <Compile Include="Models\ActualizarExistencias.cs" />
+    <Compile Include="Models\TblAccess.cs" />
+    <Compile Include="Models\TblAccessRole.cs" />
+    <Compile Include="Models\TblCargo.cs" />
+    <Compile Include="Models\TblClinica.cs" />
+    <Compile Include="Models\TblCompra.cs" />
+    <Compile Include="Models\TblComprasDetalle.cs" />
+    <Compile Include="Models\TblConsulta.cs" />
+    <Compile Include="Models\TblDiagnostico.cs" />
+    <Compile Include="Models\TblEmpleado.cs" />
+    <Compile Include="Models\TblExamene.cs" />
+    <Compile Include="Models\TblExamenesConsulta.cs" />
+    <Compile Include="Models\TblHabitacione.cs" />
+    <Compile Include="Models\TblLoteProducto.cs" />
+    <Compile Include="Models\TblMarca.cs" />
+    <Compile Include="Models\TblMenu.cs" />
+    <Compile Include="Models\TblPaciente.cs" />
+    <Compile Include="Models\TblPacientesHabitacione.cs" />
+    <Compile Include="Models\TblProducto.cs" />
+    <Compile Include="Models\TblProveedor.cs" />
+    <Compile Include="Models\TblReceta.cs" />
+    <Compile Include="Models\TblRole.cs" />
+    <Compile Include="Models\TblUsuario.cs" />
+    <Compile Include="Models\TblVenta.cs" />
+    <Compile Include="Models\TblVentasDetalle.cs" />
     <Compile Include="permisos\ValidateSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -490,18 +496,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -564,6 +559,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\Products\" />
     <Folder Include="Services\" />
     <Folder Include="Views\EmpleadoMenu\" />
   </ItemGroup>

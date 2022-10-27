@@ -29,10 +29,9 @@
                     </a>
                     <ul class="dropdown-menu">
 
-                        @if (Session["Home"] != null)
-                        {
+                        
                             <li class="dropdown-item">@Html.ActionLink("Home", "Index", "Home")</li>
-                        }
+                        
                             <li class="dropdown-item">@Html.ActionLink("Menu", "Index", "Menu")</li>
 
                         </ul>
@@ -45,10 +44,9 @@
                         
                             <li class="dropdown-item">@Html.ActionLink("Roles", "Index", "Role")</li>
                         
-                            @if (Session["Usuarios"] != null)
-                            {
+                            
                                 <li class="dropdown-item">@Html.ActionLink("Usuario", "Index", "Usuario")</li>
-                            }
+                            
                             </ul>
                 </div>
                 <div class="dropdown dropdown-toggle-split">
@@ -80,15 +78,13 @@
                         Gestion Farmacias
                     </a>
                     <ul class="dropdown-menu">
-                        @if (Session["Productos"] != null)
-                        {
+                        
                             <li class="dropdown-item">@Html.ActionLink("Productos", "Index", "Producto")</li>
-                        }
+                        
                             <li class="dropdown-item">@Html.ActionLink("Lotes Productos", "Index", "LoteProducto")</li>
-                            @if (Session["Marcas"] != null)
-                            {
+                            
                                 <li class="dropdown-item">@Html.ActionLink("Marca", "Index", "Marca")</li>
-                            }
+                            
                                 <li class="dropdown-item">@Html.ActionLink("Compras", "Index", "Compra")</li>
                                 <li class="dropdown-item">@Html.ActionLink("Proveedores", "Index", "Proveedor")</li>
                                 <li class="dropdown-item">@Html.ActionLink("Ventas", "Index", "Venta")</li>

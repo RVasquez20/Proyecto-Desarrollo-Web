@@ -1,145 +1,144 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 using WebApplication1.permisos;
+using static System.Net.WebRequestMethods;
 
 namespace WebApplication1.Controllers
 {
     [ValidateSession]
     public class ProductoController : Controller
     {
-        // GET: ProductoI
-        public ActionResult Index()
+        private readonly string _urlProductos = "https://apiclinica.azurewebsites.net/api/Productos";
+        private readonly string _urlMarcas = "https://apiclinica.azurewebsites.net/api/Marcas";
+        private readonly string _urlLote = "https://apiclinica.azurewebsites.net/api/LoteProducto";
+        private readonly string _urlClinica = "https://apiclinica.azurewebsites.net/api/Clinicas";
+        // GET: Productos
+        public async Task<ActionResult> Index()
         {
-            var lista = new List<ProductosViewModel>()
+            using (var _http = new HttpClient())
             {
-                new ProductosViewModel()
+                var response = await _http.GetAsync(_urlProductos);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    idProductos = 1,
-                    idLote_Producto = 1,
-                    Lote_Producto = "Lote 1",
-                    idClinica = 1,
-                    Clinica = "Clinica 1",
-                    nombre = "Producto 1",
-                    idMarca = 1,
-                    Marca = "Marca 1",
-                    descripcion = "Descripcion 1",
-                    precio = 100,
-                    existencia = 10 
-                },
-                new ProductosViewModel()
-                {
-                    idProductos = 2,
-                    idLote_Producto = 2,
-                    Lote_Producto = "Lote 2",
-                    idClinica = 2,
-                    Clinica = "Clinica 2",
-                    nombre = "Producto 2",
-                    idMarca = 2,
-                    Marca = "Marca 2",
-                    descripcion = "Descripcion 2",
-                    precio = 200,
-                    existencia = 10
+                    return View("Error");
                 }
-            };
-            return View(lista);
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoProductos = JsonConvert.DeserializeObject<List<ProductosViewModel>>(responseString);
+                return View(listadoProductos);
+            }
+
+        }
+        public async Task<ActionResult> newProducto()
+        {
+            using (var _http = new HttpClient())
+            {
+                var responseMarcas = await _http.GetAsync(_urlMarcas);
+                if (responseMarcas.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseClinicas = await _http.GetAsync(_urlClinica);
+                if (responseClinicas.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseLotes = await _http.GetAsync(_urlLote);
+                if (responseLotes.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringMarcas = await responseMarcas.Content.ReadAsStringAsync();
+                var listMarcas = JsonConvert.DeserializeObject<List<TblMarca>>(responseStringMarcas);
+
+                var responseStringClinica = await responseClinicas.Content.ReadAsStringAsync();
+                var listClinicas = JsonConvert.DeserializeObject<List<TblClinica>>(responseStringClinica);
+
+                var responseStringLotes = await responseLotes.Content.ReadAsStringAsync();
+                var listadoLotes = JsonConvert.DeserializeObject<List<TblLoteProducto>>(responseStringLotes);
+                var listadoLote = listadoLotes.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Descripcion,
+                        Value = r.IdLoteProducto.ToString(),
+                        Selected = false
+                    };
+                });
+                var listClinica = listClinicas.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdClinica.ToString(),
+                        Selected = false
+                    };
+                });
+                var listMarca = listMarcas.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Marca,
+                        Value = r.IdMarca.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoLoteProducto= listadoLote;
+                ViewBag.listadoClinica= listClinica;
+                ViewBag.listadoMarca= listMarca;
+                return View();
+            }
+           
         }
 
-        public ActionResult newProducto()
+
+        [HttpPost]
+        public async Task<ActionResult> AddProduct (ProductosViewModel model)
         {
-            var dataLoteProducto = new List<LoteProductos>()
+            if (!ModelState.IsValid)
             {
-                new LoteProductos()
+                return View("Error");
+            }
+                
+            string rutaSitio = Server.MapPath("~/images/Products/");
+            string pathImagen = Path.Combine(rutaSitio + model.ImagenFile.FileName);
+            model.ImagenFile.SaveAs(pathImagen);
+            using (var http = new HttpClient())
+            {
+                var oProducto = new TblProducto();
+                oProducto.IdLoteProducto = model.IdLoteProducto;
+                oProducto.IdClinica = model.IdClinica;
+                oProducto.IdMarca = model.IdMarca;
+                oProducto.Nombre = model.Nombre;
+                oProducto.Descripcion = model.Descripcion;
+                oProducto.Precio = model.Precio;
+                oProducto.Existencia = model.Existencia;
+                oProducto.Imagen = "/images/Products/" + model.ImagenFile.FileName;
+                
+                var productSerializer = JsonConvert.SerializeObject(oProducto);
+                var content = new StringContent(productSerializer, Encoding.UTF8, "application/json");
+                var response = await http.PostAsync(_urlProductos, content);
+                if (!response.IsSuccessStatusCode)
                 {
-                    IdLoteProductos=1,
-                    Descripcion="Lote 1",
-                    noLote = 1,
-                    FechaExpiracion = DateTime.Now
-                },
-                new LoteProductos()
-                {
-                    IdLoteProductos=2,
-                    Descripcion="Lote 2",
-                    noLote = 2,
-                    FechaExpiracion = DateTime.Now
-                },
-                new LoteProductos()
-                {
-                    IdLoteProductos=3,
-                    Descripcion="Lote 3",
-                    noLote = 3,
-                    FechaExpiracion = DateTime.Now
+                    return View("Error");
                 }
-            };
-            var listadoLoteProducto = dataLoteProducto.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.Descripcion,
-                    Value = r.IdLoteProductos.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoLoteProducto = listadoLoteProducto;
+                return RedirectToAction("Index");
+            }   
+        }
 
-            var dataClinica = new List<Clinica>()
-            {
-                new Clinica()
-                {
-                    idClinica=1,
-                    nombre="Clinica 1",
-                    direccion = "Clinica 1"
-                },
-                new Clinica()
-                {
-                    idClinica=1,
-                    nombre="Clinica 2",
-                    direccion = "Clinica 2"
-                }
-            };
-            var listadoClinica = dataClinica.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.nombre + "," + r.direccion,
-                    Value = r.idClinica.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoClinica = listadoClinica;
-
-            var dataMarca = new List<Marcas>()
-            {
-                new Marcas()
-                {
-                    IdMarca=1,
-                    Marca="Marca 1"
-                },
-                new Marcas()
-                {
-                    IdMarca=2,
-                    Marca="Marca 2"
-                },
-                new Marcas()
-                {
-                    IdMarca=3,
-                    Marca="Marca 3"
-                }
-            };
-            var listadoMarca = dataMarca.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.Marca,
-                    Value = r.IdMarca.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoMarca = listadoMarca;
+        public async Task<ActionResult> ActualizarProducto(int? id)
+        {
             return View();
         }
+
     }
 }

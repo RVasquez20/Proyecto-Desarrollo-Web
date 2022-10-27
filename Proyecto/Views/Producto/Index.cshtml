@@ -21,6 +21,7 @@
                     <th>Nombre</th>
                     <th>Marca</th>
                     <th>Descripcion</th>
+                    <th>Imagen</th>
                     <th>Precio</th>
                     <th>Existencia</th>
                     <th>Gestion</th>
@@ -30,16 +31,17 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Lote_Producto</td>
-                        <td>@item.Clinica</td>
-                        <td>@item.nombre</td>
-                        <td>@item.Marca</td>
-                        <td>@item.descripcion</td>
-                        <td>@item.precio</td>
-                        <td>@item.existencia</td>
+                        <td>@item.lote</td>
+                        <td>@item.clinica</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.marca</td>
+                        <td>@item.Descripcion</td>
+                        <td><img src="@item.Imagen" style="width:200px;height:200px;"/></td>
+                        <td>@item.Precio</td>
+                        <td>@item.Existencia</td>
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Producto/deleteProducto/" + item.idProductos)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Producto/modifyProducto/" + item.idProductos)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="document.location.href='@Url.Content("~/Producto/ActualizarProducto/" + item.IdProducto)'" type="button" value="Eliminar" class="btn btn-danger" />
+                            <input onclick="document.location.href='@Url.Content("~/Producto/modifyProducto/" + item.IdProducto)'" type="button" value="Editar" class="btn btn-warning" />
                         </td>
                     </tr>
                 }

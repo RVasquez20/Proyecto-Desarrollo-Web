@@ -1,0 +1,22 @@
+﻿@using WebApplication1.Models
+@model Diagnosticos
+@{
+    ViewBag.Title = "newDiagnostico";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("agregarDiagnostico", "Diagnostico", FormMethod.Post))
+{
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.titulo)
+    @Html.TextBoxFor(m => m.titulo, new { @class = "form-control" })
+</div>
+
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.descripcion)
+    @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
+</div>
+
+<button type="submit" class="btn btn-primary">Agregar Descripcion</button>
+}

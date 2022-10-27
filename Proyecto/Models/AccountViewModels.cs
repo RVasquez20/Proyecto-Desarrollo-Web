@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Core.Metadata.Edm;
 
 namespace WebApplication1.Models
 {
@@ -50,7 +51,7 @@ namespace WebApplication1.Models
     {
         [Required]
         [Display(Name = "Usuario")]
-        [EmailAddress]
+
         public string User { get; set; }
 
         [Required]
@@ -58,8 +59,6 @@ namespace WebApplication1.Models
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
-        [Display(Name = "¿Recordar cuenta?")]
-        public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
@@ -108,5 +107,48 @@ namespace WebApplication1.Models
         [EmailAddress]
         [Display(Name = "Usuario")]
         public string User { get; set; }
+    }
+
+    public class Usuarios
+    {
+        public int id_usuario { get; set; }
+        public string nombre { get; set; }
+        public string username { get; set; }
+        public string pass { get; set; }
+        public int id_rol { get; set; }
+    }
+
+    public class Roles
+    {
+        public int id_rol { get; set; }
+        public string ROL { get; set; }
+
+    }
+    public class RolesViewModel
+    {
+        public int id_rol { get; set; }
+        public string ROL { get; set; }
+
+    }
+    public class RolesAccess{
+        public int idRolesAccess { get; set; }
+        public int IdRol { get; set; }
+        public int IdAccess { get; set; }
+     }
+
+    public class Access
+    {
+        public int IdAccess { get; set; }
+        public string Name { get; set; }
+        public string URL { get; set; }
+    }
+    public class UsuariosViewModel
+    {
+        public int id_usuario { get; set; }
+        public string nombre { get; set; }
+        public string username { get; set; }
+        public string pass { get; set; }
+        public int id_rol { get; set; }
+        public string nombreRol { get; set; }
     }
 }

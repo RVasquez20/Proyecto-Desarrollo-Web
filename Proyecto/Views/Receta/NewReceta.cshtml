@@ -1,0 +1,22 @@
+﻿@using WebApplication1.Models
+@model Receta
+@{
+    ViewBag.Title = "Agregar Receta";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("agregarReceta", "Receta", FormMethod.Post))
+{
+@Html.HiddenFor(m => m.idReceta)
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.serie_receta)
+    @Html.TextBoxFor(m => m.serie_receta, new { @class = "form-control" })
+</div>
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.fecha_emision)
+    @Html.TextBoxFor(m => m.fecha_emision, new { @class = "form-control" })
+</div>
+
+<button type="submit" class="btn btn-primary">Agregar Receta</button>
+}

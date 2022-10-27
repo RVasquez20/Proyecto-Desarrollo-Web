@@ -1,0 +1,20 @@
+﻿@using WebApplication1.Models
+@model Marcas
+@{
+    ViewBag.Title = "Agregar Marca";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("agregarMarca", "Marca", FormMethod.Post))
+{
+    @Html.HiddenFor(m=>m.IdMarca)
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Marca)
+    @Html.TextBoxFor(m => m.Marca, new { @class = "form-control" })
+</div>
+
+
+<button type="submit" class="btn btn-primary">Agregar Marca</button>
+}
+

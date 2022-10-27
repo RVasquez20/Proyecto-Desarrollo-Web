@@ -1,0 +1,18 @@
+﻿@model WebApplication1.Models.Cargos
+@{
+    ViewBag.Title = "Agregar Cargo";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+{
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Cargo)
+        @Html.TextBoxFor(m => m.Cargo, new { @class = "form-control" })
+    </div>
+
+   
+    <button type="submit" class="btn btn-primary">Agregar Cargo</button>
+}
+
+

@@ -1,0 +1,60 @@
+﻿@using WebApplication1.Models
+@model List<Receta>
+    @{
+    ViewBag.Title = "Receta";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model != null)
+{
+    <div class="container mt-3">
+        <h2>Receta</h2>
+        @Html.ActionLink("Nuevo", "newReceta", "Receta", new { @class = "btn btn-primary" })
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>serie_receta</th>
+                    <th>fecha_emision</th>
+                    <th>Gestiones</th>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.serie_receta</td>
+                    <td>@item.fecha_emision</td>
+
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Receta/modificarReceta/" + item.idReceta)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarReceta('@item.idReceta', '@item.idReceta');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Receta</h2>
+    </div>
+}
+    <script>
+    function eliminarReceta(id, Receta) {
+        if (confirm(`Esta Seguro de Eliminar A Esta Receta: ${Receta} ?????` )) {
+            url = "@Url.Content("~/Receta/eliminarReceta/")" + id;
+            $.get(url).done((data) => {
+                if (data == "Exito") {
+                    document.location.href = "@Url.Content("~/Receta/Index")";
+                } else {
+                    alert("Hubo un error");
+                }
+            });
+        }
+    }
+    </script>

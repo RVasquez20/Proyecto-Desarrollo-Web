@@ -1,14 +1,14 @@
 ﻿@using WebApplication1.Models
-@model List<ClinicaViewModel>
-@{
+@model List<Clinica>
+    @{
     ViewBag.Title = "Clinicas";
-}
+    }
 
-<h2>@ViewBag.Title</h2>
-<hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
 
 
-@if (Model != null)
+    @if (Model != null)
 {
     <div class="container mt-3">
         <h2>Clinica</h2>
@@ -24,14 +24,14 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.nombre</td>
-                        <td>@item.direccion</td>
-                        <td>
-                            <input onclick="document.location.href='@Url.Content("~/Clinica/deleteClinic/" + item.idClinica)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Clinica/modifyClinic/" + item.idClinica)'" type="button" value="Editar" class="btn btn-warning" />
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@item.nombre</td>
+                    <td>@item.direccion</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Clinica/modificarClinica/" + item.idClinica)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarClinica('@item.idClinica', '@item.idClinica');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -43,17 +43,17 @@ else
         <h2>No hay usuarios</h2>
     </div>
 }
-<script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Esta Clinica?????")) {
-            url = "@Url.Content("~/Clinica/deleteClinic/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Clinica/Index")"
+    <script>
+        function eliminarClinica(id,Clinica) {
+        if (confirm(`Esta Seguro de Eliminar A Esta Clinica : ${Clinica} ?????` )) {
+            url = "@Url.Content("~/Clinica/eliminarClinica/")" + id;
+            $.get(url).done((data) => {
+                if (data == "Exito") {
+                    document.location.href = "@Url.Content("~/Clinica/Index")";
                 } else {
-                    alert("Ocurrio un Error :c");
+                    alert("Hubo un error");
                 }
             });
         }
     }
-</script>
+    </script>

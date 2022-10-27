@@ -30,8 +30,8 @@
                     <td>@item.Descripcion</td>
                     <td>@item.FechaExpiracion</td>
                     <td>
-                        <input onclick="document.location.href='@Url.Content("~/Diagnostico/deleteDiagnostic/" + item.IdLoteProductos)'" type="button" value="Eliminar" class="btn btn-danger" />
-                        <input onclick="document.location.href='@Url.Content("~/Diagnostico/modifyDiagnostic/" + item.IdLoteProductos)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="document.location.href='@Url.Content("~/LoteProducto/modificarLoteProducto/" + item.IdLoteProductos)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarLoteProducto('@item.IdLoteProductos','@item.IdLoteProductos');" type="button" value="Eliminar" class="btn btn-danger" />
                     </td>
                 </tr>
                 }
@@ -45,17 +45,17 @@ else
         <h2>No hay Diagnosticos</h2>
     </div>
 }
-    <script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Esta Diagnostico?????")) {
-            url = "@Url.Content("~/Diagnostico/deleteDiagnostic/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Diagnostico/Index")"
+   <script>
+       function EliminarLoteProducto(id,LoteProducto) {
+        if (confirm(`Esta Seguro de Eliminar A Este Lote de Productos: ${LoteProducto} ?????` )) {
+            url = "@Url.Content("~/LoteProducto/eliminarLoteProducto/")" + id;
+            $.get(url).done((data) => {
+                if (data == "Exito") {
+                    document.location.href = "@Url.Content("~/LoteProducto/Index")";
                 } else {
-                    alert("Ocurrio un Error :c");
+                    alert("Hubo un error");
                 }
             });
         }
     }
-    </script>
+  </script>

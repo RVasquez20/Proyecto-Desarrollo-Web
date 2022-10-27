@@ -16,8 +16,8 @@ namespace WebApplication1.Models
     {
         public int? idHabitacion { get; set; }
         public int no_habitacion { get; set; }
-        public int idClinica { get; set; }
-        public string Clinica { get; set; }
+        public int? idClinica { get; set; }
+        public string nombre { get; set; }
         public int CantidadPacientes { get; set; }
     }
 }

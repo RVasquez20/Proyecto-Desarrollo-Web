@@ -1,25 +1,29 @@
-﻿@model WebApplication1.Models.HabitacionesViewModel
+﻿@using WebApplication1.Models
+@model HabitacionesViewModel
+
 @{
     ViewBag.Title = "Agregar Habitacion";
-    List<SelectListItem> listaClinica = ViewBag.listadoClinica;
+    List<SelectListItem> listadoClinica = ViewBag.listadoClinica;
+
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+@using (Html.BeginForm("agregarHabitacion", "Habitacion", FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.idHabitacion)
     <div class="mb-3 mt-3">
         @Html.LabelFor(m => m.no_habitacion)
         @Html.TextBoxFor(m => m.no_habitacion, new { @class = "form-control" })
     </div>
-
     <div class="mb-3 mt-3">
-        @Html.DropDownList("Clinicas", listaClinica, "Seleccionar una clinica", new { @class = "form-control" })
+        @Html.DropDownList("Clinica", listadoClinica, "Seleccionar una Clinica", new { @class = "form-control" })
     </div>
-
     <div class="mb-3 mt-3">
         @Html.LabelFor(m => m.CantidadPacientes)
         @Html.TextBoxFor(m => m.CantidadPacientes, new { @class = "form-control" })
     </div>
-        <button type="submit" class="btn btn-primary">Agregar Habitaciones</button>
-        }
+
+
+    <button type="submit" class="btn btn-primary">Agregar Habitaciones</button>
+}

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
@@ -11,59 +15,131 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class HabitacionController : Controller
     {
-        // GET: HabitacionI
-        public ActionResult Index()
+        //recibir una lista de una api 
+        private readonly string _url = "https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/LoteProducto";
+        public async Task<ActionResult> Index()
+
         {
-            var lista = new List<HabitacionesViewModel>()
+
+            //https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4
+            using (var http = new HttpClient())
             {
-                new HabitacionesViewModel()
+                var response = await http.GetAsync(_url);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    idHabitacion = 1,
-                    no_habitacion = 1,
-                    idClinica = 1,
-                    Clinica = "Chimaltenango",
-                    CantidadPacientes = 1
-                },
-                new HabitacionesViewModel()
-                {
-                    idHabitacion = 2,
-                    no_habitacion = 2,
-                    idClinica = 1,
-                    Clinica = "Antigua",
-                    CantidadPacientes = 1
+                    return View("Error");
                 }
-            };
-            return View(lista);
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoHabitacion = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseString);
+                return View(listadoHabitacion);
+            }
+
+
+
         }
 
-        public ActionResult newHabitaciones()
+        
+        public async Task<ActionResult> newHabitaciones()
         {
-            var dataClinica = new List<ClinicaViewModel>()
+
+
+            using (var http = new HttpClient())
             {
-                new ClinicaViewModel()
+                var response = await http.GetAsync(_url);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    idClinica=1,
-                    nombre="Clinica 1",
-                    direccion = "Clinica 1"
-                },
-                new ClinicaViewModel()
-                {
-                    idClinica=1,
-                    nombre="Clinica 2",
-                    direccion = "Clinica 2"
+                    return View("Error");
                 }
-            };
-            var listadoClinica = dataClinica.ConvertAll(r =>
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoHabitacion = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseString);
+
+               var listadoClinica = listadoHabitacion.ConvertAll(r =>
+               {
+                   return new SelectListItem()
+                   {
+                       Text = r.nombre,
+                       Value = r.idClinica.ToString(),
+                       Selected = false
+                   };
+               });
+                ViewBag.listadoClinica = listadoClinica;
+
+                return View();
+            }        
+            }
+        //agregar a el json
+        [HttpPost]
+        //siempre debe ser un model
+        public async Task<ActionResult> agregarHabitacion(HabitacionesViewModel model)
+        {
+            if (!ModelState.IsValid)
             {
-                return new SelectListItem()
+                return View("Error");
+            }
+            using (var http = new HttpClient())
+            {
+                var habitacionSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(habitacionSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PostAsync(_url, content);
+                if (!response.IsSuccessStatusCode)
                 {
-                    Text = r.nombre+","+r.direccion,
-                    Value = r.idClinica.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoClinica = listadoClinica;
-            return View();
+                    return View("Error");
+                }
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        //trae la vista con los datos cargados
+        [HttpGet]
+        [Route("modificar/(id)")]
+        public async Task<ActionResult> modificarHabitacion(int id)
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_url + "/" + id);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var habitacion = JsonConvert.DeserializeObject<HabitacionesViewModel>(responseString);
+                return View(habitacion);
+            }
+
+        }
+
+        //modifica los datos de la bd
+        [HttpPost]
+        public async Task<ActionResult> modificarHabitacion(HabitacionesViewModel model)
+        {
+            using (var http = new HttpClient())
+            {
+                var habitacionSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(habitacionSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PutAsync(_url + "/" + model.idHabitacion, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Error");
+                }
+                return RedirectToAction("Index");
+            }
+
+        }
+        //elimina los datos de la bd
+        [HttpGet]
+        [Route("eliminar/(id)")]
+        public async Task<string> eliminarHabitacion(int id)
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.DeleteAsync(_url + "/" + id);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return "Error";
+                }
+                return "Exito";
+            }
         }
     }
 }

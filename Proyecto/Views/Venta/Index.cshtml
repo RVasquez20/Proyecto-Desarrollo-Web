@@ -26,12 +26,12 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.serie</td>
-                        <td>@item.numero</td>
-                        <td>@item.fecha</td>
+                        <td>@item.Serie</td>
+                        <td>@item.Numero</td>
+                        <td>@item.Fecha</td>
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Venta/deleteVenta/" + item.idVenta)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Venta/modifyVenta/" + item.idVenta)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="document.location.href='@Url.Content("~/Venta/modifyVenta/" + item.IdVentas)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="document.location.href='@Url.Content("~/Venta/deleteVenta/" + item.IdVentas)'" type="button" value="Eliminar" class="btn btn-danger" />
                         </td>
                     </tr>
                 }

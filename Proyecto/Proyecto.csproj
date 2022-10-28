@@ -574,6 +574,7 @@
     <Content Include="Views\Role\agregarRole.cshtml" />
     <Content Include="Views\Role\modificarRole.cshtml" />
     <Content Include="Views\Usuario\modificarUsuario.cshtml" />
+    <Content Include="Views\Venta\VentaDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

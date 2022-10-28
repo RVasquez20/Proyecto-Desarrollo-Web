@@ -5,22 +5,22 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+@using (Html.BeginForm("AddVenta", "Venta", FormMethod.Post, new { role = "form", @class = "" }))
 {
     <div class="mb-3 mt-3">
-        @Html.LabelFor(m => m.serie)
-        @Html.TextBoxFor(m => m.serie, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Serie)
+        @Html.TextBoxFor(m => m.Serie, new { @class = "form-control" })
     </div>
 
     <div class="mb-3 mt-3">
-        @Html.LabelFor(m => m.numero)
-        @Html.TextBoxFor(m => m.numero, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Numero)
+        @Html.TextBoxFor(m => m.Numero, new { @class = "form-control" })
     </div>
 
     <div class="mb-3 mt-3">
-        @Html.LabelFor(m => m.fecha)
-        @Html.TextBoxFor(m => m.fecha, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Fecha)
+        @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control" })
     </div>
 
-    <button type="submit" class="btn btn-primary">Agregar Descripcion</button>
+    <button type="submit" class="btn btn-primary">Agregar Productos</button>
 }

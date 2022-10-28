@@ -16,9 +16,8 @@
         <table class="table table-dark table-hover">
             <thead>
                 <tr>
-                    <th>No.Lote</th>
+                    <th>No. Lote</th>
                     <th>Descripcion</th>
-                    <th>No Lote</th>
                     <th>Fecha Expiracion</th>
                     <th>Gestion</th>
                 </tr>
@@ -27,13 +26,12 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                    <td>@item.IdLoteProducto</td>
-                    <td>@item.Descripcion</td>
                     <td>@item.NoLote</td>
+                    <td>@item.Descripcion</td>
                     <td>@item.FechaExpiracion</td>
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/LoteProducto/modificarLoteProducto/" + item.IdLoteProducto)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="EliminarLoteProducto('@item.IdLoteProducto','@item.IdLoteProducto');" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="eliminarLoteProducto('@item.IdLoteProducto','@item.Descripcion');" type="button" value="Eliminar" class="btn btn-danger" />
                     </td>
                 </tr>
                 }
@@ -44,11 +42,11 @@
 else
 {
     <div class="container mt-3">
-        <h2>No hay Diagnosticos</h2>
+        <h2>No hay Lote de Productos</h2>
     </div>
 }
     <script>
-       function EliminarLoteProducto(id,LoteProducto) {
+       function eliminarLoteProducto(id,LoteProducto) {
         if (confirm(`Esta Seguro de Eliminar A Este Lote de Productos: ${LoteProducto} ?????` )) {
             url = "@Url.Content("~/LoteProducto/eliminarLoteProducto/")" + id;
             $.get(url).done((data) => {

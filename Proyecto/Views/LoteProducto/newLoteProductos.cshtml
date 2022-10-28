@@ -1,5 +1,4 @@
-﻿@using WebApplication1.TblLoteProducto
-@model LoteProductos
+﻿@model WebApplication1.Models.TblLoteProducto
 @{
     ViewBag.Title = "Agregar Lote de Productos";
 }
@@ -9,21 +8,20 @@
 @using (Html.BeginForm("agregarLoteProducto", "LoteProducto", FormMethod.Post))
 {
 
-@Html.HiddenFor(m=>m.IdLoteProductos)
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.NoLote)
+        @Html.TextBoxFor(m => m.NoLote, new { @class = "form-control" })
+    </div>
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Descripcion)
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+    </div>
 
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.Descripcion)
-    @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
-</div>
 
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.NoLote)
-    @Html.TextBoxFor(m => m.NoLote, new { @class = "form-control" })
-</div>
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.FechaExpiracion)
-    @Html.TextBoxFor(m => m.FechaExpiracion, new { @class = "form-control",type="date" })
-</div>
-<button type="submit" class="btn btn-primary">Agregar un nuevo Lote</button>
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.FechaExpiracion)
+        @Html.TextBoxFor(m => m.FechaExpiracion, new { @class = "form-control", type = "date" })
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar un nuevo Lote</button>
 }
 

@@ -569,6 +569,11 @@
     <Content Include="Views\PacienteHabitacion\newPacienteHab.cshtml" />
     <Content Include="Views\Habitacion\HabitacionesDisponibles.cshtml" />
     <Content Include="Views\Habitacion\_DataList.cshtml" />
+    <Content Include="Views\Producto\ActualizarProducto.cshtml" />
+    <Content Include="Views\Empleados\modificarEmpleado.cshtml" />
+    <Content Include="Views\Role\agregarRole.cshtml" />
+    <Content Include="Views\Role\modificarRole.cshtml" />
+    <Content Include="Views\Usuario\modificarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

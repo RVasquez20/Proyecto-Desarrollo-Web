@@ -40,8 +40,8 @@
                         <td>@item.Precio</td>
                         <td>@item.Existencia</td>
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Producto/ActualizarProducto/" + item.IdProducto)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Producto/modifyProducto/" + item.IdProducto)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="document.location.href='@Url.Content("~/Producto/ActualizarProducto/" + item.IdProducto)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="document.location.href='@Url.Content("~/Producto/EliminarProducto/" + item.IdProducto)'" type="button" value="Eliminar" class="btn btn-danger" />
                         </td>
                     </tr>
                 }
@@ -57,15 +57,9 @@ else
 }
 <script>
     function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Esta Paciente?????")) {
-            url = "@Url.Content("~/Producto/deleteProducto/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Producto/Index")"
-                } else {
-                    alert("Ocurrio un Error :c");
-                }
-            });
+        if (confirm("Esta Seguro de Eliminar A Este Producto ?????")) {
+            url = "@Url.Content("~/Producto/EliminarProducto/")" + "/" + id;
+            $.get(url).done();
         }
     }
 </script>

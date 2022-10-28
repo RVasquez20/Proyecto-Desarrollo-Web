@@ -1,23 +1,23 @@
 ﻿@model WebApplication1.Models.TblUsuario
 @{
     ViewBag.Title = "Agregar Usuario";
-    List<SelectListItem> listaRoles = ViewBag.listadoRoles;
+    List<SelectListItem> listadoEmpleados = ViewBag.listadoEmpleados;
+    List<SelectListItem> listadoRoles = ViewBag.listadoRoles;
+
 }
 
 <h2>@ViewBag.Title</h2>
-
 @using (Html.BeginForm("agregarUsuario", "Usuario", FormMethod.Post))
 {
-
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.Username)
-    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-</div>
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-</div>
-@Html.DropDownList("IdRol", listaRoles, "Seleccionar un rol", new { @class = "form-control" })
-<button type="submit" class="btn btn-primary">Agregar Usuario</button>
+    @Html.DropDownList("IdEmpleado", listadoEmpleados, "Seleccionar un Empleado", new { @class = "form-control" })
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Username)
+        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+    </div>
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    </div>
+    @Html.DropDownList("IdRol", listadoRoles, "Seleccionar un rol", new { @class = "form-control" })
+    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
 }
-

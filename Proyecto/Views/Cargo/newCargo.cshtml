@@ -4,7 +4,7 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+@using (Html.BeginForm("AgregarCargo", "Cargo", FormMethod.Post, new { role = "form", @class = "" }))
 {
     <div class="mb-3 mt-3">
         @Html.LabelFor(m => m.Cargo)

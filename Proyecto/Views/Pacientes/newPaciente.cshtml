@@ -1,4 +1,4 @@
-﻿@using WebApplication1.Models.TblPaciente
+﻿@model WebApplication1.Models.TblPaciente
 
 
 @{
@@ -7,12 +7,12 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("agregarPacientes", "Pacientes", FormMethod.Post))
+@using (Html.BeginForm("AgregarPacientes", "Pacientes", FormMethod.Post))
 {
-@Html.HiddenFor(m => m.IdPaciente)
+
 <div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.NoAfiliado)
-    @Html.TextBoxFor(m => m.NoAfiliado, new { @class = "form-control" })
+    @Html.LabelFor(m => m.NoAfiliacion)
+    @Html.TextBoxFor(m => m.NoAfiliacion, new { @class = "form-control" })
 </div>
 
 <div class="mb-3 mt-3">

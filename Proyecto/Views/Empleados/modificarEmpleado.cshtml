@@ -1,0 +1,36 @@
+﻿@model WebApplication1.Models.TblEmpleado
+
+@{
+    ViewBag.Title = "modificarEmpleado";
+    List<SelectListItem> listadoCargos = ViewBag.listadoCargos;
+    List<SelectListItem> listadoClinicas = ViewBag.listadoClinicas;
+}
+
+<h2>modificarEmpleado</h2>
+
+@using (Html.BeginForm("modificarEmpleado","Empleado",FormMethod.Post))
+{
+@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Empleado</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.HiddenFor(model => model.IdEmpleado, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">  
+        </div>
+    </div>
+
+    
+    </div>
+    @Html.DropDownList("IdCargo", listadoCargos, "Seleccionar un Cargo", new { @class = "form-control" })
+    <br/>
+    @Html.DropDownList("IdClinica", listadoClinicas, "Seleccionar una Clinica", new { @class = "form-control" })
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+
+}

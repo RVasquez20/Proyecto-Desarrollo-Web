@@ -20,12 +20,12 @@ namespace WebApplication1.Controllers
         {
             using (var http = new HttpClient())
             {
-                var response = await http.GetAsync(_url);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                var responsePaciente = await http.GetAsync(_url);
+                if (responsePaciente.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     return View("Error");
                 }
-                var responseString = await response.Content.ReadAsStringAsync();
+                var responseString = await responsePaciente.Content.ReadAsStringAsync();
                 var listadoPacientes = JsonConvert.DeserializeObject<List<TblPaciente>>(responseString);
                 return View(listadoPacientes);
             }
@@ -61,8 +61,7 @@ namespace WebApplication1.Controllers
         }
 
         //trae la vista con los datos cargados
-        [HttpGet]
-        [Route("modificar/(id)")]
+
         public async Task<ActionResult> modificarPaciente(int id)
         {
             using (var http = new HttpClient())
@@ -97,8 +96,6 @@ namespace WebApplication1.Controllers
 
         }
         //elimina los datos de la bd
-        [HttpGet]
-        [Route("eliminar/(id)")]
         public async Task<string> eliminarPaciente(int id)
         {
             using (var http = new HttpClient())

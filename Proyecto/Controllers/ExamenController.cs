@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApplication1.Models;
 using WebApplication1.permisos;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebApplication1.Controllers
 {
@@ -60,9 +61,7 @@ namespace WebApplication1.Controllers
 
         }
 
-        //trae la vista con los datos cargados
-        [HttpGet]
-        [Route("modificar/(id)")]
+        
         public async Task<ActionResult> modificarExamen(int id)
         {
             using (var http = new HttpClient())
@@ -81,7 +80,7 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-        public async Task<ActionResult> modificarexamen(TblExamene model)
+        public async Task<ActionResult> modificarExamen(TblExamene model)
         {
             using (var http = new HttpClient())
             {
@@ -96,9 +95,7 @@ namespace WebApplication1.Controllers
             }
 
         }
-        //elimina los datos de la bd
-        [HttpGet]
-        [Route("eliminar/(id)")]
+        
         public async Task<string> eliminarExamen(int id)
         {
             using (var http = new HttpClient())

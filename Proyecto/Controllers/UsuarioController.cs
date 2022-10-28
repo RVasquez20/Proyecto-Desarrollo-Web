@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
@@ -11,95 +15,182 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class UsuarioController : Controller
     {
-        // GET: UsuarioI
-        /*public ActionResult Index()
+        private readonly string _urlUsuario = "https://apiclinica.azurewebsites.net/api/Usuarios";
+        private readonly string _urlEmpleados = "https://apiclinica.azurewebsites.net/api/Empleados";
+        private readonly string _urlRoles = "https://apiclinica.azurewebsites.net/api/Roles";
+        public async Task<ActionResult> Index()
+
         {
-            //get para obtener listado de usuarios
-           var dataUsers = new List<Usuarios>()
-            {
-                
-                new Usuarios()
-                {
-                    id_usuario=1,
-                    nombre="juana",
-                    username="Juana22",
-                    pass="1234",
-                    id_rol=1
-                },
-                 new Usuarios()
-                {
-                    id_usuario=2,
-                    nombre="juan",
-                    username="Juan22",
-                    pass="1234",
-                    id_rol=2
-                },
-                  new Usuarios()
-                {
-                    id_usuario=3,
-                    nombre="juana",
-                    username="Juana22",
-                    pass="1234",
-                    id_rol=1
-                }
-            };
-            //peticion get para obtener listado de roles
-            var dataRoles = new List<Roles>()
-            {
-                new Roles()
-                {
-                    id_rol=1,
-                    ROL="admin"
-                },
-                new Roles()
-                {
-                    id_rol=2,
-                    ROL="Medico"
-                }
-            };
 
-            var dataUsuariosViewModel = (from u in dataUsers
-                                         join r in dataRoles
-                                         on u.id_rol equals r.id_rol
-                                         select new UsuariosViewModel
-                                         {
-                                             id_usuario=u.id_usuario,
-                                             nombre=u.nombre,
-                                             username=u.username,
-                                             pass=u.pass,
-                                             id_rol=r.id_rol,
-                                             nombreRol=r.ROL
-                                         }).ToList();
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_urlUsuario);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoUsuario = JsonConvert.DeserializeObject<List<UsuariosViewModel>>(responseString);
+                return View(listadoUsuario);
+            }
 
-            return View(dataUsuariosViewModel);
+
+
+        }
+        public async Task<ActionResult> newUser()
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_urlEmpleados);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoEmpleados = JsonConvert.DeserializeObject<List<EmpleadosViewModel>>(responseString);
+                var listadoEmpleado = listadoEmpleados.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdEmpleado.ToString(),
+                        Selected = false
+                    };
+                });
+
+                var responseRoles = await http.GetAsync(_urlRoles);
+                if (responseRoles.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringRole = await responseRoles.Content.ReadAsStringAsync();
+                var listadoRoles = JsonConvert.DeserializeObject<List<TblRole>>(responseStringRole);
+                var listadoRol = listadoRoles.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Rol,
+                        Value = r.IdRol.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoEmpleados = listadoEmpleado;
+                ViewBag.listadoRoles = listadoRol;
+
+                return View();
+            }
+
         }
 
-        public ActionResult newUser()
+
+        //agregar a el json
+        [HttpPost]
+        //siempre debe ser un model
+        public async Task<ActionResult> AgregarUser(TblUsuario model)
         {
-            var dataRoles = new List<Roles>()
+            if (!ModelState.IsValid)
             {
-                new Roles()
+                return View("Error");
+            }
+            using (var http = new HttpClient())
+            {
+                var UserSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(UserSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PostAsync(_urlUsuario, content);
+                if (!response.IsSuccessStatusCode)
                 {
-                    id_rol=1,
-                    ROL="admin"
-                },
-                new Roles()
-                {
-                    id_rol=2,
-                    ROL="Medico"
+                    return View("Error");
                 }
-            };
-            var listadoRoles = dataRoles.ConvertAll(r=>
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        //trae la vista con los datos cargados
+
+        public async Task<ActionResult> modificarUsuario(int id)
+        {
+            using (var http = new HttpClient())
             {
-                return new SelectListItem()
+                var responseUser = await http.GetAsync(_urlUsuario + "/" + id);
+                if (responseUser.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    Text = r.ROL,
-                    Value = r.id_rol.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoRoles=listadoRoles;
-            return View();
-        }*/
+                    return View("Error");
+                }
+                var response = await http.GetAsync(_urlEmpleados);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoEmpleados = JsonConvert.DeserializeObject<List<EmpleadosViewModel>>(responseString);
+                var listadoEmpleado = listadoEmpleados.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdEmpleado.ToString(),
+                        Selected = false
+                    };
+                });
+
+                var responseRoles = await http.GetAsync(_urlRoles);
+                if (responseRoles.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringRole = await responseRoles.Content.ReadAsStringAsync();
+                var listadoRoles = JsonConvert.DeserializeObject<List<TblRole>>(responseStringRole);
+                var listadoRol = listadoRoles.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Rol,
+                        Value = r.IdRol.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoEmpleados = listadoEmpleado;
+                ViewBag.listadoRoles = listadoRol;
+
+                var responseStringUser = await responseUser.Content.ReadAsStringAsync();
+                var User = JsonConvert.DeserializeObject<TblUsuario>(responseStringUser);
+                return View(User);
+            }
+
+        }
+
+        //modifica los datos de la bd
+        [HttpPost]
+        public async Task<ActionResult> modificarUsuario(TblUsuario model)
+        {
+            using (var http = new HttpClient())
+            {
+                var usuarioSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(usuarioSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PutAsync(_urlUsuario + "/" + model.IdUsuario, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Error");
+                }
+                return RedirectToAction("Index");
+            }
+
+        }
+        //elimina los datos de la bd
+
+        public async Task<string> eliminarUsuario(int id)
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.DeleteAsync(_urlUsuario + "/" + id);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return "Error";
+                }
+                return "Exito";
+            }
+        }
+
     }
 }

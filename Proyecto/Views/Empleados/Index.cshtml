@@ -39,8 +39,8 @@
                         <td>@item.Clinica</td>
 
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Empleados/deleteEmployee/" + item.IdEmpleado)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Empleados/modifyEmployee/" + item.IdEmpleado)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="document.location.href='@Url.Content("~/Empleados/modificarEmpleado/" + item.IdEmpleado)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="EliminarEmpleado(@item.IdEmpleado);" type="button" value="Eliminar" class="btn btn-danger" />
                         </td>
                     </tr>
                 }
@@ -51,13 +51,13 @@
 else
 {
     <div class="container mt-3">
-        <h2>No hay usuarios</h2>
+        <h2>No hay Empleados</h2>
     </div>
 }
 <script>
-    function EliminarUsuario(id) {
+    function EliminarEmpleado(id) {
         if (confirm("Esta Seguro de Eliminar A Este Usuario?????")) {
-            url = "@Url.Content("~/Empleados/deleteEmployee/")" + "/" + id;
+            url = "@Url.Content("~/Empleados/eliminarEmpleado/")" + "/" + id;
             $.get(url).done((data)=>{
                 if (data == 1) {
                     document.location.href = "@Url.Content("~/Empleados/Index")"

@@ -60,9 +60,7 @@ namespace WebApplication1.Controllers
 
         }
 
-        //trae la vista con los datos cargados
-        [HttpGet]
-        [Route("modificar/(id)")]
+      
         public async Task<ActionResult> modificarDiagnostico(int id)
         {
             using (var http = new HttpClient())
@@ -97,8 +95,6 @@ namespace WebApplication1.Controllers
 
         }
         //elimina los datos de la bd
-        [HttpGet]
-        [Route("eliminar/(id)")]
         public async Task<string> eliminarDiagnostico(int id)
         {
             using (var http = new HttpClient())

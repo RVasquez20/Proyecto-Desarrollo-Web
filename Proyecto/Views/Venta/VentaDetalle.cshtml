@@ -13,9 +13,10 @@
         @Html.LabelFor(m => m.Cantidad)
         @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control" })
     </div>
-
+<h1 id="alert" hidden>Cantidad Mayor a Stock Ingrese nueva cantidad</h1>
+    <input type="text" class="form-control" id="Precio" name="Precio" readonly/>
     <button type="submit" id="add" class="btn btn-primary">Agregar Producto</button>
-    <button type="submit" id="Save" class="btn btn-primary" hidden>Finalizar Venta</button>
+    <button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Venta/Index")'" >Finalizar Venta</button>
 <div id="dataTable">
     <h1>Resumen de la Venta</h1>
     <table class="table table-dark">
@@ -31,6 +32,29 @@
 
 @section scripts{
     <script>
+        var _urlPrecio = "@Url.Action("getPrecios", "Venta")";
+        var cantidadStock = 0;
+        $("#IdProducto").on('change', () => {
+            var ProductoSelected = $("#IdProducto").val();
+            var obj = {
+                id: ProductoSelected
+            };
+            $.post(_urlPrecio, obj).done((data) => {
+                $("#Precio").val(data.Precio);
+                cantidadStock = data.Stock;
+            });
+        });
+        document.getElementById('Cantidad').addEventListener('change', () => {
+            var cantidad = $("#Cantidad").val();
+            if (cantidad > cantidadStock) {
+                $("#alert").removeAttr('hidden');
+                $("#add").attr('hidden',true);
+            } else {
+                $("#alert").attr('hidden',true);
+                $("#add").removeAttr('hidden');
+            }
+        });
+
         var _url = "@Url.Action("AddVentaDetalle", "Venta")";
         $("#add").on('click',()=> {
             var IdVenta = $("#IdVenta").val();
@@ -44,7 +68,7 @@
             }
             $.post(_url, obj).done(data => {
                 response += "<tr class='data'>";
-                response += "<td>" + data.IdProducto + "</td>";
+                response += "<td>" + data.Producto + "</td>";
                 response += "<td>" + data.Cantidad + "</td>";
                 response += "</tr>";
                 $("#data").append(response);

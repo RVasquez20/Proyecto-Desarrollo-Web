@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<TblVenta>
+@model List<VentaViewModel>
 @{
     ViewBag.Title = "Ventas";
 }
@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>Serie</th>
+                    <th>Paciente</th>
                     <th>Numero</th>
                     <th>Fecha</th>
                     <th>Gestion</th>
@@ -27,11 +28,11 @@
                 {
                     <tr>
                         <td>@item.Serie</td>
+                        <td>@item.Paciente</td>
                         <td>@item.Numero</td>
                         <td>@item.Fecha</td>
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Venta/modifyVenta/" + item.IdVentas)'" type="button" value="Editar" class="btn btn-warning" />
-                            <input onclick="document.location.href='@Url.Content("~/Venta/deleteVenta/" + item.IdVentas)'" type="button" value="Eliminar" class="btn btn-danger" />
+                            <input onclick="document.location.href='@Url.Content("~/Venta/Deails/" + item.IdVentas)'" type="button" value="Ver Detalles" class="btn btn-warning" />
                         </td>
                     </tr>
                 }
@@ -45,17 +46,3 @@ else
         <h2>No hay Diagnosticos</h2>
     </div>
 }
-<script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Esta Habitacion?????")) {
-            url = "@Url.Content("~/Venta/deleteVenta/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Venta/Index")"
-                } else {
-                    alert("Ocurrio un Error :c");
-                }
-            });
-        }
-    }
-</script>

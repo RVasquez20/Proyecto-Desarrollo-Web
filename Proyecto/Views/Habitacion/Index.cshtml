@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<TblHabitacione>
+@model List<HabitacionesViewModel>
     @{
     ViewBag.Title = "Examen";
     }
@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>No.Habitacion</th>
+                    <th>Clinica</th>
                     <th>Cantidad Maxima de Personas</th>
                     <th>Gestion</th>
                 </tr>
@@ -26,6 +27,7 @@
                 {
                 <tr>
                     <td>@item.NoHabitacion</td>
+                    <td>@item.Clinica</td>
                     <td>@item.CantidadMaxPacientes</td>
 
                     <td>

@@ -78,8 +78,19 @@ namespace Web_Api.Controllers
             return Ok(listado);
         }
 
-        
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblProducto>> GetTblProductos(int id)
+        {
+            var Productos = await _context.TblProductos.FindAsync(id);
+
+            if (Productos == null)
+            {
+                return NotFound("No se encontro el Registro");
+            }
+
+            return Ok(Productos);
+        }
 
 
         // PUT: api/Productoes/5

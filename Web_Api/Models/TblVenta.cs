@@ -15,6 +15,8 @@ namespace Web_Api.Models
         public int? Numero { get; set; }
         public DateTime? Fecha { get; set; }
 
+        public int? IdPaciente { get; set; }
+
         public virtual ICollection<TblVentasDetalle> TblVentasDetalles { get; set; }
     }
 }

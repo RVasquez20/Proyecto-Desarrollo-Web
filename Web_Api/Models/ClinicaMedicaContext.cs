@@ -129,7 +129,6 @@ namespace Web_Api.Models
 
                 entity.Property(e => e.IdCompras).HasColumnName("idCompras");
 
-                entity.Property(e => e.Fecha).HasColumnType("date");
 
                 entity.Property(e => e.FechaOrden)
                     .HasColumnType("date")
@@ -299,7 +298,6 @@ namespace Web_Api.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)

@@ -20,24 +20,44 @@ namespace Web_Api.Controllers
             _context = context;
         }
 
-        // GET: api/VentasDetalle
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblVentasDetalle>>> GetTblVentasDetalles()
-        {
-            return Ok(await _context.TblVentasDetalles.ToListAsync());
-        }
-
+      
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblVentasDetalle>> GetTblVentas(int id)
+        public async Task<ActionResult> GetTblVentas(int id)
         {
-            var VentasDetalles = await _context.TblVentasDetalles.FindAsync(id);
+            var listadoVentasDetalle = _context.TblVentasDetalles
+               .Where(x => x.IdVenta == id)
+               .Join(_context.TblVentas,
+               vd => vd.IdVenta,
+               v => v.IdVentas,
+               (vd, v) => new
+               {
 
-            if (VentasDetalles == null)
+                   IdVentasDetalle = vd.IdVentasDetalle,
+                   IdProducto = vd.IdProducto,
+                   Cantidad = vd.Cantidad,
+                   IdVenta = vd.IdVenta,
+                   Numero = v.Numero
+               }
+               ).Join(_context.TblProductos,
+
+               vd => vd.IdProducto,
+               p => p.IdProducto,
+               (vd, p) => new
+               {
+                   IdVentasDetalle = vd.IdVentasDetalle,
+                   IdProducto = vd.IdProducto,
+                   Cantidad = vd.Cantidad,
+                   IdVenta = vd.IdVenta,
+                   Numero = vd.Numero,
+                   Producto = p.Nombre
+               }).ToList();
+
+            if (listadoVentasDetalle == null)
             {
                 return NotFound("No se encontro el registro");
             }
 
-            return Ok(VentasDetalles);
+            return Ok(listadoVentasDetalle);
 
         }
 

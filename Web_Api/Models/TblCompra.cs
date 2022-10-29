@@ -13,7 +13,6 @@ namespace Web_Api.Models
         public int IdCompras { get; set; }
         public int? NoOrden { get; set; }
         public DateTime? FechaOrden { get; set; }
-        public DateTime? Fecha { get; set; }
         public int IdProveedor { get; set; }
 
         public virtual TblProveedor IdProveedorNavigation { get; set; } = null!;

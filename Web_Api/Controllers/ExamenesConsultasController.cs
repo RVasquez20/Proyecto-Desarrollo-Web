@@ -29,16 +29,28 @@ namespace Web_Api.Controllers
 
         // GET: api/ExamenesConsultas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblExamenesConsulta>> GetTblExamenesConsulta(int id)
+        public async Task<ActionResult> GetTblExamenesConsulta(int id)
         {
-            var tblExamenesConsulta = await _context.TblExamenesConsultas.FindAsync(id);
+            var listadoExamenesConsulta = _context.TblExamenesConsultas
+               .Where(x => x.IdConsulta == id)
+               .Join(_context.TblExamenes,
+               vd => vd.IdExamen,
+               v => v.IdExamen,
+               (vd, v) => new
+               {
+                   IdExamenConsulta = vd.IdExamenConsulta,
+                   IdExamen = vd.IdExamen,
+                   IdConsulta = vd.IdConsulta,
+                   Nombre = v.Nombre
+               }
+               ).ToList();
 
-            if (tblExamenesConsulta == null)
+            if (listadoExamenesConsulta == null)
             {
                 return NotFound("No se encontro el Registro");
             }
 
-            return Ok(tblExamenesConsulta);
+            return Ok(listadoExamenesConsulta);
         }
 
 

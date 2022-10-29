@@ -22,9 +22,24 @@ namespace Web_Api.Controllers
 
         // GET: api/Ventas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblVenta>>> GetTblVentas()
+        public async Task<ActionResult> GetTblVentas()
         {
-            return Ok(await _context.TblVentas.ToListAsync());
+
+            var listadoVentas = _context.TblVentas.Join(_context.TblPacientes,
+                v => v.IdPaciente,
+                p => p.IdPaciente,
+                (v,p) => new { 
+                
+                    IdVentas = v.IdVentas,
+                    Serie = v.Serie,
+                    Numero = v.Numero,
+                    Fecha = v.Fecha,
+                    IdPaciente = v.IdPaciente,
+                    Paciente = p.Nombre
+                }
+                ).ToList();
+
+            return Ok(listadoVentas);
         }
 
         [HttpGet("{id}")]

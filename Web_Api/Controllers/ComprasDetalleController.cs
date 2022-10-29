@@ -21,23 +21,45 @@ namespace Web_Api.Controllers
         }
 
         // GET: api/ComprasDetalle
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblComprasDetalle>>> GetTblComprasDetalles()
-        {
-            return Ok(await _context.TblComprasDetalles.ToListAsync());
-        }
+      
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblComprasDetalle>> GetTblAccessRoles(int id)
+        public async Task<ActionResult> GetTblComprasDetalles(int id)
         {
-            var CompraDetalle = await _context.TblComprasDetalles.FindAsync(id);
+            var listadoCompraDetalle = _context.TblComprasDetalles
+                .Where(x=>x.IdCompra==id)
+                .Join(_context.TblCompras,
+                cd => cd.IdCompra,
+                c => c.IdCompras,
+                (cd, c) => new
+                {
 
-            if (CompraDetalle == null)
+                    IdComprasDetalle = cd.IdComprasDetalle,
+                    IdProducto = cd.IdProducto,
+                    Cantidad = cd.Cantidad,
+                    IdCompra = cd.IdCompra,
+                    NoOrden = c.NoOrden
+                }
+                ).Join(_context.TblProductos,
+
+                cd => cd.IdProducto,
+                p => p.IdProducto,
+                (cd, p) => new
+                {
+                    IdComprasDetalle = cd.IdComprasDetalle,
+                    IdProducto = cd.IdProducto,
+                    Cantidad = cd.Cantidad,
+                    IdCompra = cd.IdCompra,
+                    NoOrden = cd.NoOrden,
+                    Producto = p.Nombre
+                }).ToList();
+
+            if (listadoCompraDetalle == null)
             {
                 return NotFound();
             }
 
-            return Ok(CompraDetalle);
+            return Ok(listadoCompraDetalle);
         }
 
 

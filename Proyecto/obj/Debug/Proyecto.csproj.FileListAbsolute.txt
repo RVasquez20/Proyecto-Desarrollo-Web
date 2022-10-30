@@ -898,6 +898,7 @@ C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto
 C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\jamay\OneDrive\Escritorio\proyectoDesa\Proyecto-Desarrollo-Web\Proyecto\bin\System.ValueTuple.xml
+<<<<<<< HEAD
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.AssemblyReference.cache
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.SuggestedBindingRedirects.cache
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.CoreCompileInputs.cache
@@ -1120,3 +1121,5 @@ C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-We
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\Proyecto.csproj.CopyComplete
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\WebApplication1.dll
 C:\Users\Rodrigo\Documents\GitHub\Proyecto Desarrollo Web\Proyecto-Desarrollo-Web\Proyecto\obj\Debug\WebApplication1.pdb
+=======
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6

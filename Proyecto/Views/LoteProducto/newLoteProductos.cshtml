@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿@model WebApplication1.Models.TblLoteProducto
+=======
+﻿@using WebApplication1.Models
+@model LoteProductos
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
 @{
     ViewBag.Title = "Agregar Lote de Productos";
 }
@@ -7,6 +12,16 @@
 
 @using (Html.BeginForm("agregarLoteProducto", "LoteProducto", FormMethod.Post))
 {
+<<<<<<< HEAD
+=======
+
+        @Html.HiddenFor(m=>m.IdLoteProductos)
+
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Descripcion)
+    @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+</div>
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
 
     <div class="mb-3 mt-3">
         @Html.LabelFor(m => m.NoLote)

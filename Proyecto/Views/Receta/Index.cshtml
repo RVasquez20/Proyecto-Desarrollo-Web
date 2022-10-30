@@ -1,5 +1,9 @@
 ﻿@using WebApplication1.Models
+<<<<<<< HEAD
 @model List<TblReceta>
+=======
+@model List<Receta>
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
     @{
     ViewBag.Title = "Receta";
     }
@@ -25,11 +29,20 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+<<<<<<< HEAD
                     <td>@item.Serie</td>
                     <td>@item.FechaEmision</td>
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Receta/modificarReceta/" + item.IdReceta)'" type="button" value="Editar" class="btn btn-warning" />
                         <input onclick="    eliminarReceta('@item.IdReceta', '@item.IdReceta');" type="button" value="Eliminar" class="btn btn-danger" />
+=======
+                    <td>@item.serie_receta</td>
+                    <td>@item.fecha_emision</td>
+
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Receta/modificarReceta/" + item.idReceta)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarReceta('@item.idReceta', '@item.idReceta');" type="button" value="Eliminar" class="btn btn-danger" />
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
                     </td>
                 </tr>
                 }
@@ -57,6 +70,9 @@ else
         }
     }
     </script>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6

@@ -14,10 +14,19 @@ namespace WebApplication1.Controllers
     public class LoteProductoController : Controller
     {
         //recibir una lista de una api 
+<<<<<<< HEAD
         private readonly string _url = "https://apiclinica.azurewebsites.net/api/LoteProducto";
         public async Task<ActionResult> Index()
 
         {
+=======
+        private readonly string _url = " https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/LoteProducto";
+        public async Task<ActionResult> Index()
+
+        {
+
+            //https://63572d5b2712d01e14036ea9.mockapi.io/pruebas4/LoteProducto
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -26,7 +35,11 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
+<<<<<<< HEAD
                 var listadoLoteProducto = JsonConvert.DeserializeObject<List<TblLoteProducto>>(responseString);
+=======
+                var listadoLoteProducto = JsonConvert.DeserializeObject<List<LoteProductos>>(responseString);
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
                 return View(listadoLoteProducto);
             }
 
@@ -40,7 +53,11 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
+<<<<<<< HEAD
         public async Task<ActionResult> agregarLoteProducto(TblLoteProducto model)
+=======
+        public async Task<ActionResult> agregarLoteProducto(LoteProductos model)
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
         {
             if (!ModelState.IsValid)
             {
@@ -60,7 +77,13 @@ namespace WebApplication1.Controllers
 
         }
 
+<<<<<<< HEAD
        
+=======
+        //trae la vista con los datos cargados
+        [HttpGet]
+        [Route("modificar/(id)")]
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
         public async Task<ActionResult> modificarLoteProducto(int id)
         {
             using (var http = new HttpClient())
@@ -71,7 +94,11 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
+<<<<<<< HEAD
                 var LoteProducto = JsonConvert.DeserializeObject<TblLoteProducto>(responseString);
+=======
+                var LoteProducto = JsonConvert.DeserializeObject<LoteProductos>(responseString);
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
                 return View(LoteProducto);
             }
 
@@ -79,13 +106,21 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
+<<<<<<< HEAD
         public async Task<ActionResult> modificarLoteProducto(TblLoteProducto model)
+=======
+        public async Task<ActionResult> modificarLoteProducto(LoteProductos model)
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
         {
             using (var http = new HttpClient())
             {
                 var LoteProductoSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(LoteProductoSerializada, Encoding.UTF8, "application/json");
+<<<<<<< HEAD
                 var response = await http.PutAsync(_url + "/" + model.IdLoteProducto, content);
+=======
+                var response = await http.PutAsync(_url + "/" + model.IdLoteProductos, content);
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");
@@ -95,7 +130,12 @@ namespace WebApplication1.Controllers
 
         }
         //elimina los datos de la bd
+<<<<<<< HEAD
 
+=======
+        [HttpGet]
+        [Route("eliminar/(id)")]
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
         public async Task<string> eliminarLoteProducto(int id)
         {
             using (var http = new HttpClient())

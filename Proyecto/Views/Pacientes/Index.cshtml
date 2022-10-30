@@ -1,7 +1,13 @@
 ﻿@using WebApplication1.Models
+<<<<<<< HEAD
 @model List<TblPaciente>
     @{
     ViewBag.Title = "Vista Pacientes";
+=======
+@model List<Pacientes>
+    @{
+    ViewBag.Title = "Pacientes";
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
     }
 
     <h2>@ViewBag.Title</h2>
@@ -27,6 +33,7 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+<<<<<<< HEAD
                     <td>@item.NoAfiliacion</td>
                     <td>@item.Nombre</td>
                     <td>@item.Direccion</td>
@@ -34,6 +41,15 @@
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Pacientes/modificarPaciente/" + item.IdPaciente)'" type="button" value="Editar" class="btn btn-warning" />
                         <input onclick="eliminarPaciente('@item.IdPaciente','@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
+=======
+                    <td>@item.no_afiliado</td>
+                    <td>@item.nombre</td>
+                    <td>@item.direccion</td>
+                    <td>@item.telefono</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Pacientes/modificarPaciente/" + item.idPaciente)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarPaciente('@item.idPaciente','@item.idPaciente');" type="button" value="Eliminar" class="btn btn-danger" />
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
                     <td>
                 </tr>
                 }
@@ -48,7 +64,11 @@ else
     </div>
 }
     <script>
+<<<<<<< HEAD
     function eliminarPaciente(id,Pacientes) {
+=======
+    function EliminarPaciente(id,Pacientes) {
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
         if (confirm(`Esta Seguro de Eliminar A Este Paciente: ${Pacientes} ?????` )) {
             url = "@Url.Content("~/Pacientes/eliminarPaciente/")" + id;
             $.get(url).done((data) => {

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿@model WebApplication1.Models.TblDiagnostico
+=======
+﻿@using WebApplication1.Models
+@model Diagnosticos
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
 @{
     ViewBag.Title = "newDiagnostico";
 }
@@ -8,6 +13,7 @@
 @using (Html.BeginForm("agregarDiagnostico", "Diagnostico", FormMethod.Post))
 {
 <div class="mb-3 mt-3">
+<<<<<<< HEAD
     @Html.LabelFor(m => m.Titulo)
     @Html.TextBoxFor(m => m.Titulo, new { @class = "form-control" })
 </div>
@@ -18,4 +24,16 @@
 </div>
 
 <button type="submit" class="btn btn-primary">Agregar Diagnostico</button>
+=======
+    @Html.LabelFor(m => m.titulo)
+    @Html.TextBoxFor(m => m.titulo, new { @class = "form-control" })
+</div>
+
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.descripcion)
+    @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
+</div>
+
+<button type="submit" class="btn btn-primary">Agregar Descripcion</button>
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
 }

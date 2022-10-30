@@ -23,12 +23,21 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+<<<<<<< HEAD
                 <tr>
                     <td>@item.Cargo</td>
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Cargo/modificarCargo/" + item.IdCargo)'" type="button" value="Editar" class="btn btn-warning" />
                         <input onclick="EliminarCargo('@item.IdCargo','@item.Cargo');" type="button" value="Eliminar" class="btn btn-danger" />
                 </tr>
+=======
+                    <tr>
+                        <td>@item.Cargo</td>
+                        <td>
+                            <input onclick="document.location.href='@Url.Content("~/Cargo/modificarCargo/" + item.IdCargo)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="EliminarCargo('@item.IdCargo','@item.Cargo');" type="button" value="Eliminar" class="btn btn-danger" />
+</tr>
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
                 }
             </tbody>
         </table>
@@ -40,7 +49,11 @@ else
         <h2>No hay cargos</h2>
     </div>
 }
+<<<<<<< HEAD
     <script>
+=======
+           <script>
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
     function EliminarCargo(id,Cargo) {
         if (confirm(`Esta Seguro de Eliminar A Este cargo : ${Cargo} ?????` )) {
         url = "@Url.Content("~/Cargo/eliminarCargo/")" + id;

@@ -13,11 +13,21 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class cargoController : Controller
     {
+<<<<<<< HEAD
         private readonly string _url = "https://apiclinica.azurewebsites.net/api/Cargo";
         public async Task<ActionResult> Index()
 
         {
            
+=======
+        //recibir una lista de una api 
+        private readonly string _url = "https://63560ad8da523ceadc0a79f5.mockapi.io/apis/cargo";
+        public async Task<ActionResult> Index()
+
+        {
+
+            //https://63560ad8da523ceadc0a79f5.mockapi.io/apis/cargo
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);
@@ -40,7 +50,11 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
+<<<<<<< HEAD
         public async Task<ActionResult>AgregarCargo(TblCargo model)
+=======
+        public async Task<ActionResult>AgregarCargo(Cargos model)
+>>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
         {
             if (!ModelState.IsValid)
             {

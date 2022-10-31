@@ -520,10 +520,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Pacientes\Index.cshtml" />
-    <Content Include="Views\Home\Farmacia.cshtml" />
-    <Content Include="Views\Home\Empleado.cshtml" />
-    <Content Include="Views\Home\Menu.cshtml" />
-    <Content Include="Views\Home\Consulta.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Consulta\Index.cshtml" />

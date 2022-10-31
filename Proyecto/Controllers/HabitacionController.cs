@@ -50,7 +50,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoHabitacion = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseString);
+                var listadoHabitacion = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseString);
                 return View(listadoHabitacion);
             }
 
@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoHabitacion = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseString);
+                var listadoHabitacion = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseString);
                 return PartialView("_DataList", listadoHabitacion);
             }
         }

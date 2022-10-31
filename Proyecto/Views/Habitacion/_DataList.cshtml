@@ -1,23 +1,19 @@
 ﻿
 <table class="table">
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.IdHabitacion
-            </td>
-            <td>@item.NoHabitacion
-            </td>
-            <td>@item.IdClinica
-            </td>
-            <td>@item.CantidadMaxPacientes
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
-
+    <thead>
+        <th>No Habitacion</th>
+        <th>Clinica</th>
+        <th>Cantidad Maxima de Personas</th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+            <td>@item.NoHabitacion</td>
+            <td>@item.Clinica</td>
+            <td>@item.CantidadMaxPacientes</td>
+   
+    </tr>
+}
+    </tbody>
 </table>

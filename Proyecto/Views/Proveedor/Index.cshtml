@@ -1,9 +1,7 @@
 ﻿@using WebApplication1.Models
-<<<<<<< HEAD
+
 @model List<TblProveedor>
-=======
-@model List<Proveedores>
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
     @{
     ViewBag.Title = "Proveedor";
     }
@@ -31,7 +29,7 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-<<<<<<< HEAD
+
                     <td>@item.Nombre</td>
                     <td>@item.Nit</td>
                     <td>@item.Direccion</td>
@@ -39,15 +37,7 @@
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Proveedor/modificarProveedor/" + item.IdProveedor)'" type="button" value="Editar" class="btn btn-warning" />
                         <input onclick="eliminarProveedor('@item.IdProveedor', '@item.IdProveedor');" type="button" value="Eliminar" class="btn btn-danger" />
-=======
-                    <td>@item.nombre</td>
-                    <td>@item.nit</td>
-                    <td>@item.direccion</td>
-                    <td>@item.telefono</td>
-                    <td>
-                        <input onclick="document.location.href='@Url.Content("~/Proveedor/modificarProveedor/" + item.idProveedor)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="eliminarProveedor('@item.idProveedor', '@item.idProveedor');" type="button" value="Eliminar" class="btn btn-danger" />
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                     </td>
                 </tr>
                 }
@@ -75,10 +65,7 @@ else
         }
     }
     </script>
-<<<<<<< HEAD
-=======
 
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
 
 
 

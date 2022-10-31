@@ -160,6 +160,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        //
         [HttpPost]
         public async Task<JsonResult> getPrecios(int id)
         {
@@ -181,6 +182,22 @@ namespace WebApplication1.Controllers
                     };
                     return Json(responseData);
                 }
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult> Details(int? id)
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_urlVd+"/"+id);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var Detalles = JsonConvert.DeserializeObject<List<VentasDetalleViewDetails>>(responseString);
+                ViewBag.data = Detalles[0].Numero;
+                return View(Detalles);
             }
         }
     }

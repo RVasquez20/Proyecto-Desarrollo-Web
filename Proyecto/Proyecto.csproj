@@ -317,7 +317,6 @@
     <Compile Include="Controllers\CargoController.cs" />
     <Compile Include="Controllers\ClinicaController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
-    <Compile Include="Controllers\ComprasDetalleController.cs" />
     <Compile Include="Controllers\ConsultaController.cs" />
     <Compile Include="Controllers\DiagnosticoController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
@@ -566,7 +565,6 @@
     <Content Include="Views\Pacientes\modificarPaciente.cshtml" />
     <Content Include="Views\Receta\modificarReceta.cshtml" />
     <Content Include="Views\LoteProducto\modificarLoteProducto.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\PacienteHabitacion\newPacienteHab.cshtml" />
     <Content Include="Views\Habitacion\HabitacionesDisponibles.cshtml" />
     <Content Include="Views\Habitacion\_DataList.cshtml" />
@@ -576,9 +574,9 @@
     <Content Include="Views\Role\modificarRole.cshtml" />
     <Content Include="Views\Usuario\modificarUsuario.cshtml" />
     <Content Include="Views\Venta\VentaDetalle.cshtml" />
-=======
-    <Content Include="Views\Habitacion\modificarHabitacion.cshtml" />
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+    <Content Include="Views\Venta\Details.cshtml" />
+    <Content Include="Views\Compra\CompraDetalle.cshtml" />
+    <Content Include="Views\Compra\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

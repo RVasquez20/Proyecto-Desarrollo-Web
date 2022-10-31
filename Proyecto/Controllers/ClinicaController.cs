@@ -14,11 +14,9 @@ namespace WebApplication1.Controllers
     public class ClinicaController : Controller
     {
         //recibir una lista de una api 
-<<<<<<< HEAD
+
         private readonly string _url = "https://apiclinica.azurewebsites.net/api/Clinicas";
-=======
-        private readonly string _url = "https://63572b429243cf412f942721.mockapi.io/prueba3/Clinica";
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
         public async Task<ActionResult> Index()
 
         {
@@ -32,11 +30,9 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-<<<<<<< HEAD
+
                 var listadoClinica = JsonConvert.DeserializeObject<List<TblClinica>>(responseString);
-=======
-                var listadoClinica = JsonConvert.DeserializeObject<List<Clinica>>(responseString);
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                 return View(listadoClinica);
             }
 
@@ -49,12 +45,9 @@ namespace WebApplication1.Controllers
         }
         //agregar a el json
         [HttpPost]
-        //siempre debe ser un model
-<<<<<<< HEAD
+
         public async Task<ActionResult> agregarClinica(TblClinica model)
-=======
-        public async Task<ActionResult> agregarClinica(Clinica model)
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
         {
             if (!ModelState.IsValid)
             {
@@ -87,11 +80,9 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-<<<<<<< HEAD
+
                 var clinica = JsonConvert.DeserializeObject<TblClinica>(responseString);
-=======
-                var clinica = JsonConvert.DeserializeObject<Clinica>(responseString);
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                 return View(clinica);
             }
 
@@ -99,21 +90,17 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-<<<<<<< HEAD
+
         public async Task<ActionResult> modificarClinica(TblClinica model)
-=======
-        public async Task<ActionResult> modificarClinica(Clinica model)
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
         {
             using (var http = new HttpClient())
             {
                 var clinicaSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(clinicaSerializada, Encoding.UTF8, "application/json");
-<<<<<<< HEAD
+
                 var response = await http.PutAsync(_url + "/" + model.IdClinica, content);
-=======
-                var response = await http.PutAsync(_url + "/" + model.idClinica, content);
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

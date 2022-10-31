@@ -10,22 +10,17 @@
 
 <h2>modificarLoteProducto</h2>
 
-<<<<<<< HEAD
+
 @using (Html.BeginForm("modificarLoteProducto", "LoteProducto", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
-=======
-@using (Html.BeginForm("modificarLoteProducto","LoteProducto",FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
     <div class="form-horizontal">
         <h4>LoteProductos</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-<<<<<<< HEAD
+
 
         <div class="form-group">
          @Html.HiddenFor(model => model.IdLoteProducto, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -34,15 +29,7 @@
            @Html.ValidationMessageFor(model => model.IdLoteProducto, "", new { @class = "text-danger" })
         </div>
     </div>
-=======
-        <div class="form-group">
-           
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.IdLoteProductos, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdLoteProductos, "", new { @class = "text-danger" })
-            </div>
-        </div>
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -53,17 +40,12 @@
         </div>
 
         <div class="form-group">
-<<<<<<< HEAD
+
             @Html.LabelFor(model => model.NoLote, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.NoLote, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NoLote, "", new { @class = "text-danger" })
-=======
-            @Html.LabelFor(model => model.noLote, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.noLote, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.noLote, "", new { @class = "text-danger" })
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
             </div>
         </div>
 
@@ -86,9 +68,4 @@
 }
 
 
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6

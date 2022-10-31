@@ -1,9 +1,7 @@
 ﻿@using WebApplication1.Models
-<<<<<<< HEAD
+
 @model List<TblClinica>
-=======
-@model List<Clinica>
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
     @{
     ViewBag.Title = "Clinicas";
     }
@@ -29,19 +27,13 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-<<<<<<< HEAD
+
                     <td>@item.Nombre</td>
                     <td>@item.Direccion</td>
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Clinica/modificarClinica/" + item.IdClinica)'" type="button" value="Editar" class="btn btn-warning" />
                         <input onclick="eliminarClinica('@item.IdClinica', '@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
-=======
-                    <td>@item.nombre</td>
-                    <td>@item.direccion</td>
-                    <td>
-                        <input onclick="document.location.href='@Url.Content("~/Clinica/modificarClinica/" + item.idClinica)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="eliminarClinica('@item.idClinica', '@item.idClinica');" type="button" value="Eliminar" class="btn btn-danger" />
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                     </td>
                 </tr>
                 }

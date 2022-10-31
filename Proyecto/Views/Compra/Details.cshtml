@@ -1,0 +1,26 @@
+﻿@model IEnumerable<WebApplication1.Models.ComprasDetalleViewDetails>
+
+    @{
+    ViewBag.Title = "Details";
+    int NoOrden = ViewBag.data;
+    }
+
+    <h2>Details</h2>
+    <h1>No.Orden:@NoOrden</h1>
+    <table class="table">
+
+        <tr>
+
+            <th>Producto</th>
+            <th>Cantidad</th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Producto</td>
+            <td>@item.Cantidad</td>
+        </tr>
+    }
+
+    </table>

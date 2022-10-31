@@ -131,78 +131,10 @@ namespace WebApplication1.Controllers
                 {
                     return View("Error");
                 }
-<<<<<<< HEAD
+
                 return RedirectToAction("Index");
             }   
-=======
-            };
-            var listadoLoteProducto = dataLoteProducto.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.Descripcion,
-                    Value = r.IdLoteProductos.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoLoteProducto = listadoLoteProducto;
 
-            var dataClinica = new List<Clinica>()
-            {
-                new Clinica()
-                {
-                    idClinica=1,
-                    nombre="Clinica 1",
-                    direccion = "Clinica 1"
-                },
-                new Clinica()
-                {
-                    idClinica=1,
-                    nombre="Clinica 2",
-                    direccion = "Clinica 2"
-                }
-            };
-            var listadoClinica = dataClinica.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.nombre + "," + r.direccion,
-                    Value = r.idClinica.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoClinica = listadoClinica;
-
-            var dataMarca = new List<Marcas>()
-            {
-                new Marcas()
-                {
-                    IdMarca=1,
-                    Marca="Marca 1"
-                },
-                new Marcas()
-                {
-                    IdMarca=2,
-                    Marca="Marca 2"
-                },
-                new Marcas()
-                {
-                    IdMarca=3,
-                    Marca="Marca 3"
-                }
-            };
-            var listadoMarca = dataMarca.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.Marca,
-                    Value = r.IdMarca.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoMarca = listadoMarca;
-            return View();
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
         }
 
         public async Task<ActionResult> ActualizarProducto(int? id)

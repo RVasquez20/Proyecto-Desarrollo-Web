@@ -1,10 +1,7 @@
-<<<<<<< HEAD
+
 ﻿@model WebApplication1.Models.TblReceta
 
-=======
-﻿@using WebApplication1.Models
-@model Receta
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
 @{
     ViewBag.Title = "Agregar Receta";
 }
@@ -13,7 +10,7 @@
 
 @using (Html.BeginForm("agregarReceta", "Receta", FormMethod.Post))
 {
-<<<<<<< HEAD
+
     @Html.HiddenFor(m => m.IdReceta)
     <div class="mb-3 mt-3">
         @Html.LabelFor(m => m.Serie)
@@ -25,19 +22,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Agregar una Receta</button>
-=======
-@Html.HiddenFor(m => m.idReceta)
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.serie_receta)
-    @Html.TextBoxFor(m => m.serie_receta, new { @class = "form-control" })
-</div>
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.fecha_emision)
-    @Html.TextBoxFor(m => m.fecha_emision, new { @class = "form-control" })
-</div>
 
-<button type="submit" class="btn btn-primary">Agregar Receta</button>
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
 }
 
 

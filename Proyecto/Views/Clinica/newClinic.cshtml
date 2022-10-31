@@ -1,10 +1,7 @@
-<<<<<<< HEAD
+
 ﻿@model WebApplication1.Models.TblClinica
 
-=======
-﻿@using WebApplication1.Models
-@model Clinica
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
 @{
     ViewBag.Title = "Agregar Clinica";
 }
@@ -23,16 +20,6 @@
 <div class="mb-3 mt-3">
     @Html.LabelFor(m => m.Direccion)
     @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
-=======
-    @Html.HiddenFor(m=>m.idClinica)
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.nombre)
-    @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
-</div>
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.direccion)
-    @Html.TextBoxFor(m => m.direccion, new { @class = "form-control" })
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
 </div>
 
 

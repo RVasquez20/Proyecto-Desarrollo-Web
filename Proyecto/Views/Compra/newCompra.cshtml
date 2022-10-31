@@ -1,35 +1,24 @@
 ﻿@model WebApplication1.Models.TblCompra
 @{
     ViewBag.Title = "Agregar Compra";
-    List<SelectListItem> listaProveedor = ViewBag.listadoProveedor;
+    List<SelectListItem> listadoProveedor = ViewBag.listadoProveedor;
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
+@using (Html.BeginForm("AddCompra", "Compra", FormMethod.Post, new { role = "form", @class = "" }))
 {
 <div class="mb-3 mt-3">
     @Html.LabelFor(m => m.NoOrden)
-    @Html.TextBoxFor(m => m.no_orden, new { @class = "form-control" })
+    @Html.TextBoxFor(m => m.NoOrden, new { @class = "form-control" })
 </div>
 
 <div class="mb-3 mt-3">
     @Html.LabelFor(m => m.FechaOrden)
-    @Html.TextBoxFor(m => m.fecha_orden, new { @class = "form-control" })
+    @Html.TextBoxFor(m => m.FechaOrden, new { @class = "form-control" })
 </div>
-
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.Fecha)
-    @Html.TextBoxFor(m => m.fecha, new { @class = "form-control" })
-</div>
-
-<div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.IdProveedor)
-    @Html.TextBoxFor(m => m.IdProveedor, new { @class = "form-control" })
-</div>
-
-@Html.DropDownList("Proveedor", listaProveedor, "Seleccionar una clinica", new { @class = "form-control" })
-
+@Html.LabelFor(m => m.IdProveedor)
+@Html.DropDownList("IdProveedor", listadoProveedor, "Seleccionar un Producto", new { @class = "form-control" })
 <button type="submit" class="btn btn-primary">Agregar Compra</button>
 }
 

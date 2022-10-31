@@ -25,7 +25,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-<<<<<<< HEAD
+
                 <tr>
                     <td>@item.NoHabitacion</td>
                     <td>@item.Clinica</td>
@@ -36,17 +36,7 @@
                         <input onclick="eliminarHabitacion('@item.IdHabitacion','@item.NoHabitacion');" type="button" value="Eliminar" class="btn btn-danger" />
                     </td>
                 </tr>
-=======
-                    <tr>
-                        <td>@item.no_habitacion</td>
-                        <td>@item.nombre</td>
-                        <td>@item.CantidadPacientes</td>
-                        <td>
-                            <input onclick="document.location.href='@Url.Content("~/Habitacion/modificarHabitacion/" + item.idHabitacion)'" type="button" value="Editar" class="btn btn-warning" />
-                            <input onclick="eliminarHabitacion('@item.idHabitacion', '@item.idHabitacion');" type="button" value="Eliminar" class="btn btn-danger" />
-                        </td>
-                    </tr>
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                 }
             </tbody>
         </table>
@@ -58,15 +48,11 @@ else
         <h2>No hay examen</h2>
     </div>
 }
-<<<<<<< HEAD
+
     <script>
         function eliminarHabitacion(id,Habitacion) {
         if (confirm(`Esta Seguro de Eliminar Este Examen: ${Habitacion} ?????` )) {
-=======
-<script>
-        function eliminarHabitacion(id,Habitacion) {
-            if (confirm(`Esta Seguro de Eliminar A Esta Habitacion: ${Habitacion} ?????` )) {
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
             url = "@Url.Content("~/Habitacion/eliminarHabitacion/")" + id;
             $.get(url).done((data) => {
                 if (data == "Exito") {

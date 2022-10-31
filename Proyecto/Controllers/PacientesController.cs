@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
     public class PacientesController : Controller
     {
         //recibir una lista de una api 
-<<<<<<< HEAD
+
         private readonly string _url = "https://apiclinica.azurewebsites.net/api/Pacientes";
         public async Task<ActionResult> Index()
 
@@ -28,23 +28,7 @@ namespace WebApplication1.Controllers
                 }
                 var responseString = await responsePaciente.Content.ReadAsStringAsync();
                 var listadoPacientes = JsonConvert.DeserializeObject<List<TblPaciente>>(responseString);
-=======
-        private readonly string _url = "https://63572b429243cf412f942721.mockapi.io/prueba3/Paciente";
-        public async Task<ActionResult> Index()
 
-        {
-
-            //https://63572b429243cf412f942721.mockapi.io/prueba3/Paciente
-            using (var http = new HttpClient())
-            {
-                var response = await http.GetAsync(_url);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                {
-                    return View("Error");
-                }
-                var responseString = await response.Content.ReadAsStringAsync();
-                var listadoPacientes = JsonConvert.DeserializeObject<List<Pacientes>>(responseString);
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
                 return View(listadoPacientes);
             }
 
@@ -58,11 +42,9 @@ namespace WebApplication1.Controllers
         //agregar a el json
         [HttpPost]
         //siempre debe ser un model
-<<<<<<< HEAD
+
         public async Task<ActionResult> agregarPacientes(TblPaciente model)
-=======
-        public async Task<ActionResult> agregarPacientes(Pacientes model)
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
         {
             if (!ModelState.IsValid)
             {
@@ -83,12 +65,9 @@ namespace WebApplication1.Controllers
         }
 
         //trae la vista con los datos cargados
-<<<<<<< HEAD
 
-=======
-        [HttpGet]
-        [Route("modificar/(id)")]
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
+
         public async Task<ActionResult> modificarPaciente(int id)
         {
             using (var http = new HttpClient())
@@ -99,11 +78,9 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-<<<<<<< HEAD
+
                 var pacientes = JsonConvert.DeserializeObject<TblPaciente>(responseString);
-=======
-                var pacientes = JsonConvert.DeserializeObject<Pacientes>(responseString);
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                 return View(pacientes);
             }
 
@@ -111,21 +88,17 @@ namespace WebApplication1.Controllers
 
         //modifica los datos de la bd
         [HttpPost]
-<<<<<<< HEAD
+
         public async Task<ActionResult> modificarPaciente(TblPaciente model)
-=======
-        public async Task<ActionResult> modificarPaciente(Pacientes model)
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
         {
             using (var http = new HttpClient())
             {
                 var pacienteSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(pacienteSerializada, Encoding.UTF8, "application/json");
-<<<<<<< HEAD
+
                 var response = await http.PutAsync(_url + "/" + model.IdPaciente, content);
-=======
-                var response = await http.PutAsync(_url + "/" + model.idPaciente, content);
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");
@@ -135,11 +108,7 @@ namespace WebApplication1.Controllers
 
         }
         //elimina los datos de la bd
-<<<<<<< HEAD
-=======
-        [HttpGet]
-        [Route("eliminar/(id)")]
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
         public async Task<string> eliminarPaciente(int id)
         {
             using (var http = new HttpClient())

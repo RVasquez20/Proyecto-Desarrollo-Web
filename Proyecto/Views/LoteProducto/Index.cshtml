@@ -30,13 +30,10 @@
                     <td>@item.Descripcion</td>
                     <td>@item.FechaExpiracion</td>
                     <td>
-<<<<<<< HEAD
+
                         <input onclick="document.location.href='@Url.Content("~/LoteProducto/modificarLoteProducto/" + item.IdLoteProducto)'" type="button" value="Editar" class="btn btn-warning" />
                         <input onclick="eliminarLoteProducto('@item.IdLoteProducto','@item.Descripcion');" type="button" value="Eliminar" class="btn btn-danger" />
-=======
-                        <input onclick="document.location.href='@Url.Content("~/LoteProducto/modificarLoteProducto/" + item.IdLoteProductos)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="EliminarLoteProducto('@item.IdLoteProductos','@item.IdLoteProductos');" type="button" value="Eliminar" class="btn btn-danger" />
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
                     </td>
                 </tr>
                 }
@@ -50,13 +47,10 @@ else
         <h2>No hay Lote de Productos</h2>
     </div>
 }
-<<<<<<< HEAD
+
     <script>
        function eliminarLoteProducto(id,LoteProducto) {
-=======
-   <script>
-       function EliminarLoteProducto(id,LoteProducto) {
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+
         if (confirm(`Esta Seguro de Eliminar A Este Lote de Productos: ${LoteProducto} ?????` )) {
             url = "@Url.Content("~/LoteProducto/eliminarLoteProducto/")" + id;
             $.get(url).done((data) => {
@@ -68,11 +62,9 @@ else
             });
         }
     }
-<<<<<<< HEAD
+
     </script>
 
 
    
-=======
-  </script>
->>>>>>> 18857b6bb0833709fb4ab1c219a7f8f5bc7055d6
+

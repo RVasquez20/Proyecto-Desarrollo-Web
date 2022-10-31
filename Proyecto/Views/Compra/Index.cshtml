@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<TblCompra>
+@model List<CompraViewModel>
     @{
     ViewBag.Title = "Compras";
     }
@@ -18,7 +18,6 @@
                 <tr>
                     <th>No. Orden</th>
                     <th>Fecha Orden</th>
-                    <th>Fecha</th>
                     <th>Proveedor</th>
                     <th>Gestion</th>
                 </tr>
@@ -29,11 +28,9 @@
                 <tr>
                     <td>@item.NoOrden</td>
                     <td>@item.FechaOrden</td>
-                    <td>@item.Fecha</td>
-                    <td>@item.IdProveedor</td>
+                    <td>@item.Proveedor</td>
                     <td>
-                        <input onclick="document.location.href='@Url.Content("~/Compra/deleteCompra/" + item.IdCompras)'" type="button" value="Eliminar" class="btn btn-danger" />
-                        <input onclick="document.location.href='@Url.Content("~/Compra/modifyCompra/" + item.IdCompras)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="document.location.href='@Url.Content("~/Compra/Details/" + item.IdCompras)'" type="button" value="Ver Detalles" class="btn btn-warning" />
                     </td>
                 </tr>
                 }
@@ -44,22 +41,8 @@
 else
 {
     <div class="container mt-3">
-        <h2>No hay Diagnosticos</h2>
+        <h2>No hay Compras</h2>
     </div>
 }
-    <script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Esta Habitacion?????")) {
-            url = "@Url.Content("~/Compra/deleteCompra/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Compra/Index")"
-                } else {
-                    alert("Ocurrio un Error :c");
-                }
-            });
-        }
-    }
-    </script>
 
 

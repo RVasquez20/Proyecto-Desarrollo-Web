@@ -15,32 +15,6 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult Menu()
-        {
-            ViewBag.Message = "Menu";
-
-            return View();
-        }
-
-        public ActionResult Consulta()
-        {
-            ViewBag.Message = "Consult";
-
-            return View();
-        }
-
-        public ActionResult Empleado()
-        {
-            ViewBag.Message = "Employee";
-
-            return View();
-        }
-
-        public  ActionResult Farmacia()
-        {
-            ViewBag.Message = "Farmacy";
-
-            return View();
-        }
+       
     }
 }

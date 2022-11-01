@@ -1,0 +1,20 @@
+﻿@model WebApplication1.Models.TblPacientesHabitacione
+@{
+    ViewBag.Title = "modificarPacienteHabitacion";
+    List<SelectListItem> listadoHabDisp = ViewBag.listadoHabDisp;
+     List<SelectListItem> listadoPacientes = ViewBag.listadoPacientes;
+}
+
+<h2>modificarPacienteHabitacion</h2>
+@using(Html.BeginForm("modificarPacientesHabitaciones","PacienteHabitacion",FormMethod.Post))
+{
+@Html.HiddenFor(m=>m.IdPacHab)
+<input name="IdPacHab" id="IdPacHab" value="@Model.IdPacHab" type="text" hidden></input>
+@Html.DropDownList("IdHabitacion", listadoHabDisp, "Seleccionar una habitacion", new { @class = "form-control" })
+<div class="mb-3 mt-3">
+    @Html.DropDownList("IdPaciente", listadoPacientes, "Seleccionar un Paciente", new { @class = "form-control" })
+</div>
+
+<button type="submit" id="add" class="btn btn-primary">Agregar Paciente</button>
+
+}

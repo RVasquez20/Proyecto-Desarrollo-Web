@@ -573,6 +573,7 @@
     <Content Include="Views\Venta\Details.cshtml" />
     <Content Include="Views\Compra\CompraDetalle.cshtml" />
     <Content Include="Views\Compra\Details.cshtml" />
+    <Content Include="Views\PacienteHabitacion\modificarPacienteHabitacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

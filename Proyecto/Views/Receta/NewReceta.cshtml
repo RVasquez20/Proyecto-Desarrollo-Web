@@ -11,7 +11,6 @@
 @using (Html.BeginForm("agregarReceta", "Receta", FormMethod.Post))
 {
 
-    @Html.HiddenFor(m => m.IdReceta)
     <div class="mb-3 mt-3">
         @Html.LabelFor(m => m.Serie)
         @Html.TextBoxFor(m => m.Serie, new { @class = "form-control" })

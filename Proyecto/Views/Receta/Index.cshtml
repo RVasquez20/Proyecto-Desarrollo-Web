@@ -32,7 +32,7 @@
                     <td>@item.FechaEmision</td>
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Receta/modificarReceta/" + item.IdReceta)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="    eliminarReceta('@item.IdReceta', '@item.IdReceta');" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="eliminarReceta('@item.IdReceta', '@item.IdReceta');" type="button" value="Eliminar" class="btn btn-danger" />
 
                     </td>
                 </tr>
@@ -47,18 +47,50 @@ else
         <h2>No hay Receta</h2>
     </div>
 }
-    <script>
-    function eliminarReceta(id, Receta) {
-        if (confirm(`Esta Seguro de Eliminar A Esta Receta: ${Receta} ?????` )) {
-            url = "@Url.Content("~/Receta/eliminarReceta/")" + id;
-            $.get(url).done((data) => {
-                if (data == "Exito") {
-                    document.location.href = "@Url.Content("~/Receta/Index")";
-                } else {
-                    alert("Hubo un error");
+<script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+
+        function eliminarReceta(id, Receta) {
+            swalWithBootstrapButtons.fire({
+                title: `Desea Eliminar la Receta No.${id}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/Receta/eliminarReceta/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/Receta/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'La Receta No Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminada!',
+                        'La Receta Se Ha Eliminado Exitosamente.',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'La Receta No Se Elimino :D',
+                        'error'
+                    )
                 }
-            });
-        }
+            })
     }
-    </script>
+</script>
 

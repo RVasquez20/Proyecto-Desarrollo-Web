@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using WebApplication1.Models;
 using WebApplication1.permisos;
 using WebApplication1.Hubs;
+using System.Net.Sockets;
 
 namespace WebApplication1.Controllers
 {
@@ -80,9 +81,85 @@ namespace WebApplication1.Controllers
             }
             
         }
+        public async Task<ActionResult> modificarPacienteHabitacion(int id)
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.GetAsync(_url + "/" + id);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responsePaciente = await http.GetAsync(_urlPacientes);
+                if (responsePaciente.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringPaciente = await responsePaciente.Content.ReadAsStringAsync();
+                var listadoPac = JsonConvert.DeserializeObject<List<TblPaciente>>(responseStringPaciente);
 
 
+                var responseHabitaciones = await http.GetAsync(_urlHabitacionesDisponibles);
+                if (responseHabitaciones.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringHabDispo = await responseHabitaciones.Content.ReadAsStringAsync();
+                var listadoHabDisp = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseStringHabDispo);
+                var listadoPacientes = listadoPac.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdPaciente.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoPacientes = listadoPacientes;
+                var listadoHabDisponibles = listadoHabDisp.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.NoHabitacion.ToString(),
+                        Value = r.IdHabitacion.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoHabDisp = listadoHabDisponibles;
+                var responseString = await response.Content.ReadAsStringAsync();
+                var pacienteHabitacion = JsonConvert.DeserializeObject<TblPacientesHabitacione>(responseString);
+                return View(pacienteHabitacion);
+            }
+        }
         [HttpPost]
+        public async Task<ActionResult> modificarPacientesHabitaciones(TblPacientesHabitacione model)
+        {
+            using (var http=new HttpClient())
+            {
+                var responsePacienteHabitacion = await http.GetAsync(_url + "/" + model.IdPacHab);
+                if (responsePacienteHabitacion.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringPaciente = await responsePacienteHabitacion.Content.ReadAsStringAsync();
+                var pacienteHabitacion = JsonConvert.DeserializeObject<TblPacientesHabitacione>(responseStringPaciente);
+                pacienteHabitacion.IdHabitacion = model.IdHabitacion;
+                pacienteHabitacion.IdPaciente = model.IdPaciente;
+                //Modificar TblPAcientesHabitaciones
+                var pacHabitacionSerializada = JsonConvert.SerializeObject(pacienteHabitacion);
+                var content = new StringContent(pacHabitacionSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PutAsync(_url + "/" + model.IdPacHab, content);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                return RedirectToAction("Index");
+                
+            }
+        }
+        
+
+            [HttpPost]
         public async Task<ActionResult> newPacHab(TblPacientesHabitacione model)
         {
             if (!ModelState.IsValid)
@@ -94,6 +171,20 @@ namespace WebApplication1.Controllers
                 var pacHabitacionSerializada = JsonConvert.SerializeObject(model);
                 var content = new StringContent(pacHabitacionSerializada, Encoding.UTF8, "application/json");
                 var response = await http.PostAsync(_url, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return View("Error");
+                }
+                HabitacionesHub.BroadcastData();
+                return RedirectToAction("Index");
+            }
+        }
+
+        public async Task<ActionResult> EliminarPacienteHabitacion(int? id)
+        {
+            using (var _http = new HttpClient())
+            {
+                var response = await _http.DeleteAsync(_url + "/" + id);
                 if (!response.IsSuccessStatusCode)
                 {
                     return View("Error");

@@ -10,12 +10,15 @@ using System.Web.Mvc;
 using WebApplication1.Models;
 using WebApplication1.permisos;
 
+
 namespace WebApplication1.Controllers
 {
     [ValidateSession]
     public class RoleController : Controller
     {
         private readonly string _urlRoles = "https://apiclinica.azurewebsites.net/api/Roles";
+        private readonly string _urlAccesos = "https://apiclinica.azurewebsites.net/api/Access";
+        private readonly string _urlAccesosRoles = "https://apiclinica.azurewebsites.net/api/AccessRoles";
         // GET: RoleI
         public async Task<ActionResult> Index()
         {
@@ -28,11 +31,14 @@ namespace WebApplication1.Controllers
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
                 var listadoRol = JsonConvert.DeserializeObject<List<TblRole>>(responseString);
+                
                 return View(listadoRol);
             }
         }
         public ActionResult agregarRole()
         {
+            //mandar una lista de accesos y convcertir esa lista en si o no tipo combobox
+
             return View();
         }
             //agregar a el json
@@ -53,10 +59,15 @@ namespace WebApplication1.Controllers
                 {
                     return View("Error");
                 }
+                //deserealizar id rol
                 return RedirectToAction("Index");
             }
 
         }
+        // mandar una lista de accesos y convcertir esa lista en si o no tipo combobox
+        //guardan cada acceso en accesRoles con el id de rol que devolvio la peticion anterior
+        //retornan a el listado de roles(Index)
+
 
 
         public async Task<ActionResult> modificarRole(int id)

@@ -21,7 +21,6 @@ namespace WebApplication1.Controllers
 
         {
 
-            //https://63572b429243cf412f942721.mockapi.io/prueba3/Clinica
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_url);

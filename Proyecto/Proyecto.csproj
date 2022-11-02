@@ -364,6 +364,7 @@
     <Compile Include="Models\TblVentasDetalle.cs" />
     <Compile Include="permisos\ValidateSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Encrypt.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -574,11 +575,11 @@
     <Content Include="Views\Compra\CompraDetalle.cshtml" />
     <Content Include="Views\Compra\Details.cshtml" />
     <Content Include="Views\PacienteHabitacion\modificarPacienteHabitacion.cshtml" />
+    <Content Include="Views\Consulta\ConsultasPorPaciente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\Products\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

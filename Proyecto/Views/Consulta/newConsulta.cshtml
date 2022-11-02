@@ -1,48 +1,144 @@
-﻿
-@model WebApplication1.Models.TblConsulta
+﻿@model WebApplication1.Models.TblConsulta
 @{
     ViewBag.Title = "Agregar Consulta";
-    List<SelectListItem> listadoPaciente = ViewBag.listadoPaciente;
-    List<SelectListItem> listadoEmpleado = ViewBag.listadoEmpleado;
-    List<SelectListItem> listadoClinica = ViewBag.listadoClinica;
-    List<SelectListItem> listadoDiagnostico = ViewBag.listadoDiagnostico;
-    List<SelectListItem> listadoReceta = ViewBag.listadoReceta;
+    List<SelectListItem> listadoPaciente = ViewBag.listadoPacientes;
+    List<SelectListItem> listadoExamenes = ViewBag.listadoExamenes;
+    // List<SelectListItem> listadoEmpleado = ViewBag.listadoEmpleado;
+    //List<SelectListItem> listadoClinica = ViewBag.listadoClinica;
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Action", "Controller", FormMethod.Post, new { role = "form", @class = "" }))
-{
+<hr />
+<h3>Paciente</h3>
 <div class="mb-3 mt-3">
-    @Html.LabelFor(m => m.IdPaciente)
-    @Html.TextBoxFor(m => m.IdPaciente, new { @class = "form-control" })
-</div>
-
-<div class="mb-3 mt-3">
+    <input id="IdConsulta" class="form-control" name="IdConsulta" value="0" hidden />
     @Html.DropDownList("IdPaciente", listadoPaciente, "Seleccionar un Paciente", new { @class = "form-control" })
 </div>
 
-<div class="mb-3 mt-3">
-    @Html.DropDownList("IdEmpleado", listadoEmpleado, "Seleccionar un Empleado", new { @class = "form-control" })
+<div id="Diagnostico" class="mb-3 mt-3" hidden>
+    <h3 id="tit-Diagnoistico">Diagnostico</h3>
+    <hr />
+
+    <input id="IdDiagnostico" class="form-control" name="IdDiagnostico" value="0" hidden />
+    <label>Titulo</label>
+    <input id="Titulo" class="form-control" name="Titulo" />
+    <label>Descripcion</label>
+    <textarea id="Descripcion" name="Descripcion" class="form-control" aria-label="Descripcion del diagnostico"></textarea>
+
+    <button type="submit" id="addDiagnostico" class="btn btn-primary">Agregar Diagnostico</button>
 </div>
 
+<div id="Receta" class="mb-3 mt-3" hidden>
+    <h3 id="tit-Receta">Receta</h3>
+    <hr />
+    <input id="IdReceta" class="form-control" name="IdReceta" value="0" hidden />
+    <label>Serie</label>
+    <input id="Serie" class="form-control" name="Serie" />
+    <label>Fecha Emision</label>
+    <input id="FechaEmision" class="form-control" type="date" name="FechaEmision" />
 
-<div class="mb-3 mt-3">
-    @Html.DropDownList("IdClinica", listadoClinica, "Seleccionar una Clinica", new { @class = "form-control" })
+
+    <button type="submit" id="addReceta" class="btn btn-primary">Agregar Receta</button>
+</div>
+<div id="Examenes" class="mb-3 mt-3" hidden>
+    @Html.DropDownList("IdExamen", listadoExamenes, "Seleccionar un Examen", new { @class = "form-control" })
+
+    <button type="submit" id="addExamen" class="btn btn-primary">Agregar Examen</button>
+    <button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Consultas/Index")'">Finalizar Venta</button>
+    <div id="dataTable">
+        <h1>Examenes Realizados</h1>
+        <table class="table table-dark">
+            <thead>
+            <th>Examen</th>
+            </thead>
+            <tbody id="data">
+            </tbody>
+
+        </table>
+    </div>
 </div>
 
-<div class="mb-3 mt-3">
-    @Html.DropDownList("IdDiagnostico", listadoDiagnostico, "Seleccionar un Diagnostico", new { @class = "form-control" })
-</div>
+<button type="submit" id="addConsulta" class="btn btn-primary" hidden>Agregar Consulta</button>
+@section scripts{
 
-<div class="mb-3 mt-3">
-    @Html.DropDownList("IdReceta", listadoReceta, "Seleccionar una Receta", new { @class = "form-control" })
-</div>
+    <script>
+        
+          var _urlAddDiagnostic = "@Url.Action("agregarDiagnostico", "Diagnostico")";
+          var _urlAddReceta = "@Url.Action("agregarReceta", "Receta")";
+          var _urlAddConsulta= "@Url.Action("agregarConsulta", "Consulta")";
+        var _urlAddExamenConsulta = "@Url.Action("agregarExamenConsulta", "Examen")";
 
-<button type="submit" class="btn btn-primary">Agregar </button>
-}
+        $("#IdPaciente").on('change', () => {
+            $("#Diagnostico").removeAttr('hidden');
+        });
 
+        $("#addDiagnostico").on('click', () => {
+            var Titulo = $("#Titulo").val();
+            var Descripcion = $("#Descripcion").val();
 
+            var obj = {
+                Titulo: Titulo,
+                Descripcion: Descripcion
+            };
 
+            $.post(_urlAddDiagnostic, obj).done((data) => {
+                $('#addDiagnostico').attr("disabled", true);
+                $("#Receta").removeAttr('hidden');
+                $("#IdDiagnostico").val(data.IdDiagnostico);
+            });
 
+        });
 
+        $("#addReceta").on('click', () => {
+            var Serie = $("#Serie").val();
+            var FechaEmision = $("#FechaEmision").val();
+            var obj = {
+                Serie: Serie,
+                FechaEmision: FechaEmision
+            };
+
+            $.post(_urlAddReceta, obj).done((data) => {
+                $('#addReceta').attr("disabled", true);
+                $("#IdReceta").val(data.IdReceta);
+
+                var IdPaciente = $("#IdPaciente").val();
+                var IdDiagnostico = $("#IdDiagnostico").val();
+                var IdReceta = $("#IdReceta").val();
+                var obj = {
+                    IdPaciente: IdPaciente,
+                    IdEmpleado: @Session["Empleado"],
+                    IdClinica: 1,
+                    IdDiagnostico: IdDiagnostico,
+                    IdReceta: IdReceta
+                };
+
+                $.post(_urlAddConsulta, obj).done((data) => {
+                    $("#IdConsulta").val(data.IdConsulta);
+                    $("#Examenes").removeAttr('hidden');
+                });
+
+            });
+
+        });
+
+        $("#addExamen").on('click',()=> {
+            var IdExamen = $("#IdExamen").val();
+            var IdConsulta = $("#IdConsulta").val();
+            var response = '';
+            var obj = {
+                IdExamen: IdExamen,
+                IdConsulta: IdConsulta
+            };
+            $.post(_urlAddExamenConsulta, obj).done(data => {
+                response += "<tr class='data'>";
+                response += "<td>" + data.IdExamen + "</td>";
+                response += "</tr>";
+                $("#data").append(response);
+                if ($("#Save")[0].hidden) {
+                    $("#Save").removeAttr('hidden');
+                }
+            });
+        });
+    </script>
+    }

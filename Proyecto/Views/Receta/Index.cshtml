@@ -1,5 +1,4 @@
 ﻿@using WebApplication1.Models
-
 @model List<TblReceta>
 
     @{
@@ -10,7 +9,7 @@
     <hr />
 
 
-    @if (Model != null)
+@if (Model.Count>0)
 {
     <div class="container mt-3">
         <h2>Receta</h2>

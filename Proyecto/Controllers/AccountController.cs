@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 using WebApplication1.Models;
+using WebApplication1.Services;
 using static System.Net.WebRequestMethods;
 
 namespace WebApplication1.Controllers
@@ -35,6 +36,8 @@ namespace WebApplication1.Controllers
         public ActionResult LogOff()
         {
             Session["User"] = null;
+            Session["Empleado"] = null;
+            //Session["Clinica"] = null;
             var accesos = (List<TblAccess>)Session["Accesos"];
             foreach (var acceso in accesos)
             {
@@ -57,6 +60,7 @@ namespace WebApplication1.Controllers
                 var oUser = new TblUsuario();
                 oUser.Username = model.User;
                 oUser.Password = model.Password;
+                var hash = Encrypt.GetHash(model.Password);
                 var userSerializer = JsonConvert.SerializeObject(oUser);
                 var content = new StringContent(userSerializer, Encoding.UTF8, "application/json");
                 var response = await _http.PostAsync(_url + "/Login", content);
@@ -67,6 +71,8 @@ namespace WebApplication1.Controllers
                 var responseString = await response.Content.ReadAsStringAsync();
                 var oUsuario = JsonConvert.DeserializeObject<TblUsuario>(responseString);
                 Session["User"] = oUsuario.Username;
+                Session["Empleado"] = oUsuario.IdEmpleado;
+                //Session["Clinica"] = oUsuario.idClinica;
                 var accesos =await getMenu(oUsuario.IdUsuario);
                 Session["Accesos"] = accesos;
                 foreach (var acceso in accesos)

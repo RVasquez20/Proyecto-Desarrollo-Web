@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Consultas";
+
+    List<SelectListItem> listadoPaciente = ViewBag.listadoPacientes;
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<div class="container mt-3">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            @Html.ActionLink("Todas las Consultas", "Index", "Consulta", new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Buscar Consultas por Paciente", "ConsultasPorPaciente", "Consulta", new { @class = "nav-link active" })
+        </li>
+    </ul>
+</div>
+<br />
+<br />
+<div class="container mt-3">
+
+    @Html.DropDownList("IdPaciente", listadoPaciente, "Seleccionar un Paciente", new { @class = "form-control" })
+    <br />
+    <br />
+    <br />
+
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th>Consulta</th>
+                <th>Paciente</th>
+                <th>Empleado</th>
+                <th>Clinica</th>
+                <th>Diagnostico</th>
+                <th>Receta</th>
+                <th>Gestion</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+</div>
+
+
+@section scripts
+{
+
+    <script>
+        $("#IdPaciente").on('change', () => {
+             var _url = "@Url.Action("consultasPaciente", "Consulta")";
+            debugger
+            var IdPaciente = $("#IdPaciente").val();
+            var response = '';
+            var obj = {
+                Paciente: IdPaciente
+            }
+            $.post(_url, obj).done((data) => {
+                for (var i = 0; i < data.length; i++) {
+                    response += "<tr class='data'>";
+                    response += "<td>" + data[i].IdConsulta + "</td>";
+                    response += "<td>" + data[i].Paciente + "</td>";
+                    response += "<td>" + data[i].Empleado + "</td>";
+                    response += "<td>" + data[i].Clinica + "</td>";
+                    response += "<td>" + data[i].Diagnostico + "</td>";
+                    response += "<td>" + data[i].Receta+ "</td>";
+                    response += "<td><a href='/Consultas/DetallesConsulta/" + data[i].IdConsulta +"'class='btn btn-warning' />Ver Detalles</a></td > ";
+
+                    response += "</tr>";
+                }
+
+                $("#data").append(response);
+
+            });
+
+        });
+
+    </script>    
+    
+
+}

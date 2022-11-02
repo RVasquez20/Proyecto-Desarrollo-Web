@@ -46,12 +46,12 @@ namespace WebApplication1.Controllers
         [HttpPost]
         //siempre debe ser un model
 
-        public async Task<ActionResult> agregarReceta(TblReceta model)
+        public async Task<JsonResult> agregarReceta(TblReceta model)
 
         {
             if (!ModelState.IsValid)
             {
-                return View("Error");
+                return Json(null);
             }
             using (var http = new HttpClient())
             {
@@ -60,9 +60,11 @@ namespace WebApplication1.Controllers
                 var response = await http.PostAsync(_url, content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return View("Error");
+                    return Json(null);
                 }
-                return RedirectToAction("Index");
+                var responseString = await response.Content.ReadAsStringAsync();
+                var receta = JsonConvert.DeserializeObject<TblReceta>(responseString);
+                return Json(receta);
             }
 
         }

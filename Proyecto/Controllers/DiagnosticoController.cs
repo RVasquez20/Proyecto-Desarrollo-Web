@@ -33,19 +33,10 @@ namespace WebApplication1.Controllers
 
 
         }
-        public ActionResult newDiagnostico()
-        {
-            return View();
-        }
-        //agregar a el json
+        
         [HttpPost]
-        //siempre debe ser un model
-        public async Task<ActionResult> agregarDiagnostico(TblDiagnostico model)
+        public async Task<JsonResult> agregarDiagnostico(TblDiagnostico model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("Error");
-            }
             using (var http = new HttpClient())
             {
                 var DiagnosticoSerializada = JsonConvert.SerializeObject(model);
@@ -53,9 +44,11 @@ namespace WebApplication1.Controllers
                 var response = await http.PostAsync(_url, content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return View("Error");
+                    return Json(null);
                 }
-                return RedirectToAction("Index");
+                var responseString = await response.Content.ReadAsStringAsync();
+                var Diagnostico = JsonConvert.DeserializeObject<TblDiagnostico>(responseString);
+                return Json(Diagnostico);
             }
 
         }

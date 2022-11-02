@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
         //recibir una lista de una api 
 
         private readonly string _url = "https://apiclinica.azurewebsites.net/api/Examenes";
+        private readonly string _urlExamenConsulta = "https://apiclinica.azurewebsites.net/api/ExamenesConsultas";
         public async Task<ActionResult> Index()
 
         {
@@ -125,5 +126,29 @@ namespace WebApplication1.Controllers
             }
         }
 
+
+        [HttpPost]
+        public async Task<JsonResult> agregarExamenConsulta(TblExamenesConsulta model)
+
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(null);
+            }
+            using (var http = new HttpClient())
+            {
+                var examenSerializado = JsonConvert.SerializeObject(model);
+                var content = new StringContent(examenSerializado, Encoding.UTF8, "application/json");
+                var response = await http.PostAsync(_urlExamenConsulta, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Json(null);
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var examen = JsonConvert.DeserializeObject<TblExamenesConsulta>(responseString);
+                return Json(examen);
+            }
+
+        }
     }
 }

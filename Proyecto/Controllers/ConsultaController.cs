@@ -1,194 +1,152 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 using WebApplication1.permisos;
+using static System.Net.WebRequestMethods;
 
 namespace WebApplication1.Controllers
 {
     [ValidateSession]
     public class ConsultaController : Controller
     {
-     /*   // GET: Consulta
-        public ActionResult Consulta()
+        private readonly string _urlConsultas= "https://apiclinica.azurewebsites.net/api/Consultas";
+        private readonly string _urlPacientes= "https://apiclinica.azurewebsites.net/api/Pacientes";
+        private readonly string _urlExamenes = "https://apiclinica.azurewebsites.net/api/Examenes";
+        public async Task<ActionResult> Index()
         {
-            var lista = new List<ConsultaViewModel>()
+            using (var _http = new HttpClient())
             {
-                new ConsultaViewModel()
+                var response = await _http.GetAsync(_urlConsultas);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    idConsulta = 1,
-                    nombre = "Consulta 1",
-                    idPaciente = 2,
-                    Paciente = "Juan",
-                    idEmpleado = 1,
-                    Empleado = "Pepito",
-                    idClinica = 1,
-                    Clinica = "Clinica 1",
-                    idDiagnostico = 1,
-                    Diagnostico = "Diagnostico 1",
-                    idReceta = 1,
-                    Receta = "Receta 1"
-                },
-                new ConsultaViewModel()
-                {
-                    idConsulta = 2,
-                    nombre = "Consulta 2",
-                    idPaciente = 1,
-                    Paciente = "Dayana",
-                    idEmpleado = 1,
-                    Empleado = "Pepito",
-                    idClinica = 2,
-                    Clinica = "Clinica 2",
-                    idDiagnostico = 1,
-                    Diagnostico = "Diagnostico 2",
-                    idReceta = 2,
-                    Receta = "Receta 2"
+                    return View("Error");
                 }
-            };
-            return View();
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listadoConsultas = JsonConvert.DeserializeObject<List<ConsultasViewModel>>(responseString);
+                return View(listadoConsultas);
+            }
+        }
+        public async Task<ActionResult> ConsultasPorPaciente()
+        {
+            using (var _http = new HttpClient())
+            {
+                var responsePacientes = await _http.GetAsync(_urlPacientes);
+                if (responsePacientes.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringPacientes = await responsePacientes.Content.ReadAsStringAsync();
+                var listPacientes = JsonConvert.DeserializeObject<List<TblPaciente>>(responseStringPacientes);
+                var listadoPaciente = listPacientes.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdPaciente.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoPacientes = listadoPaciente;
+                return View();
+            }
         }
 
-        public ActionResult newConsulta()
+        public async Task<ActionResult> newConsulta()
         {
-            var dataPaciente = new List<Pacientes>()
+            using (var _http = new HttpClient())
             {
-                new Pacientes()
+                var responsePacientes = await _http.GetAsync(_urlPacientes);
+                if (responsePacientes.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    idPaciente = 1,
-                    no_afiliado = "2541254789654",
-                    nombre = "Dayana",
-                    direccion = "Ecuador",
-                    telefono = 12345678
-                },
-                new Pacientes()
-                {
-                    idPaciente = 2,
-                    no_afiliado = "547896541254",
-                    nombre = "Juan",
-                    direccion = "Perez",
-                    telefono = 87654321
+                    return View("Error");
                 }
-            };
-            var listadoPaciente = dataPaciente.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.no_afiliado + "," + r.nombre,
-                    Value = r.idPaciente.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoPaciente = listadoPaciente;
 
-            var dataEmpleado = new List<EmpleadosViewModel>()
-            {
-                new EmpleadosViewModel()
+                var responseExamenes = await _http.GetAsync(_urlExamenes);
+                if (responseExamenes.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    idEmpleado=1,
-                    Nombre="Pepito",
-                    Apellido="Perez",
-                    IdCargo=1,
-                    Cargo="Medico"
-                },
-                new EmpleadosViewModel()
-                {
-                    idEmpleado=2,
-                    Nombre="Pepito2",
-                    Apellido="Perez2",
-                    IdCargo=2,
-                    Cargo="Administrador"
+                    return View("Error");
                 }
-            };
-            var listadoEmpleado = dataEmpleado.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.Nombre + "," + r.Apellido,
-                    Value = r.idEmpleado.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoEmpleado = listadoEmpleado;
 
-            var dataClinica = new List<Clinica>()
-            {
-                new Clinica()
-                {
-                    idClinica = 1,
-                    nombre = "Clinica 1",
-                    direccion = "Direccion 1"
-                },
-                new Clinica()
-                {
-                    idClinica = 2,
-                    nombre = "Clinica 2",
-                    direccion = "Direccion 2"
-                }
-            };
-            var listadoClinica = dataClinica.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.nombre + "," + r.direccion,
-                    Value = r.idClinica.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoClinica = listadoClinica;
+                var responseStringPacientes = await responsePacientes.Content.ReadAsStringAsync();
+                var listPacientes = JsonConvert.DeserializeObject<List<TblPaciente>>(responseStringPacientes);
 
-            var dataDiagnostico = new List<Diagnosticos>()
-            {
-                new Diagnosticos()
-                {
-                    idDiagnostico = 1,
-                    titulo = "General",
-                    descripcion = "General"
-                },
-                new Diagnosticos()
-                {
-                    idDiagnostico = 2,
-                    titulo = "Interno",
-                    descripcion = "Interno"
-                }
-            };
-            var listadoDiagnostico = dataDiagnostico.ConvertAll(r =>
-            {
-                return new SelectListItem()
-                {
-                    Text = r.titulo,
-                    Value = r.idDiagnostico.ToString(),
-                    Selected = false
-                };
-            });
-            ViewBag.listadoDiagnostico = listadoDiagnostico;
+                var responseStringExamenes = await responseExamenes.Content.ReadAsStringAsync();
+                var listExamenes = JsonConvert.DeserializeObject<List<TblExamene>>(responseStringExamenes);
 
-            var dataReceta = new List<Receta>()
+                var listadoPaciente = listPacientes.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdPaciente.ToString(),
+                        Selected = false
+                    };
+                });
+                var listadoExamenes = listExamenes.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdExamen.ToString(),
+                        Selected = false
+                    };
+                });
+
+                ViewBag.listadoPacientes = listadoPaciente;
+                ViewBag.listadoExamenes = listadoExamenes;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> agregarConsulta(TblConsulta model)
+
+        {
+            if (!ModelState.IsValid)
             {
-                new Receta()
+                return Json(null);
+            }
+            using (var http = new HttpClient())
+            {
+                var consultaSerializada = JsonConvert.SerializeObject(model);
+                var content = new StringContent(consultaSerializada, Encoding.UTF8, "application/json");
+                var response = await http.PostAsync(_urlConsultas, content);
+                if (!response.IsSuccessStatusCode)
                 {
-                    idReceta = 1,
-                    serie_receta = "Juana Maria",
-                    fecha_emision = DateTime.Now
-                },
-                new Receta()
-                {
-                    idReceta = 2,
-                    serie_receta = "",
-                    fecha_emision = DateTime.Now
+                    return Json(null);
                 }
-            };
-            var listadoReceta = dataReceta.ConvertAll(r =>
+                var responseString = await response.Content.ReadAsStringAsync();
+                var consulta = JsonConvert.DeserializeObject<TblConsulta>(responseString);
+                return Json(consulta);
+            }
+            
+        }
+        
+        [HttpPost]
+        public async Task<JsonResult> consultasPaciente(int Paciente)
+
+        {
+            using (var http = new HttpClient())
             {
-                return new SelectListItem()
+                var response = await http.GetAsync(_urlConsultas+"/"+Paciente);
+                if (!response.IsSuccessStatusCode)
                 {
-                    Text = r.serie_receta + "," + r.fecha_emision,
-                    Value = r.idReceta.ToString(),
-                    Selected = false
-                };
-            });
-            return View();
-        }*/
+                    return Json(null);
+                }
+                
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    var consulta = JsonConvert.DeserializeObject<List<ConsultasViewModel>>(responseString);
+                    return Json(consulta);
+            }
+
+        }
     }
 }

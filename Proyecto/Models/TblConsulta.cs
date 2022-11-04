@@ -27,5 +27,6 @@ namespace WebApplication1.Models
         public string Clinica { get; set; }
         public string Diagnostico { get; set; }
         public string Receta { get; set; }
+        public List<TblExamene> Examenes { get; set; }
     }
 }

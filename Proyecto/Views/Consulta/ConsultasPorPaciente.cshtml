@@ -56,15 +56,16 @@
                 Paciente: IdPaciente
             }
             $.post(_url, obj).done((data) => {
+                $('.data2').remove();
                 for (var i = 0; i < data.length; i++) {
-                    response += "<tr class='data'>";
+                    response += "<tr class='data2'>";
                     response += "<td>" + data[i].IdConsulta + "</td>";
                     response += "<td>" + data[i].Paciente + "</td>";
                     response += "<td>" + data[i].Empleado + "</td>";
                     response += "<td>" + data[i].Clinica + "</td>";
                     response += "<td>" + data[i].Diagnostico + "</td>";
                     response += "<td>" + data[i].Receta+ "</td>";
-                    response += "<td><a href='/Consultas/DetallesConsulta/" + data[i].IdConsulta +"'class='btn btn-warning' />Ver Detalles</a></td > ";
+                    response += "<td><a href='/Consulta/DetallesConsulta/" + data[i].IdConsulta +"'class='btn btn-warning' />Ver Detalles</a></td > ";
 
                     response += "</tr>";
                 }

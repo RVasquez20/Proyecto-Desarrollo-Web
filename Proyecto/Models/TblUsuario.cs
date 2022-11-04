@@ -38,4 +38,15 @@ namespace WebApplication1.Models
         public string Username { get; set; }
         public string Password { get; set; }
     }
+
+    public class UsuarioLoginViewModel
+    {
+        public int IdUsuario { get; set; }
+        public int? IdEmpleado { get; set; }
+        public int? IdClinica { get; set; }
+        public string Clinica { get; set; }
+        public int? IdRol { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
 }

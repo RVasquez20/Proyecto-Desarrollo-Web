@@ -145,7 +145,7 @@ namespace WebApplication1.Controllers
                     return Json(null);
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var examen = JsonConvert.DeserializeObject<TblExamenesConsulta>(responseString);
+                var examen = JsonConvert.DeserializeObject<ExamenConsultaViewModel>(responseString);
                 return Json(examen);
             }
 

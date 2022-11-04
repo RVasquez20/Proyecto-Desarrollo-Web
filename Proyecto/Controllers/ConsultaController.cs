@@ -148,5 +148,31 @@ namespace WebApplication1.Controllers
             }
 
         }
+
+        public async Task<ActionResult> DetallesConsulta(int id)
+        {
+            
+            using (var _http = new HttpClient())
+            {
+                var Total = 0d;
+                var response = await _http.GetAsync(_urlConsultas + "/Details/" + id);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseString = await response.Content.ReadAsStringAsync();
+                var consulta = JsonConvert.DeserializeObject<List<ConsultasViewModel>>(responseString);
+                foreach(var c in consulta)
+                {
+                    foreach (var item in c.Examenes)
+                    {
+                        Total += item.Precio;
+                    }
+                }
+                ViewBag.Total = Total;
+                return View(consulta);
+            
+            }
+        }
     }
 }

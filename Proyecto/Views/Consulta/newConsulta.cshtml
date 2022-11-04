@@ -45,12 +45,13 @@
     @Html.DropDownList("IdExamen", listadoExamenes, "Seleccionar un Examen", new { @class = "form-control" })
 
     <button type="submit" id="addExamen" class="btn btn-primary">Agregar Examen</button>
-    <button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Consultas/Index")'">Finalizar Venta</button>
+    <button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Consulta/Index")'">Finalizar Consulta</button>
     <div id="dataTable">
         <h1>Examenes Realizados</h1>
         <table class="table table-dark">
             <thead>
             <th>Examen</th>
+            <th>Descripcion</th>
             </thead>
             <tbody id="data">
             </tbody>
@@ -108,7 +109,7 @@
                 var obj = {
                     IdPaciente: IdPaciente,
                     IdEmpleado: @Session["Empleado"],
-                    IdClinica: 1,
+                    IdClinica: @Session["IDClinica"],
                     IdDiagnostico: IdDiagnostico,
                     IdReceta: IdReceta
                 };
@@ -132,7 +133,8 @@
             };
             $.post(_urlAddExamenConsulta, obj).done(data => {
                 response += "<tr class='data'>";
-                response += "<td>" + data.IdExamen + "</td>";
+                response += "<td>" + data.Nombre + "</td>";
+                response += "<td>" + data.Descripcion + "</td>";
                 response += "</tr>";
                 $("#data").append(response);
                 if ($("#Save")[0].hidden) {

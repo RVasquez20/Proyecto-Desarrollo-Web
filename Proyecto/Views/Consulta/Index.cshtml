@@ -47,8 +47,6 @@
                         <td>@item.Diagnostico</td>
                         <td>@item.Receta</td>
                         <td>
-                            <input onclick="document.location.href='@Url.Content("~/Consulta/deleteConsulta/" + item.IdConsulta)'" type="button" value="Eliminar" class="btn btn-danger" />
-                            <input onclick="document.location.href='@Url.Content("~/Consulta/modifyConsulta/" + item.IdConsulta)'" type="button" value="Editar" class="btn btn-warning" />
                             <input onclick="document.location.href='@Url.Content("~/Consulta/DetallesConsulta/" + item.IdConsulta)'" type="button" value="Ver Detalles" class="btn btn-warning" />
                         </td>
                     </tr>

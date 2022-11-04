@@ -37,7 +37,8 @@ namespace WebApplication1.Controllers
         {
             Session["User"] = null;
             Session["Empleado"] = null;
-            //Session["Clinica"] = null;
+            Session["NClinica"] = null;
+            Session["IDClinica"] = null;
             var accesos = (List<TblAccess>)Session["Accesos"];
             foreach (var acceso in accesos)
             {
@@ -59,8 +60,7 @@ namespace WebApplication1.Controllers
             {
                 var oUser = new TblUsuario();
                 oUser.Username = model.User;
-                oUser.Password = model.Password;
-                var hash = Encrypt.GetHash(model.Password);
+                oUser.Password = Encrypt.GetHash(model.Password);
                 var userSerializer = JsonConvert.SerializeObject(oUser);
                 var content = new StringContent(userSerializer, Encoding.UTF8, "application/json");
                 var response = await _http.PostAsync(_url + "/Login", content);
@@ -69,10 +69,11 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var oUsuario = JsonConvert.DeserializeObject<TblUsuario>(responseString);
+                var oUsuario = JsonConvert.DeserializeObject<UsuarioLoginViewModel>(responseString);
                 Session["User"] = oUsuario.Username;
                 Session["Empleado"] = oUsuario.IdEmpleado;
-                //Session["Clinica"] = oUsuario.idClinica;
+                Session["IDClinica"] = oUsuario.IdClinica;
+                Session["NClinica"] = oUsuario.Clinica;
                 var accesos =await getMenu(oUsuario.IdUsuario);
                 Session["Accesos"] = accesos;
                 foreach (var acceso in accesos)

@@ -1,18 +1,79 @@
 ﻿@model WebApplication1.Models.TblRole
 @{
     ViewBag.Title = "Agregar Role";
+    List<SelectListItem> listadoPermisos=ViewBag.listadoPermisos;
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("agregarRole", "Role", FormMethod.Post))
-{
+
 <div class="mb-3 mt-3">
     @Html.LabelFor(m => m.Rol)
     @Html.TextBoxFor(m => m.Rol, new { @class = "form-control" })
 </div>
+<br />
+<button type="submit" id="addRol" class="btn btn-primary">Siguiente</button>
+<div class="mb-3 mt-3" id="permisos">
+    <h2>Accesos:</h2>
+    <input name="IdRole" id="IdRole" value="0" type="text" hidden></input>
+    @Html.DropDownList("IdAccess", listadoPermisos, "Seleccionar el Acceso", new { @class = "form-control" })
+    <br />
+    <button type="submit" id="add" class="btn btn-primary">Agregar Permiso</button>
+    <button type="submit" id="Save" class="btn btn-primary" hidden onclick="Finalizar();">Agregar Rol</button>
+    <div id="dataTable">
+        <h1>Listado de Accesos</h1>
+        <table class="table table-dark">
+            <thead>
+            <th>Seccion</th>
+            </thead>
+            <tbody id="data">
+            </tbody>
+
+        </table>
+    </div>
+</div>
+@section scripts{
+    <script>
+
+        var _urlRole = "@Url.Action("agregarRole", "Role")";
+        $("#addRol").on('click', () => {
+            var Rol = $("#Rol").val();
+            var obj = {
+                Rol: Rol
+            }
+            $.post(_urlRole, obj).done(data => {
+                $("#IdRole").val(data.IdRol);
+                $("#permisos").removeAttr('hidden');
+                $('#addRol').attr("disabled", true);
+                $('#addRol').attr("hidden", true);
+            });
+        });
 
 
-<button type="submit" class="btn btn-primary">Agregar Rol</button>
-}
+        $("#add").on('click', () => {
+            var IdVenta = $("#IdVenta").val();
+            var Cantidad = $("#Cantidad").val();
+            var IdProducto = $("#IdProducto").val();
+            var response = '';
+            var obj = {
+                IdVenta: IdVenta,
+                Cantidad: Cantidad,
+                IdProducto: IdProducto
+            }
+            $.post(_url, obj).done(data => {
+                response += "<tr class='data'>";
+                response += "<td>" + data.Producto + "</td>";
+                response += "<td>" + data.Cantidad + "</td>";
+                response += "</tr>";
+                $("#data").append(response);
+                if ($("#Save")[0].hidden) {
+                    $("#Save").removeAttr('hidden');
+                }
+            });
+        });
 
+
+
+    </script>
+    
+    }

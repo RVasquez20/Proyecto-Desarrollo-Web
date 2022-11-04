@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 using WebApplication1.permisos;
+using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
@@ -94,7 +95,13 @@ namespace WebApplication1.Controllers
             }
             using (var http = new HttpClient())
             {
-                var UserSerializada = JsonConvert.SerializeObject(model);
+                var oUser = new TblUsuario();
+                oUser.IdEmpleado = model.IdEmpleado;
+                oUser.IdRol = model.IdRol;
+                oUser.Username = model.Username;
+                oUser.Password = Encrypt.GetHash(model.Password);
+                
+                var UserSerializada = JsonConvert.SerializeObject(oUser);
                 var content = new StringContent(UserSerializada, Encoding.UTF8, "application/json");
                 var response = await http.PostAsync(_urlUsuario, content);
                 if (!response.IsSuccessStatusCode)
@@ -166,7 +173,12 @@ namespace WebApplication1.Controllers
         {
             using (var http = new HttpClient())
             {
-                var usuarioSerializada = JsonConvert.SerializeObject(model);
+                var oUser = new TblUsuario();
+                oUser.IdEmpleado = model.IdEmpleado;
+                oUser.IdRol = model.IdRol;
+                oUser.Username = model.Username;
+                oUser.Password = Encrypt.GetHash(model.Password);
+                var usuarioSerializada = JsonConvert.SerializeObject(oUser);
                 var content = new StringContent(usuarioSerializada, Encoding.UTF8, "application/json");
                 var response = await http.PutAsync(_urlUsuario + "/" + model.IdUsuario, content);
                 if (!response.IsSuccessStatusCode)

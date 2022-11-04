@@ -19,6 +19,6 @@ namespace WebApplication1.Models
         public int IdVenta { get; set; }
         public int Numero { get; set; }
         public string Producto { get; set; }
-
+        public int Precio { get; set; }
     }
 }

@@ -19,7 +19,6 @@ namespace WebApplication1.Controllers
         private readonly string _urlRoles = "https://apiclinica.azurewebsites.net/api/Roles";
         private readonly string _urlAccesos = "https://apiclinica.azurewebsites.net/api/Access";
         private readonly string _urlAccesosRoles = "https://apiclinica.azurewebsites.net/api/AccessRoles";
-        // GET: RoleI
         public async Task<ActionResult> Index()
         {
             using (var http = new HttpClient())
@@ -35,38 +34,54 @@ namespace WebApplication1.Controllers
                 return View(listadoRol);
             }
         }
-        public ActionResult agregarRole()
+        public async Task<ActionResult> agregarRole()
         {
-            //mandar una lista de accesos y convcertir esa lista en si o no tipo combobox
-
-            return View();
-        }
-            //agregar a el json
-            [HttpPost]
-        //siempre debe ser un model
-        public async Task<ActionResult> agregarRole(TblRole model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View("Error");
-            }
             using (var http = new HttpClient())
             {
-                var RoleSerializada = JsonConvert.SerializeObject(model);
-                var content = new StringContent(RoleSerializada, Encoding.UTF8, "application/json");
-                var response = await http.PostAsync(_urlRoles, content);
-                if (!response.IsSuccessStatusCode)
+                var response = await http.GetAsync(_urlAccesos);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     return View("Error");
                 }
-                //deserealizar id rol
-                return RedirectToAction("Index");
+                var responseString = await response.Content.ReadAsStringAsync();
+                var listPermisos = JsonConvert.DeserializeObject<List<TblAccess>>(responseString);
+                var listadoPermisos = listPermisos.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Name,
+                        Value = r.IdAccess.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoPermisos = listadoPermisos;
+                return View();
             }
-
         }
-        // mandar una lista de accesos y convcertir esa lista en si o no tipo combobox
-        //guardan cada acceso en accesRoles con el id de rol que devolvio la peticion anterior
-        //retornan a el listado de roles(Index)
+        
+        [HttpPost]
+        public async Task<JsonResult> agregarRole(TblRole model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(null);
+            }
+            /*   using (var http = new HttpClient())
+               {
+                   var RoleSerializada = JsonConvert.SerializeObject(model);
+                   var content = new StringContent(RoleSerializada, Encoding.UTF8, "application/json");
+                   var response = await http.PostAsync(_urlRoles, content);
+                   if (!response.IsSuccessStatusCode)
+                   {
+                       return Json(null);
+                   }
+                   var responseString = await response.Content.ReadAsStringAsync();
+                   var role = JsonConvert.DeserializeObject<TblRole>(responseString);
+                   return Json(role);
+               }*/
+            model.IdRol = 5;
+            return Json(model);
+        }
 
 
 
@@ -85,8 +100,7 @@ namespace WebApplication1.Controllers
             }
 
         }
-
-        //modifica los datos de la bd
+        
         [HttpPost]
         public async Task<ActionResult> modificarRole(TblRole model)
         {
@@ -103,8 +117,7 @@ namespace WebApplication1.Controllers
             }
 
         }
-        //elimina los datos de la bd
-
+        
         public async Task<string> eliminarRole(int id)
         {
             using (var http = new HttpClient())

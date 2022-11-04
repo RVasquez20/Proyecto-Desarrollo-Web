@@ -1,0 +1,42 @@
+﻿@using WebApplication1.Models
+@model List<ConsultasViewModel>
+@{
+    ViewBag.Title = "DetallesConsulta";
+    double Total = ViewBag.Total;
+}
+
+<h2>DetallesConsulta</h2>
+<div class="container mt-3">
+    @foreach (var c in Model)
+    {
+    <h3>Paciente:@c.Paciente</h3>
+    <h3>Empleado:@c.Empleado</h3>
+    <h3>Clinica:@c.Clinica</h3>
+    <h3>Diagnostico:@c.Diagnostico</h3>
+    <h3>Receta:@c.Receta</h3>
+    <hr />
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in c.Examenes)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.Precio</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2" class="text-center">Total</td>
+                <td>@Total</td>
+            </tr>
+        </tbody>
+    </table>
+    }
+</div>

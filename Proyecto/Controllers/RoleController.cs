@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using WebApplication1.Models;
 using WebApplication1.permisos;
 
@@ -66,27 +67,45 @@ namespace WebApplication1.Controllers
             {
                 return Json(null);
             }
-            /*   using (var http = new HttpClient())
-               {
-                   var RoleSerializada = JsonConvert.SerializeObject(model);
-                   var content = new StringContent(RoleSerializada, Encoding.UTF8, "application/json");
-                   var response = await http.PostAsync(_urlRoles, content);
-                   if (!response.IsSuccessStatusCode)
-                   {
-                       return Json(null);
-                   }
-                   var responseString = await response.Content.ReadAsStringAsync();
-                   var role = JsonConvert.DeserializeObject<TblRole>(responseString);
-                   return Json(role);
-               }*/
-            model.IdRol = 5;
-            return Json(model);
+            using (var http = new HttpClient())
+             {
+                 var RoleSerializada = JsonConvert.SerializeObject(model);
+                 var content = new StringContent(RoleSerializada, Encoding.UTF8, "application/json");
+                 var response = await http.PostAsync(_urlRoles, content);
+                 if (!response.IsSuccessStatusCode)
+                 {
+                     return Json(null);
+                 }
+                 var responseString = await response.Content.ReadAsStringAsync();
+                 var role = JsonConvert.DeserializeObject<TblRole>(responseString);
+                 return Json(role);
+             }
+        }
+        [HttpPost]
+        public async Task<JsonResult> agregarRolePermisos(TblAccessRole model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(null);
+            }
+             using (var http = new HttpClient())
+             {
+                 var RAccessSerializada = JsonConvert.SerializeObject(model);
+                 var content = new StringContent(RAccessSerializada, Encoding.UTF8, "application/json");
+                 var response = await http.PostAsync(_urlAccesosRoles, content);
+                 if (!response.IsSuccessStatusCode)
+                 {
+                     return Json(null);
+                 }
+                 var responseString = await response.Content.ReadAsStringAsync();
+                 var rAccess = JsonConvert.DeserializeObject<TblAccessRole>(responseString);
+                 return Json(rAccess);
+             }
         }
 
 
-
         public async Task<ActionResult> modificarRole(int id)
-        {
+        { 
             using (var http = new HttpClient())
             {
                 var response = await http.GetAsync(_urlRoles + "/" + id);
@@ -96,6 +115,48 @@ namespace WebApplication1.Controllers
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
                 var Role = JsonConvert.DeserializeObject<TblRole>(responseString);
+                
+                var responseAccess = await http.GetAsync(_urlAccesosRoles);
+                if (responseAccess.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringAccess = await responseAccess.Content.ReadAsStringAsync();
+                var listPermisos = JsonConvert.DeserializeObject<List<TblAccessRole>>(responseStringAccess);
+
+                var responseAccesos = await http.GetAsync(_urlAccesos);
+                if (responseAccesos.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringAccesos = await responseAccesos.Content.ReadAsStringAsync();
+                var listAccesos = JsonConvert.DeserializeObject<List<TblAccess>>(responseStringAccesos);
+
+
+                var listPermisosRol = listPermisos.Where(x=>x.IdRol==Role.IdRol)
+                    .Join(listAccesos,
+                    a=>a.IdAccess,
+                    p=>p.IdAccess,
+                    (a, p) => new accessRolesViewModel
+                    {
+                        IdAccessRoles = a.IdAccessRole,
+                        Name=p.Name
+                    })
+                    .ToList();
+
+               
+
+                var listadoAccesos = listAccesos.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Name,
+                        Value = r.IdAccess.ToString(),
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoAccesos = listadoAccesos;
+                ViewBag.listadoPermisos = listPermisosRol;
                 return View(Role);
             }
 
@@ -116,6 +177,20 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> EliminarAcceso(int id)
+        {
+            using (var http = new HttpClient())
+            {
+                var response = await http.DeleteAsync(_urlAccesosRoles + "/" + id);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Json("Error");
+                }
+                return Json("Exito");
+            }
         }
         
         public async Task<string> eliminarRole(int id)

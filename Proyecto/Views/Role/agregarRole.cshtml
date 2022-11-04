@@ -13,13 +13,14 @@
 </div>
 <br />
 <button type="submit" id="addRol" class="btn btn-primary">Siguiente</button>
-<div class="mb-3 mt-3" id="permisos">
+
+<div class="mb-3 mt-3" id="permisos" hidden>
     <h2>Accesos:</h2>
-    <input name="IdRole" id="IdRole" value="0" type="text" hidden></input>
+    <input name="IdRole" id="IdRole" value="0" type="text" hidden/>
     @Html.DropDownList("IdAccess", listadoPermisos, "Seleccionar el Acceso", new { @class = "form-control" })
     <br />
     <button type="submit" id="add" class="btn btn-primary">Agregar Permiso</button>
-    <button type="submit" id="Save" class="btn btn-primary" hidden onclick="Finalizar();">Agregar Rol</button>
+    <button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Role/Index")'">Agregar Rol</button>
     <div id="dataTable">
         <h1>Listado de Accesos</h1>
         <table class="table table-dark">
@@ -42,28 +43,28 @@
                 Rol: Rol
             }
             $.post(_urlRole, obj).done(data => {
-                $("#IdRole").val(data.IdRol);
+                $("#IdRole").attr("value",data.IdRol);
                 $("#permisos").removeAttr('hidden');
                 $('#addRol').attr("disabled", true);
+                $('#Rol').attr("disabled", true);
                 $('#addRol').attr("hidden", true);
             });
         });
 
-
+        var _urlRolePermisos = "@Url.Action("agregarRolePermisos", "Role")";
         $("#add").on('click', () => {
-            var IdVenta = $("#IdVenta").val();
-            var Cantidad = $("#Cantidad").val();
-            var IdProducto = $("#IdProducto").val();
+            var IdRol = $("#IdRole").val();
+            var IdAccess = $("#IdAccess").val();
             var response = '';
             var obj = {
-                IdVenta: IdVenta,
-                Cantidad: Cantidad,
-                IdProducto: IdProducto
+                IdRol: IdRol,
+                IdAccess: IdAccess
             }
-            $.post(_url, obj).done(data => {
+            $.post(_urlRolePermisos, obj).done(data => {
+                let selected = $("#IdAccess").find('option:selected').text();
+                $("option[value='"+data.IdAccess+"']").remove();
                 response += "<tr class='data'>";
-                response += "<td>" + data.Producto + "</td>";
-                response += "<td>" + data.Cantidad + "</td>";
+                response += "<td>" + selected + "</td>";
                 response += "</tr>";
                 $("#data").append(response);
                 if ($("#Save")[0].hidden) {

@@ -190,7 +190,7 @@ namespace Web_Api.Controllers
 
 
         [HttpGet]
-        [Route("Details/(id)")]
+        [Route("Details/{id}")]
         public async Task<ActionResult<TblConsulta>> GetTblConsultasDetails(int id)
         {
             var listado = _context.TblConsultas.ToList()

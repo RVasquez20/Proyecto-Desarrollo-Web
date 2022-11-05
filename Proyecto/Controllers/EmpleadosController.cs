@@ -66,7 +66,7 @@ namespace WebApplication1.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = r.Nombre,
+                        Text = (r.Nombre+", "+r.Direccion),
                         Value = r.IdClinica.ToString(),
                         Selected = false
                     };
@@ -144,7 +144,7 @@ namespace WebApplication1.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = r.Nombre,
+                        Text = (r.Nombre + ", " + r.Direccion),
                         Value = r.IdClinica.ToString(),
                         Selected = false
                     };

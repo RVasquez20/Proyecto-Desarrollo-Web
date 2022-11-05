@@ -13,7 +13,6 @@ namespace WebApplication1.Controllers
     [ValidateSession]
     public class PacientesController : Controller
     {
-        //recibir una lista de una api 
 
         private readonly string _url = "https://apiclinica.azurewebsites.net/api/Pacientes";
         public async Task<ActionResult> Index()
@@ -39,9 +38,7 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        //agregar a el json
         [HttpPost]
-        //siempre debe ser un model
 
         public async Task<ActionResult> agregarPacientes(TblPaciente model)
 
@@ -64,10 +61,6 @@ namespace WebApplication1.Controllers
 
         }
 
-        //trae la vista con los datos cargados
-
-
-
         public async Task<ActionResult> modificarPaciente(int id)
         {
             using (var http = new HttpClient())
@@ -85,10 +78,8 @@ namespace WebApplication1.Controllers
             }
 
         }
-
-        //modifica los datos de la bd
+        
         [HttpPost]
-
         public async Task<ActionResult> modificarPaciente(TblPaciente model)
 
         {
@@ -107,7 +98,6 @@ namespace WebApplication1.Controllers
             }
 
         }
-        //elimina los datos de la bd
 
         public async Task<string> eliminarPaciente(int id)
         {

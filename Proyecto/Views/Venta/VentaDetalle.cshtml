@@ -5,7 +5,7 @@
     List<SelectListItem> listadoProductos = ViewBag.listadoProducto;
 }
 
-<h2>ViewBag.Title</h2>
+<h2>@ViewBag.Title</h2>
 
     <input name="IdVenta" id="IdVenta" value="@idVenta" type="text" hidden></input>
     @Html.DropDownList("IdProducto", listadoProductos, "Seleccionar un Producto", new { @class = "form-control" })

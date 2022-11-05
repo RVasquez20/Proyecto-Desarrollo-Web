@@ -196,11 +196,14 @@ namespace WebApplication1.Controllers
                 var Detalles = JsonConvert.DeserializeObject<List<ComprasDetalleViewDetails>>(responseString);
                 ViewBag.data = Detalles[0].NoOrden;
                 int total = 0;
+                var Subtotales = new Dictionary<int, Double>();
                 foreach (var item in Detalles)
                 {
                     total += (int)(item.Precio*item.Cantidad);
+                    Subtotales[item.IdProducto] = (double)(item.Precio * item.Cantidad);
                 }
                 ViewBag.total = total;
+                ViewBag.Subtotales = Subtotales;
                 return View(Detalles);
             }
         }

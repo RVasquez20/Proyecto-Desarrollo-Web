@@ -41,12 +41,11 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        //agregar a el json
+
+
+
         [HttpPost]
-        //siempre debe ser un model
-
         public async Task<ActionResult> agregarLoteProducto(TblLoteProducto model)
-
         {
             if (!ModelState.IsValid)
             {

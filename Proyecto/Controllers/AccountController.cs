@@ -50,7 +50,8 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> signIn(LoginViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +67,8 @@ namespace WebApplication1.Controllers
                 var response = await _http.PostAsync(_url + "/Login", content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return View("Error");
+                    ModelState.AddModelError("", "El Username o Password Ingresado es Incorrecto.");
+                    return View(model);
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
                 var oUsuario = JsonConvert.DeserializeObject<UsuarioLoginViewModel>(responseString);

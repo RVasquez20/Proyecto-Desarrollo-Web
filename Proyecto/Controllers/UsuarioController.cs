@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = r.Nombre,
+                        Text = (r.Nombre + " " + r.Apellido),
                         Value = r.IdEmpleado.ToString(),
                         Selected = false
                     };
@@ -135,7 +135,7 @@ namespace WebApplication1.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = r.Nombre,
+                        Text = (r.Nombre+" "+r.Apellido),
                         Value = r.IdEmpleado.ToString(),
                         Selected = false
                     };
@@ -173,12 +173,18 @@ namespace WebApplication1.Controllers
         {
             using (var http = new HttpClient())
             {
-                var oUser = new TblUsuario();
-                oUser.IdEmpleado = model.IdEmpleado;
-                oUser.IdRol = model.IdRol;
-                oUser.Username = model.Username;
-                oUser.Password = Encrypt.GetHash(model.Password);
-                var usuarioSerializada = JsonConvert.SerializeObject(oUser);
+                var responseUser = await http.GetAsync(_urlUsuario + "/" + model.IdUsuario);
+                if (responseUser.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringUser = await responseUser.Content.ReadAsStringAsync();
+                var User = JsonConvert.DeserializeObject<TblUsuario>(responseStringUser);
+                User.IdEmpleado = model.IdEmpleado;
+                User.IdRol = model.IdRol;
+                User.Username = model.Username;
+                User.Password = Encrypt.GetHash(model.Password);
+                var usuarioSerializada = JsonConvert.SerializeObject(User);
                 var content = new StringContent(usuarioSerializada, Encoding.UTF8, "application/json");
                 var response = await http.PutAsync(_urlUsuario + "/" + model.IdUsuario, content);
                 if (!response.IsSuccessStatusCode)

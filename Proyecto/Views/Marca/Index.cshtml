@@ -42,6 +42,7 @@ else
         <h2>No hay Marcas</h2>
     </div>
 }
+@section scripts{
 <script>
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
@@ -68,26 +69,27 @@ else
                         } else {
                             swalWithBootstrapButtons.fire(
                                 'Cancelado',
-                                'La Receta No Se Elimino :D',
+                                'La Marca NO se Ha Eliminado :D',
                                 'error'
                             )
                         }
                     });
                     swalWithBootstrapButtons.fire(
                         'Eliminada!',
-                        'La Receta Se Ha Eliminado Exitosamente.',
+                        'La Marca Se Ha Eliminado Exitosamente.',
                         'success'
                     )
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         'Cancelado',
-                        'La Receta No Se Elimino :D',
+                        'La Marca NO se Ha Eliminado :D',
                         'error'
                     )
                 }
             })
     }
 </script>
+    }
 
 
 

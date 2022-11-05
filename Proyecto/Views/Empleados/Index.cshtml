@@ -60,7 +60,7 @@ else
         if (confirm("Esta Seguro de Eliminar A Este Usuario?????")) {
             url = "@Url.Content("~/Empleados/eliminarEmpleado/")" + "/" + id;
             $.get(url).done((data)=>{
-                if (data == 1) {
+                if (data == "Exito") {
                     document.location.href = "@Url.Content("~/Empleados/Index")"
                 } else {
                     alert("Ocurrio un Error :c");

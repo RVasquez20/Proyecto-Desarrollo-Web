@@ -55,7 +55,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseStringHabDispo= await responseHabitaciones.Content.ReadAsStringAsync();
-                var listadoHabDisp = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseStringHabDispo);
+                var listadoHabDisp = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseStringHabDispo);
                 var listadoPacientes = listadoPac.ConvertAll(r =>
                 {
                     return new SelectListItem()
@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = r.NoHabitacion.ToString(),
+                        Text = (r.NoHabitacion.ToString()+", "+r.Clinica),
                         Value = r.IdHabitacion.ToString(),
                         Selected = false
                     };
@@ -104,7 +104,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseStringHabDispo = await responseHabitaciones.Content.ReadAsStringAsync();
-                var listadoHabDisp = JsonConvert.DeserializeObject<List<TblHabitacione>>(responseStringHabDispo);
+                var listadoHabDisp = JsonConvert.DeserializeObject<List<HabitacionesViewModel>>(responseStringHabDispo);
                 var listadoPacientes = listadoPac.ConvertAll(r =>
                 {
                     return new SelectListItem()
@@ -119,7 +119,7 @@ namespace WebApplication1.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = r.NoHabitacion.ToString(),
+                        Text = (r.NoHabitacion.ToString() + ", " + r.Clinica),
                         Value = r.IdHabitacion.ToString(),
                         Selected = false
                     };
@@ -142,8 +142,15 @@ namespace WebApplication1.Controllers
                 }
                 var responseStringPaciente = await responsePacienteHabitacion.Content.ReadAsStringAsync();
                 var pacienteHabitacion = JsonConvert.DeserializeObject<TblPacientesHabitacione>(responseStringPaciente);
-                pacienteHabitacion.IdHabitacion = model.IdHabitacion;
-                pacienteHabitacion.IdPaciente = model.IdPaciente;
+                if (model.IdHabitacion != null)
+                {
+                    pacienteHabitacion.IdHabitacion = model.IdHabitacion;
+                    pacienteHabitacion.IdPaciente = model.IdPaciente;
+                }
+                else
+                {
+                    pacienteHabitacion.IdPaciente = model.IdPaciente;
+                }
                 //Modificar TblPAcientesHabitaciones
                 var pacHabitacionSerializada = JsonConvert.SerializeObject(pacienteHabitacion);
                 var content = new StringContent(pacHabitacionSerializada, Encoding.UTF8, "application/json");

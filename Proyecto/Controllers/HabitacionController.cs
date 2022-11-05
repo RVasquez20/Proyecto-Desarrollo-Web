@@ -95,7 +95,7 @@ namespace WebApplication1.Controllers
                {
                    return new SelectListItem()
                    {
-                       Text = r.Nombre,
+                       Text = (r.Nombre+", "+r.Direccion),
                        Value = r.IdClinica.ToString(),
 
                        Selected = false
@@ -105,13 +105,10 @@ namespace WebApplication1.Controllers
 
                 return View();
             }        
-            }
-        //agregar a el json
+        }
+
         [HttpPost]
-        //siempre debe ser un model
-
         public async Task<ActionResult> agregarHabitacion(TblHabitacione model)
-
         {
             if (!ModelState.IsValid)
             {
@@ -159,7 +156,7 @@ namespace WebApplication1.Controllers
                 {
                     return new SelectListItem()
                     {
-                        Text = r.Nombre,
+                        Text = (r.Nombre + ", " + r.Direccion),
                         Value = r.IdClinica.ToString(),
 
                         Selected = false

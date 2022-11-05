@@ -187,6 +187,106 @@ namespace Web_Api.Controllers
         }
 
 
+
+
+        [HttpGet]
+        [Route("Details/(id)")]
+        public async Task<ActionResult<TblConsulta>> GetTblConsultasDetails(int id)
+        {
+            var listado = _context.TblConsultas.ToList()
+                .Where(x => x.IdConsulta == id)
+                .Join(_context.TblPacientes,
+                consulta => consulta.IdPaciente,
+                paciente => paciente.IdPaciente,
+                (consulta, paciente) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = paciente.Nombre
+                }).ToList().Join(_context.TblEmpleados,
+                consulta => consulta.IdEmpleado,
+                empleado => empleado.IdEmpleado,
+                (consulta, empleado) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = empleado.Nombre
+                }).ToList().Join(_context.TblClinicas,
+                consulta => consulta.IdClinica,
+                clinica => clinica.IdClinica,
+                (consulta, clinica) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = consulta.Empleado,
+                    Clinica = clinica.Nombre
+                }).ToList().Join(_context.TblDiagnosticos,
+                consulta => consulta.IdDiagnostico,
+                diagnosticos => diagnosticos.IdDiagnostico,
+                (consulta, diagnosticos) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = consulta.Empleado,
+                    Clinica = consulta.Clinica,
+                    Diagnostico = diagnosticos.Titulo
+                }).ToList().Join(_context.TblRecetas,
+                consulta => consulta.IdReceta,
+                recetas => recetas.IdReceta,
+                (consulta, recetas) => new
+                {
+                    IdConsulta = consulta.IdConsulta,
+                    IdPaciente = consulta.IdPaciente,
+                    IdEmpleado = consulta.IdEmpleado,
+                    IdClinica = consulta.IdClinica,
+                    IdDiagnostico = consulta.IdDiagnostico,
+                    IdReceta = consulta.IdReceta,
+                    Paciente = consulta.Paciente,
+                    Empleado = consulta.Empleado,
+                    Clinica = consulta.Clinica,
+                    Diagnostico = consulta.Diagnostico,
+                    Receta = recetas.Serie,
+                    Examenes=(_context.TblExamenesConsultas.Where(x=>x.IdConsulta==id).Join(_context.TblExamenes,
+                    c=>c.IdExamen,
+                    e=>e.IdExamen,
+                    (c, e) => new
+                    {
+                        IdExamen=c.IdExamen,
+                        Nombre=e.Nombre,
+                        Descripcion=e.Descripcion,
+                        Precio=e.Precio
+                    }).ToList())
+                }).ToList();
+
+            if (listado == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(listado);
+        }
+
+
+
         // PUT: api/Consultas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

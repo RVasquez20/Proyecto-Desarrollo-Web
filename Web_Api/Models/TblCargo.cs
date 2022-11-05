@@ -11,7 +11,7 @@ namespace Web_Api.Models
         }
 
         public int IdCargo { get; set; }
-        public string Cargo { get; set; } = null!;
+        public string Cargo { get; set; }
 
         public virtual ICollection<TblEmpleado> TblEmpleados { get; set; }
     }

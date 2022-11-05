@@ -49,7 +49,8 @@ namespace Web_Api.Controllers
                    Cantidad = vd.Cantidad,
                    IdVenta = vd.IdVenta,
                    Numero = vd.Numero,
-                   Producto = p.Nombre
+                   Producto = p.Nombre,
+                   Precio = p.Precio
                }).ToList();
 
             if (listadoVentasDetalle == null)

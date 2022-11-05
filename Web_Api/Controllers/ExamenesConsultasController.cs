@@ -89,12 +89,26 @@ namespace Web_Api.Controllers
         // POST: api/ExamenesConsultas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblExamenesConsulta>> PostTblExamenesConsulta(TblExamenesConsulta tblExamenesConsulta)
+        public async Task<ActionResult> PostTblExamenesConsulta(TblExamenesConsulta tblExamenesConsulta)
         {
             _context.TblExamenesConsultas.Add(tblExamenesConsulta);
             await _context.SaveChangesAsync();
+            var listadoExamenConsulta = _context.TblExamenesConsultas
+                .Where(x=>x.IdExamenConsulta==tblExamenesConsulta.IdExamenConsulta)
+                .Join(_context.TblExamenes,
+                ec => ec.IdExamen,
+                e => e.IdExamen,
+                (ec, e) => new
+                {
+                    IdExamenConsulta = ec.IdExamenConsulta,
+                    IdExamen = ec.IdExamen,
+                    IdConsulta = ec.IdConsulta,
+                    Nombre = e.Nombre,
+                    Descripcion = e.Descripcion,
+                    Precio = e.Precio
+                }).ToList();
 
-            return Ok(tblExamenesConsulta);
+            return Ok(listadoExamenConsulta);
         }
 
         // DELETE: api/ExamenesConsultas/5

@@ -43,7 +43,18 @@ namespace Web_Api.Controllers
                         IdPaciente = PacientesHabitaciones.IdPaciente,
                         IdHabitacion = PacientesHabitaciones.IdHabitacion,
                         Paciente = PacientesHabitaciones.Paciente,
-                        NumHabitacion = Habitaciones.NoHabitacion
+                        NumHabitacion = Habitaciones.NoHabitacion,
+                        IdClinica = Habitaciones.IdClinica
+                    }).Join(_context.TblClinicas,
+                    h => h.IdClinica,
+                    c => c.IdClinica,
+                    (h,c) => new {
+                        IdPacHab = h.IdPacHab,
+                        IdPaciente = h.IdPaciente,
+                        IdHabitacion = h.IdHabitacion,
+                        Paciente = h.Paciente,
+                        NumHabitacion = h.NumHabitacion,
+                        Clinica = (c.Nombre + ", " + c.Direccion)
                     }).ToList();
 
 

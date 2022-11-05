@@ -11,7 +11,7 @@ namespace Web_Api.Models
         }
 
         public int IdLoteProducto { get; set; }
-        public string Descripcion { get; set; } = null!;
+        public string Descripcion { get; set; }
         public int NoLote { get; set; }
         public DateTime FechaExpiracion { get; set; }
 

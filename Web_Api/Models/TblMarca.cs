@@ -11,7 +11,7 @@ namespace Web_Api.Models
         }
 
         public int IdMarca { get; set; }
-        public string Marca { get; set; } = null!;
+        public string Marca { get; set; }
 
         public virtual ICollection<TblProducto> TblProductos { get; set; }
     }

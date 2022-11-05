@@ -136,7 +136,36 @@ namespace Web_Api.Controllers
         [Route("Login")]
         public async Task<IActionResult> userLogin(TblUsuario user)
         {
-            var oUser = await _context.TblUsuarios.Where(u=>u.Username==user.Username&&u.Password==user.Password).FirstOrDefaultAsync();
+            var oUser = await _context.TblUsuarios
+                .Where(u => u.Username == user.Username && u.Password == user.Password)
+                .Join(_context.TblEmpleados,
+                u => u.IdEmpleado,
+                e => e.IdEmpleado,
+                (u, e) => new
+                {
+
+                    IdUsuario = u.IdUsuario,
+                    IdEmpleado = u.IdEmpleado,
+                    IdRol = u.IdRol,
+                    Username = u.Username,
+                    Password = u.Password,
+                    Empleado = e.Nombre,
+                    IdClinica = e.IdClinica
+                }).Join(_context.TblClinicas,
+                u => u.IdClinica,
+                e => e.IdClinica,
+                (u, e) => new
+                {
+
+                    IdUsuario = u.IdUsuario,
+                    IdEmpleado = u.IdEmpleado,
+                    IdRol = u.IdRol,
+                    Username = u.Username,
+                    Password = u.Password,
+                    Empleado = u.Empleado,
+                    IdClinica = u.IdClinica,
+                    Clinica =  e.Nombre
+                }).FirstOrDefaultAsync();
             if (oUser == null)
                 return NotFound("Username o Password No Valido");
 

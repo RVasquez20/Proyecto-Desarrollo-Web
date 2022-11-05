@@ -16,10 +16,10 @@ namespace Web_Api.Models
         public int? IdClinica { get; set; }
         public string? Nombre { get; set; }
         public int? IdMarca { get; set; }
-        public string Descripcion { get; set; } = null!;
+        public string Descripcion { get; set; }
         public double Precio { get; set; }
         public int Existencia { get; set; }
-        public string Imagen { get; set; } = null!;
+        public string Imagen { get; set; }
 
         public virtual TblClinica? IdClinicaNavigation { get; set; }
         public virtual TblLoteProducto? IdLoteProductoNavigation { get; set; }

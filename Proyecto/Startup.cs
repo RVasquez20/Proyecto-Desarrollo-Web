@@ -9,7 +9,8 @@ namespace WebApplication1
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            app.MapSignalR();
+            //app.MapSignalR();
+            app.MapAzureSignalR(this.GetType().FullName);
         }
     }
 }

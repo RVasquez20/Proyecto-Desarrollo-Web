@@ -122,7 +122,7 @@ namespace WebApplication1.Controllers
                 oProducto.Descripcion = model.Descripcion;
                 oProducto.Precio = model.Precio;
                 oProducto.Existencia = model.Existencia;
-                oProducto.Imagen = "/images/Products/" + model.ImagenFile.FileName;
+                oProducto.Imagen = "https://webclinica.azurewebsites.net/images/Products/" + model.ImagenFile.FileName;
                 
                 var productSerializer = JsonConvert.SerializeObject(oProducto);
                 var content = new StringContent(productSerializer, Encoding.UTF8, "application/json");
@@ -230,7 +230,7 @@ namespace WebApplication1.Controllers
                     productos.Descripcion = model.Descripcion;
                     productos.Precio = model.Precio;
                     productos.Existencia = model.Existencia;
-                    productos.Imagen = "/images/Products/" + model.ImagenFile.FileName;
+                    productos.Imagen = "https://webclinica.azurewebsites.net/images/Products/" + model.ImagenFile.FileName;
                     var ProductoSerializado = JsonConvert.SerializeObject(productos);
                     var content = new StringContent(ProductoSerializado, Encoding.UTF8, "application/json");
                     var response = await _http.PutAsync(_urlProductos + "/" + model.IdProducto, content);

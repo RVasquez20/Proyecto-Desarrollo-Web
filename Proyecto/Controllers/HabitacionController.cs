@@ -131,9 +131,7 @@ namespace WebApplication1.Controllers
 
         }
 
-        //trae la vista con los datos cargados
-        [HttpGet]
-        [Route("modificar/(id)")]
+
         public async Task<ActionResult> modificarHabitacion(int id)
         {
             using (var http = new HttpClient())
@@ -147,6 +145,27 @@ namespace WebApplication1.Controllers
 
                 var habitacion = JsonConvert.DeserializeObject<TblHabitacione>(responseString);
 
+                var responseClinica = await http.GetAsync(_urlClinica);
+
+                if (responseClinica.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return View("Error");
+                }
+                var responseStringClinica = await responseClinica.Content.ReadAsStringAsync();
+
+                var listadoClinicas = JsonConvert.DeserializeObject<List<TblClinica>>(responseStringClinica);
+
+                var listadoClinica = listadoClinicas.ConvertAll(r =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = r.Nombre,
+                        Value = r.IdClinica.ToString(),
+
+                        Selected = false
+                    };
+                });
+                ViewBag.listadoClinica = listadoClinica;
                 return View(habitacion);
             }
 

@@ -65,6 +65,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<ActionResult> AddCompra(TblCompra model)
         {
+            model.FechaOrden = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return View("Error");
@@ -194,6 +195,12 @@ namespace WebApplication1.Controllers
                 var responseString = await response.Content.ReadAsStringAsync();
                 var Detalles = JsonConvert.DeserializeObject<List<ComprasDetalleViewDetails>>(responseString);
                 ViewBag.data = Detalles[0].NoOrden;
+                int total = 0;
+                foreach (var item in Detalles)
+                {
+                    total += (int)(item.Precio*item.Cantidad);
+                }
+                ViewBag.total = total;
                 return View(Detalles);
             }
         }

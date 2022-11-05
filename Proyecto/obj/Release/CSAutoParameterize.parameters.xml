@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="Azure:SignalR:ConnectionString-Web.config Connection String" description="Azure:SignalR:ConnectionString Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Endpoint=https://signalrproyecto.service.signalr.net;AccessKey=FKDVN9pv5536aXGaJUh0Aw8RgmhOxGUdJcbXT4UR7P0=;Version=1.0;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Rodrigo\\Documents\\GitHub\\Proyecto\ Desarrollo\ Web\\Proyecto-Desarrollo-Web\\Proyecto\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Azure:SignalR:ConnectionString']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-WebApplication1-20221010032849.mdf;Initial Catalog=aspnet-WebApplication1-20221010032849;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Rodrigo\\Documents\\GitHub\\Proyecto\ Desarrollo\ Web\\Proyecto-Desarrollo-Web\\Proyecto\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

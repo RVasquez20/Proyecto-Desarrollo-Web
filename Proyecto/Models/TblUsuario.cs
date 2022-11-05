@@ -17,13 +17,13 @@ namespace WebApplication1.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Usuario")]
+        [Display(Name = "Username")]
 
         public string User { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
     }

@@ -21,7 +21,6 @@ namespace WebApplication1.Controllers
         private readonly string _urlProductos = "https://apiclinica.azurewebsites.net/api/Productos";
         private readonly string _urlPacientes = "https://apiclinica.azurewebsites.net/api/Pacientes";
         private readonly string _urlVd = "https://apiclinica.azurewebsites.net/api/VentasDetalle";
-        // GET: VentaI
         public async Task<ActionResult> Index()
         {
 
@@ -68,6 +67,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<ActionResult> AddVenta(TblVenta model)
         {
+            model.Fecha = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return View("Error");
@@ -197,6 +197,12 @@ namespace WebApplication1.Controllers
                 var responseString = await response.Content.ReadAsStringAsync();
                 var Detalles = JsonConvert.DeserializeObject<List<VentasDetalleViewDetails>>(responseString);
                 ViewBag.data = Detalles[0].Numero;
+                int total = 0;
+                foreach (var item in Detalles)
+                {
+                    total += (int)(item.Precio * item.Cantidad);
+                }
+                ViewBag.total = total;
                 return View(Detalles);
             }
         }

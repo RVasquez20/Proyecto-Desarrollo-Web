@@ -7,8 +7,11 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("agregarUsuario", "Usuario", FormMethod.Post))
+
+<hr />
+@using (Html.BeginForm("AgregarUser", "Usuario", FormMethod.Post))
 {
+    <label>Empleado:</label>
     @Html.DropDownList("IdEmpleado", listadoEmpleados, "Seleccionar un Empleado", new { @class = "form-control" })
     <div class="mb-3 mt-3">
         @Html.LabelFor(m => m.Username)
@@ -18,6 +21,9 @@
         @Html.LabelFor(m => m.Password)
         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
     </div>
+    <label>Rol:</label>
     @Html.DropDownList("IdRol", listadoRoles, "Seleccionar un rol", new { @class = "form-control" })
+    <br />
+    <br />
     <button type="submit" class="btn btn-primary">Agregar Usuario</button>
 }

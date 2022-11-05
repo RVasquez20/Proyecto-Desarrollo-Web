@@ -6,27 +6,52 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function HomeScreen({ navigation }) {
   const [data, setData] = useState([]);
-  const getEmpleados=()=>{
+  const [filteredData, setFilteredData] = useState([]);
+  const getProductos=()=>{
     fetch('https://apiclinica.azurewebsites.net/api/Productos')
     .then(res=>res.json())
     .then(data=>{
-      console.log("data",data)
       setData(data);
+      setFilteredData(data);
     })
     .catch(err=>console.log(err.message))
   }
 
   useEffect(()=>{
-    getEmpleados()
+    getProductos()
   },[])
+  useEffect(()=>{
+    navigation.setOptions({
+      headerLargeTitle:true,
+      headerTitle:"Listado de Productos",
+      headerSearchBarOptions:{
+        placeholder:"Product",
+        onChangeText:(event)=>{
+          searchFilterFunction(event.nativeEvent.text);
+        },
+      },
+    });
+  },[navigation]);
 
+const searchFilterFunction = (text)=>{
+  if(text){
+    const newData=data.filter(item=>{
+      const itemData=item.nombre ? item.nombre.toUpperCase() : ''.toUpperCase();
+      const textData=text.toUpperCase();
+      return itemData.indexOf(textData)>-1;
+    })
+    setFilteredData(newData);
+  }else{
+    setFilteredData(data);
+  }
+}
 
   return (
     <SafeAreaView >
   
    
       <FlatList
-        data={data}
+        data={filteredData}
         keyExtractor={(item,index)=>index.toString()}
         renderItem={({item})=>{
           return(

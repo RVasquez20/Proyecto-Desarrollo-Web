@@ -1,0 +1,86 @@
+﻿@using WebApplication1.Models
+@model List<ConsultasViewModel>
+    @{
+    ViewBag.Title = "Consultas";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+    <div class="container mt-3">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Todas las Consultas</a>
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Buscar Consultas por Paciente", "ConsultasPorPaciente", "Consulta", new { @class = "nav-link" })
+            </li>
+        </ul>
+    </div>
+    <br />
+    <br />
+    <a href="~/Consulta/newConsulta" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nueva Consulta</a>
+
+    <!--@Html.ActionLink("Nuevo", "newConsulta", "Consulta", new { @class = "btn btn-primary" })-->
+    @if (Model.Count > 0)
+{
+    <div class="container mt-3">
+
+
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Consulta</th>
+                    <th>Paciente</th>
+                    <th>Empleado</th>
+                    <th>Clinica</th>
+                    <th>Diagnostico</th>
+                    <th>Receta</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.IdConsulta</td>
+                    <td>@item.Paciente</td>
+                    <td>@item.Empleado</td>
+                    <td>@item.Clinica</td>
+                    <td>@item.Diagnostico</td>
+                    <td>@item.Receta</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Consulta/DetallesConsulta/" + item.IdConsulta)'" type="button" value="Ver Detalles" class="btn btn-warning" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Consultas</h2>
+    </div>
+}
+<script>
+    function EliminarUsuario(id) {
+        if (confirm("Esta Seguro de Eliminar A Esta Paciente?????")) {
+            url = "@Url.Content("~/Consulta/deleteConsulta/")" + "/" + id;
+            $.get(url).done((data)=>{
+                if (data == 1) {
+                    document.location.href = "@Url.Content("~/Consulta/Index")"
+                } else {
+                    alert("Ocurrio un Error :c");
+                }
+            });
+        }
+    }
+</script>
+
+
+
+
+
+
+

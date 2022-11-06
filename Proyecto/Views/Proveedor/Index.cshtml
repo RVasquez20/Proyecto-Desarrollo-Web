@@ -1,0 +1,113 @@
+﻿@using WebApplication1.Models
+
+@model List<TblProveedor>
+
+    @{
+    ViewBag.Title = "Proveedor";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model.Count>0)
+{
+    <div class="container mt-3">
+        <a href="~/Proveedor/newProveedor" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Proveedor</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Nit</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+
+                    <td>@item.Nombre</td>
+                    <td>@item.Nit</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.Telefono</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Proveedor/modificarProveedor/" + item.IdProveedor)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarProveedor('@item.IdProveedor', '@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay usuarios</h2>
+    </div>
+}
+
+
+
+
+@section scripts{
+               <script>
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+
+        function eliminarProveedor(id,Proveedor) {
+            swalWithBootstrapButtons.fire({
+                        title: `Desea Eliminar al Proveedor ${Proveedor}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var url = "@Url.Content("~/Proveedor/eliminarProveedor/")" + id;
+                            $.get(url).done((data) => {
+                                if (data == "Exito") {
+                                    document.location.href = "@Url.Content("~/Proveedor/Index")";
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Cancelado',
+                                        'El Proveedor NO Se Elimino :D',
+                                        'error'
+                                    )
+                                }
+                            });
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El Proveedor Se Ha Eliminado Exitosamente.',
+                                'success'
+                            )
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Proveedor NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    })
+
+    }
+               </script>
+
+}
+
+
+
+

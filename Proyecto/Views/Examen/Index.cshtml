@@ -1,0 +1,100 @@
+﻿@using WebApplication1.Models
+@model List<TblExamene>
+    @{
+    ViewBag.Title = "Examen";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model.Count > 0)
+{
+    <div class="container mt-3">
+        <a href="~/Examen/newExamen" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Examen</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                                    <th>Precio</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.Precio</td>
+
+                    <td>
+
+                        <input onclick="document.location.href='@Url.Content("~/Examen/modificarExamen/" + item.IdExamen)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarExamen('@item.IdExamen','@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay examen</h2>
+    </div>
+}
+    @section scripts{
+                   <script>
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            function eliminarExamen(id, Examen) {
+
+            swalWithBootstrapButtons.fire({
+                title: `Desea Eliminar El Examen  ${Examen}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/Examen/eliminarExamen/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/Examen/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Examen NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminado!',
+                        'El Examen Se Ha Eliminado Exitosamente.',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'El Examen NO Se Elimino :D',
+                        'error'
+                    )
+                }
+            })
+
+    }
+                   </script>
+
+    }

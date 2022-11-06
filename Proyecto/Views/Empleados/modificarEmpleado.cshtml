@@ -1,0 +1,57 @@
+﻿@model WebApplication1.Models.TblEmpleado
+
+@{
+    ViewBag.Title = "Modificar Empleado";
+    List<SelectListItem> listadoCargos = ViewBag.listadoCargos;
+    List<SelectListItem> listadoClinicas = ViewBag.listadoClinicas;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("modificarEmpleado", "Empleados",FormMethod.Post))
+{
+@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.HiddenFor(model => model.IdEmpleado, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+        </div>
+    </div>
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.CodigoEmpleado)
+        @Html.TextBoxFor(m => m.CodigoEmpleado, new { @class = "form-control" })
+    </div>
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Apellido)
+        @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
+    </div>
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Direccion)
+        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
+    </div>
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Telefono)
+        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control" })
+    </div>
+    <label>Cargo:</label>
+    @Html.DropDownList("IdCargo", listadoCargos, "Seleccionar un Cargo", new { @class = "form-control" })
+    <br />
+    <label>Clinica:</label>
+    @Html.DropDownList("IdClinica", listadoClinicas, "Seleccionar una Clinica", new { @class = "form-control" })
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+    </div>
+
+    }

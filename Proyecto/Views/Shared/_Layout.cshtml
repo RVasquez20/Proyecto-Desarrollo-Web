@@ -1,0 +1,205 @@
+﻿@{ 
+    var GestionUsuarios = Session["Role"] != null || Session["Usuario"] != null;
+    var Roles = Session["Role"] != null;
+    var Usuarios = Session["Usuario"] != null;
+    var GestionConsultasPacientes = Session["Consulta"] != null || Session["Pacientes"] != null || Session["Diagnostico"] != null || Session["Examen"] != null|| Session["Receta"] != null;
+    var Consulta = Session["Consulta"] != null;
+    var Pacientes = Session["Pacientes"] != null;
+    var Diagnostico=Session["Diagnostico"] != null;
+    var Examen = Session["Examen"] != null;
+    var Receta = Session["Receta"] != null;
+    var GestionHabitaciones= Session["Habitacion"] != null|| Session["PacienteHabitacion"] != null;
+    var Habitacion = Session["Habitacion"] != null;
+    var PacienteHabitacion = Session["PacienteHabitacion"] != null;
+    var GestionEmpleados = Session["Empleados"] != null || Session["Cargo"] != null || Session["Clinica"] != null;
+    var Empleados = Session["Empleados"] != null;
+    var Cargo = Session["Cargo"] != null;
+    var Clinica = Session["Clinica"] != null;
+    var GestionFarmacia= Session["Producto"] != null || Session["LoteProducto"] != null || Session["Marca"] != null || Session["Compra"] != null || Session["Proveedor"] != null || Session["Ventas"] != null;
+    var Producto = Session["Producto"] != null;
+    var LoteProducto = Session["LoteProducto"] != null;
+    var Marca = Session["Marca"] != null;
+    var Compra = Session["Compra"] != null;
+    var Proveedor = Session["Proveedor"] != null;
+    var Venta = Session["Venta"] != null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/74e9b2ce2d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+
+
+            <a href="~/Home/Index" class="navbar-brand"><img src="~/images/3388856.png" alt="" width="30" height="24" class="d-inline-block align-text-top" />@Session["NClinica"].ToString()</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                @if (GestionUsuarios)
+                {
+                    <div class="dropdown dropdown-toggle-split">
+                        <a class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-regular fa-user"></i>&nbsp;Gestion Usuarios
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Roles)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Roles", "Index", "Role")</li>
+                            }
+                            @if (Usuarios)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Usuario", "Index", "Usuario")</li>
+                            }
+                        </ul>
+                    </div>
+                }
+                <div class="dropdown dropdown-toggle-split">
+                    @if (GestionConsultasPacientes)
+                    {
+                        <a class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-regular fa-address-book"></i>&nbsp;Gestion Consultas y Pacientes
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Consulta)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Consulta", "Index", "Consulta")</li>
+                            }
+                            @if (Pacientes)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Paciente", "Index", "Pacientes")</li>
+                            }
+                            @if (Examen)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Examen", "Index", "Examen")</li>
+                            }
+                        </ul>
+                    }
+                </div>
+
+                <div class="dropdown dropdown-toggle-split">
+                    @if (GestionHabitaciones)
+                    {
+                        <a class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-bed"></i>&nbsp;Gestion Habitaciones
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Habitacion)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Habitaciones", "Index", "Habitacion")</li>
+                                <li class="dropdown-item">@Html.ActionLink("Habitaciones Disponibles", "HabitacionesDisponibles", "Habitacion")</li>
+                            }
+                            @if (PacienteHabitacion)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Pacientes por Habitacion", "Index", "PacienteHabitacion")</li>
+                            }
+                            </ul>
+                     }
+                    </div>
+
+
+
+                <div class="dropdown dropdown-toggle-split">
+                    @if (GestionEmpleados)
+                    {
+                        <a class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-people-carry-box"></i>&nbsp;Gestion Empleados
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Empleados)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Empleados", "Index", "Empleados")</li>
+                            }
+                            @if (Cargo)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Cargos", "Index", "Cargo")</li>
+                            }
+                            @if (Clinica)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Clinicas", "Index", "Clinica")</li>
+                            }
+                        </ul>
+                    }
+                    </div>
+                <div class="dropdown dropdown-toggle-split">
+                    @if (GestionFarmacia)
+                    {
+                        <a class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-syringe"></i>&nbsp;Gestion Farmacias
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Producto)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Productos", "Index", "Producto")</li>
+                            }
+                            @if (LoteProducto)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Lotes Productos", "Index", "LoteProducto")</li>
+                            }
+                            @if (Marca)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Marca", "Index", "Marca")</li>
+                            }
+                            @if (Compra)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Compras", "Index", "Compra")</li>
+                            }
+                            @if (Proveedor)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Proveedores", "Index", "Proveedor")</li>
+                            }
+                            @if (Venta)
+                            {
+                                <li class="dropdown-item">@Html.ActionLink("Ventas", "Index", "Venta")</li>
+                            }
+                        </ul>
+                    }
+                    </div>
+                <div>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="dropdown dropdown-toggle-split">
+                        <a class="btn btn-secondary dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="fa-regular fa-hand-spock"></i>&nbsp;Hola @Session["User"].ToString() !!
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión &nbsp;<i class="bi bi-box-arrow-right"></i></a></li>
+                        </ul>
+                    </div>
+                            }
+                        </div>
+                    </div>
+            </div>
+    </nav>
+
+    <div class="container body-content">
+
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Desarrollo Web</p>
+        </footer>
+    </div>
+
+
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿@if (Model.Count > 0)
+{
+<table class="table table-dark- table-hover">
+    <thead>
+        <th>No Habitacion</th>
+        <th>Clinica</th>
+        <th>Cantidad Maxima de Personas</th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+            <td>@item.NoHabitacion</td>
+            <td>@item.Clinica</td>
+            <td>@item.CantidadMaxPacientes</td>
+   
+    </tr>
+        }
+    </tbody>
+</table>
+}
+else
+{
+    <h2>No Hay Habitaciones Disponibles en este Momento</h2>
+}

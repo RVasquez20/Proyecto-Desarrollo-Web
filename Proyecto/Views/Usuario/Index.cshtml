@@ -1,0 +1,107 @@
+﻿@using WebApplication1.Models
+@model List<UsuarioViewModel>
+    @{
+    ViewBag.Title = "Vista Usuarios";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model.Count > 0)
+{
+    <div class="container mt-3">
+        <a href="~/Usuario/newUser" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo usuario</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Empleado</th>
+                    <th>Clinica</th>
+                    <th>username</th>
+                    <th>Password</th>
+                    <th>Rol</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Empleado</td>
+                    <td>@item.Clinica</td>
+                    <td>@item.Username</td>
+                    <td>@item.Password</td>
+                    <td>@item.Rol</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Usuario/modificarUsuario/" + item.IdUsuario)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarUsuario('@item.IdUsuario','@item.Username')" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay usuarios</h2>
+    </div>
+}
+
+
+
+    @section scripts{
+        <script>
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+
+
+
+
+
+    function EliminarUsuario(id,username) {
+        swalWithBootstrapButtons.fire({
+                        title: `Desea Eliminar el Usuario ${username}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var url = "@Url.Content("~/Usuario/eliminarUsuario/")" + id;
+                            $.get(url).done((data) => {
+                                if (data == "Exito") {
+                                    document.location.href = "@Url.Content("~/Usuario/Index")";
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Cancelado',
+                                        'El Usuario NO Se Elimino :D',
+                                        'error'
+                                    )
+                                }
+                            });
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El Usuario Se Ha Eliminado Exitosamente.',
+                                'success'
+                            )
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Usuario NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    })
+    }
+        </script>
+    }

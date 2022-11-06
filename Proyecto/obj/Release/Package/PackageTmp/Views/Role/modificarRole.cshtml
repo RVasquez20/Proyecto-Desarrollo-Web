@@ -1,0 +1,119 @@
+﻿@using WebApplication1.Models
+@model WebApplication1.Models.TblRole
+
+@{
+    ViewBag.Title = "Modificar Rol";
+    List<accessRolesViewModel> permisos = ViewBag.listadoPermisos;
+    List<SelectListItem> Accesos = ViewBag.listadoAccesos;
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Role</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.HiddenFor(model => model.IdRol, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.ValidationMessageFor(model => model.IdRol, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Rol, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Rol, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Rol, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+
+    <label>Accesos:</label>
+    @Html.DropDownList("IdAccess", Accesos, "Seleccionar el Acceso", new { @class = "form-control" })
+
+    <br />
+    <button type="submit" id="add" class="btn btn-primary">Agregar Permiso</button>
+    <br />
+    <br />
+    <table class="table table-dark">
+        <thead>
+        <th colspan="2">Seccion</th>
+        </thead>
+        <tbody id="data">
+
+            @foreach (var item in permisos)
+            {
+                <tr id="permisos" data-idPermiso="@item.IdAccessRoles">
+                    <td>@item.Name</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="EliminarPermiso(@item.IdAccessRoles);">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="Guardar" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        var _urlEliminarAccesos= "@Url.Action("EliminarAcceso", "Role")";
+        const EliminarPermiso=(id)=>{
+            const nodeList = document.querySelectorAll("#permisos");
+            for (let i = 0; i < nodeList.length; i++) {
+                console.log(nodeList[i]);
+                if (nodeList[i].dataset.idpermiso == id) {
+                    $(nodeList[i]).remove();
+                    var obj = {
+                        id:id
+                    }
+                    $.post(_urlEliminarAccesos, obj).done((data) => {
+                    });
+                }
+            }
+        }
+
+
+        var _urlRolePermisos = "@Url.Action("agregarRolePermisos", "Role")";
+        $("#add").on('click', () => {
+            var IdRol = $("#IdRol").val();
+            var IdAccess = $("#IdAccess").val();
+            var response = '';
+            var obj = {
+                IdRol: IdRol,
+                IdAccess: IdAccess
+            }
+            $.post(_urlRolePermisos, obj).done(data => {
+                let selected = $("#IdAccess").find('option:selected').text();
+                $("option[value='"+data.IdAccess+"']").remove();
+                response += "<tr class='data'>";
+                response += "<td>" + selected + "</td>";
+                response += "<td><button class='btn btn-danger' onclick='EliminarPermiso(" + data.IdAccessRole +");'>Eliminar</button></td>";
+                response += "</tr>";
+                $("#data").append(response);
+
+            });
+        });
+        var _urlModificarRol = "@Url.Action("modificarRole","Role")";
+        $("#Guardar").on('click', () => {
+            var IdRol=$("#IdRol").val();
+            var Rol = $("#Rol").val();
+            var obj = {
+                IdRol: IdRol,
+                Rol: Rol
+            }
+            $.post(_urlModificarRol, obj).done(() => {
+                document.location.href = '@Url.Content("~/Role/Index/")';
+            });
+        });
+    </script>
+
+}

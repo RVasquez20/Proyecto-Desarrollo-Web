@@ -1,0 +1,57 @@
+﻿@model WebApplication1.Models.TblHabitacione
+
+@{
+    ViewBag.Title = "Modificar Habitacion";
+    List<SelectListItem> listaClinicas = ViewBag.listadoClinica;
+}
+
+<h2>@ViewBag.Title</h2>
+<hr/>
+
+@using (Html.BeginForm("modificarHabitacion", "Habitacion", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.IdHabitacion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IdHabitacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NoHabitacion, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NoHabitacion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NoHabitacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label>Clinica</label>
+        <div class="col-md-10">
+            @Html.DropDownList("IdClinica", listaClinicas, "Seleccionar un Lote", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdClinica, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CantidadMaxPacientes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CantidadMaxPacientes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CantidadMaxPacientes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br/>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}

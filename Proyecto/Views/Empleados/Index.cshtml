@@ -1,0 +1,107 @@
+﻿@using WebApplication1.Models
+@model List<EmpleadosViewModel>
+    @{
+    ViewBag.Title = "Vista Empleados";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model.Count > 0)
+{
+    <div class="container mt-3">
+        <a href="~/Empleados/newEmployee" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Empleado</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Codigo Empleado</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Cargo</th>
+                    <th>Clinica</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.CodigoEmpleado</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Apellido</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.Telefono</td>
+                    <td>@item.Cargo</td>
+                    <td>@item.Clinica</td>
+
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Empleados/modificarEmpleado/" + item.IdEmpleado)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarEmpleado('@item.IdEmpleado','@item.Nombre','@item.Apellido');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Empleados</h2>
+    </div>
+}
+    @section scripts{
+                   <script>
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+    function EliminarEmpleado(id,Nombre,Apellido) {
+         swalWithBootstrapButtons.fire({
+             title: `Desea Eliminar El Empleado  ${Nombre} ${Apellido}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/Empleados/eliminarEmpleado/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/Empleados/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Empleado NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminado!',
+                        'El Empleado Se Ha Eliminado Exitosamente.',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'El Empleado NO Se Elimino :D',
+                        'error'
+                    )
+                }
+            })
+
+        
+    }
+                   </script>
+    }

@@ -1,0 +1,103 @@
+﻿@using WebApplication1.Models
+@model List<TblLoteProducto>
+    @{
+    ViewBag.Title = "Lotes Productos";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model.Count > 0)
+{
+    <div class="container mt-3">
+        <a href="~/LoteProducto/newLoteProductos" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Lote Producto</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>No. Lote</th>
+                    <th>Descripcion</th>
+                    <th>Fecha Expiracion</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.NoLote</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.FechaExpiracion</td>
+                    <td>
+
+                        <input onclick="document.location.href='@Url.Content("~/LoteProducto/modificarLoteProducto/" + item.IdLoteProducto)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarLoteProducto('@item.IdLoteProducto','@item.Descripcion');" type="button" value="Eliminar" class="btn btn-danger" />
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Lote de Productos</h2>
+    </div>
+}
+    @section scripts{
+                   <script>
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            function eliminarLoteProducto(id, LoteProducto) {
+
+            swalWithBootstrapButtons.fire({
+                title: `Desea Eliminar El Lote Producto  ${LoteProducto}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/LoteProducto/eliminarLoteProducto/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/LoteProducto/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Lote Producto NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminado!',
+                        'El Lote Producto Se Ha Eliminado Exitosamente.',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'El Lote Producto NO Se Elimino :D',
+                        'error'
+                    )
+                }
+            })
+
+    }
+
+                   </script>
+    }
+
+
+

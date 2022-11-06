@@ -1,0 +1,26 @@
+﻿@model WebApplication1.Models.TblVenta
+@{
+    ViewBag.Title = "Agregar Venta";
+    List<SelectListItem> listadoPaciente = ViewBag.listadoPaciente;
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+@using (Html.BeginForm("AddVenta", "Venta", FormMethod.Post, new { role = "form", @class = "" }))
+{
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Serie)
+        @Html.TextBoxFor(m => m.Serie, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Numero)
+        @Html.TextBoxFor(m => m.Numero, new { @class = "form-control" })
+    </div>
+
+   
+    <label>Paciente:</label>
+    @Html.DropDownList("IdPaciente", listadoPaciente, "Seleccionar un Paciente", new { @class = "form-control" })
+    <br />
+    <button type="submit" class="btn btn-primary">Agregar Productos</button>
+}

@@ -1,0 +1,108 @@
+﻿@using WebApplication1.Models
+
+@model List<TblPaciente>
+    @{
+    ViewBag.Title = "Vista Pacientes";
+
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model.Count > 0)
+{
+    <div class="container mt-3">
+        <a href="~/Pacientes/newPaciente" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo paciente</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>No. Afiliado</th>
+                    <th>Nombre</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.NoAfiliacion</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.Telefono</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Pacientes/modificarPaciente/" + item.IdPaciente)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarPaciente('@item.IdPaciente','@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay pacientes</h2>
+    </div>
+}
+@section scripts{
+    <script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+    function eliminarPaciente(id,nombre) {
+        swalWithBootstrapButtons.fire({
+                        title: `Desea Eliminar al Paciente ${nombre}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var url = "@Url.Content("~/Pacientes/eliminarPaciente/")" + id;
+                            $.get(url).done((data) => {
+                                if (data == "Exito") {
+                                    document.location.href = "@Url.Content("~/Pacientes/Index")";
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Cancelado',
+                                        'El Paciente NO Se Elimino :D',
+                                        'error'
+                                    )
+                                }
+                            });
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El Paciente Se Ha Eliminado Exitosamente.',
+                                'success'
+                            )
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Paciente NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    })
+
+
+       
+
+    }
+    </script>
+
+    }
+
+
+
+
+

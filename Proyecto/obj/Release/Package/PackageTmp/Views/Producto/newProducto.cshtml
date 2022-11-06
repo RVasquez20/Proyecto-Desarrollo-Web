@@ -1,0 +1,58 @@
+﻿@model WebApplication1.Models.ProductosViewModel
+@{
+    ViewBag.Title = "Agregar Producto";
+    List<SelectListItem> listaLoteProducto = ViewBag.listadoLoteProducto;
+    List<SelectListItem> listaClinica = ViewBag.listadoClinica;
+    List<SelectListItem> listaMarca = ViewBag.listadoMarca;
+}
+
+<h2>@ViewBag.Title</h2>
+<hr/>
+
+@using (Html.BeginForm("AddProduct", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="mb-3 mt-3">
+        <label>Lote Producto:</label>
+        @Html.DropDownList("IdLoteProducto", listaLoteProducto, "Seleccionar un Lote", new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        <label>Clinica:</label>
+        @Html.DropDownList("IdClinica", listaClinica, "Seleccionar una Clinica", new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        <label>Marca:</label>
+        @Html.DropDownList("IdMarca", listaMarca, "Seleccionar una Marca", new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Descripcion)
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Precio)
+        @Html.TextBoxFor(m => m.Precio, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3 mt-3">
+        @Html.LabelFor(m => m.Existencia)
+        @Html.TextBoxFor(m => m.Existencia, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImagenFile, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ImagenFile, new { type = "file" })
+            @Html.ValidationMessageFor(model => model.ImagenFile, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Agregar Producto</button>
+}

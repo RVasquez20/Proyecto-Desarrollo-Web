@@ -1,0 +1,95 @@
+﻿@using WebApplication1.Models
+@model List<TblRole>
+    @{
+    ViewBag.Title = "Roles";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model.Count > 0)
+{
+    <div class="container mt-3">
+        <a href="~/Role/agregarRole" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Role</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Rol</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Rol</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Role/modificarRole/" + item.IdRol)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarRol('@item.IdRol','@item.Rol');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Roles</h2>
+    </div>
+}
+
+
+    @section scripts{
+        <script>
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+
+        function eliminarRol(id, Role) {
+        swalWithBootstrapButtons.fire({
+            title: `Desea Eliminar el Rol ${Role}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var url = "@Url.Content("~/Role/eliminarRole/")" + id;
+                            $.get(url).done((data) => {
+                                if (data == "Exito") {
+                                    document.location.href = "@Url.Content("~/Role/Index")";
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Cancelado',
+                                        'El Rol NO Se Elimino :D',
+                                        'error'
+                                    )
+                                }
+                            });
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El Rol Se Ha Eliminado Exitosamente.',
+                                'success'
+                            )
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Rol NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    })
+    }
+        </script>
+    }
+

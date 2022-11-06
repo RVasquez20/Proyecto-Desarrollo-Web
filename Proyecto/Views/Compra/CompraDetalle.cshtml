@@ -1,0 +1,83 @@
+﻿@model WebApplication1.Models.TblComprasDetalle
+@{
+    ViewBag.Title = "Compras Detalle";
+    int idCompra = ViewBag.data;
+    List<SelectListItem> listadoProductos = ViewBag.listadoProducto;
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<input name="IdCompra" id="IdCompra" value="@idCompra" type="text" hidden></input>
+<label>Producto:</label>
+@Html.DropDownList("IdProducto", listadoProductos, "Seleccionar un Producto", new { @class = "form-control" })
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Cantidad)
+    @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control" })
+</div>
+<h1 id="alert" hidden>Cantidad Mayor a Stock Ingrese nueva cantidad</h1>
+<input type="text" class="form-control" id="Precio" name="Precio" readonly />
+<button type="submit" id="add" class="btn btn-primary">Agregar Producto</button>
+<button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Compra/Index")'">Finalizar Compra</button>
+<div id="dataTable">
+    <h1>Resumen de la Compra</h1>
+    <table class="table table-dark">
+        <thead>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        </thead>
+        <tbody id="data">
+        </tbody>
+
+    </table>
+</div>
+
+
+@section scripts{
+    <script>
+        var _urlPrecio = "@Url.Action("getPrecios", "Compra")";
+        var cantidadStock = 0;
+        $("#IdProducto").on('change', () => {
+            var ProductoSelected = $("#IdProducto").val();
+            var obj = {
+                id: ProductoSelected
+            };
+            $.post(_urlPrecio, obj).done((data) => {
+                $("#Precio").val(data.Precio);
+                cantidadStock = data.Stock;
+            });
+        });
+        document.getElementById('Cantidad').addEventListener('change', () => {
+            var cantidad = $("#Cantidad").val();
+            if (cantidad < 0) {
+                $("#alert").removeAttr('hidden');
+                $("#add").attr('hidden',true);
+            } else {
+                $("#alert").attr('hidden',true);
+                $("#add").removeAttr('hidden');
+            }
+        });
+
+        var _url = "@Url.Action("AddComprasDetalle", "Compra")";
+        $("#add").on('click',()=> {
+            var IdCompra = $("#IdCompra").val();
+            var Cantidad = $("#Cantidad").val();
+            var IdProducto = $("#IdProducto").val();
+            var response = '';
+            var obj = {
+                IdCompra: IdCompra,
+                Cantidad: Cantidad,
+                IdProducto: IdProducto
+            }
+            $.post(_url, obj).done(data => {
+                response += "<tr class='data'>";
+                response += "<td>" + data.Producto + "</td>";
+                response += "<td>" + data.Cantidad + "</td>";
+                response += "</tr>";
+                $("#data").append(response);
+                if ($("#Save")[0].hidden) {
+                    $("#Save").removeAttr('hidden');
+                }
+            });
+        });
+    </script>
+}

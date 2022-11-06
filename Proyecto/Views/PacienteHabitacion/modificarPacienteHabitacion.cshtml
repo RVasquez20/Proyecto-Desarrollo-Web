@@ -1,0 +1,33 @@
+﻿@model WebApplication1.Models.TblPacientesHabitacione
+@{
+    ViewBag.Title = "Modificar Paciente Habitacion";
+    List<SelectListItem> listadoHabDisp = ViewBag.listadoHabDisp;
+     List<SelectListItem> listadoPacientes = ViewBag.listadoPacientes;
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+@using(Html.BeginForm("modificarPacientesHabitaciones","PacienteHabitacion",FormMethod.Post))
+{
+@Html.HiddenFor(m=>m.IdPacHab)
+<input name="IdPacHab" id="IdPacHab" value="@Model.IdPacHab" type="text" hidden></input>
+@Html.DropDownList("IdHabitacion", listadoHabDisp, "Seleccionar una habitacion", new { @class = "form-control" })
+<div class="mb-3 mt-3">
+    @Html.DropDownList("IdPaciente", listadoPacientes, "Seleccionar un Paciente", new { @class = "form-control" })
+</div>
+<h1 id="alert" class="alert-danger" hidden>No hay Habitaciones disponibles para modificar donde se encuentra este paciente,Puede modificar Solamente al Paciente</h1>
+<button type="submit" id="add" class="btn btn-primary">Modificar Datos</button>
+
+}
+@section scripts{
+    
+    <script>
+        $(function () {
+            var habs = document.querySelectorAll('#IdHabitacion>option');
+            if (habs.length <= 1) {
+                $("#alert").removeAttr('hidden');
+            }
+        })
+    </script>
+    
+    }

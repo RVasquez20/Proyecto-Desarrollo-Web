@@ -1,0 +1,64 @@
+﻿@using WebApplication1.Models
+@model List<UsuariosViewModel>
+    @{
+    ViewBag.Title = "Vista Usuarios";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model != null)
+{
+    <div class="container mt-3">
+        <a href="~/Usuario/newUser" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo usuario</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>username</th>
+                    <th>Password</th>
+                    <th>Rol</th>
+                    <th>Empleado</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Username</td>
+                    <td>@item.Password</td>
+                    <td>@item.Rol</td>
+                    <td>@item.Empleado</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Usuario/modificarUsuario/" + item.IdUsuario)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarUsuario(@item.IdUsuario)" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay usuarios</h2>
+    </div>
+}
+    <script>
+    function EliminarUsuario(id) {
+        if (confirm("Esta Seguro de Eliminar A Este Usuario?????")) {
+            url = "@Url.Content("~/Usuario/eliminarUsuario/")" + "/" + id;
+            $.get(url).done((data)=>{
+                if (data == 1) {
+                    document.location.href = "@Url.Content("~/Usuario/Index")"
+                } else {
+                    alert("Ocurrio un Error :c");
+                }
+            });
+        }
+    }
+    </script>

@@ -1,0 +1,62 @@
+﻿@using WebApplication1.Models
+@model List<TblRole>
+    @{
+    ViewBag.Title = "Roles";
+    }
+
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+
+    @if (Model != null)
+{
+    <div class="container mt-3">
+        <a href="~/Role/agregarRole" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Role</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Rol</th>
+                    <th>Gestion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Rol</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Role/modificarRole/" + item.IdRol)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarRol('@item.IdRol','@item.Rol');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Roles</h2>
+    </div>
+}
+
+
+           <script>
+        function eliminarRol(id, Role) {
+        if (confirm(`Esta Seguro de Eliminar Esta Rol: ${Role} ?????` )) {
+            url = "@Url.Content("~/Role/eliminarRole/")" + "/" + id;
+            $.get(url).done((data) => {
+                if (data == "Exito") {
+                    document.location.href = "@Url.Content("~/Role/Index")";
+                } else {
+                    alert("Hubo un error al eliminar");
+                }
+            });
+        }
+    }
+           </script>
+
+

@@ -1,0 +1,71 @@
+﻿@using WebApplication1.Models
+@model List<EmpleadosViewModel>
+@{
+    ViewBag.Title = "Vista Empleados";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+
+@if (Model != null)
+{
+    <div class="container mt-3">
+        <a href="~/Empleados/newEmployee" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Empleado</a>
+        <br />
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Codigo Empleado</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Cargo</th>
+                    <th>Clinica</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.CodigoEmpleado</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Apellido</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.Telefono</td>
+                    <td>@item.Cargo</td>
+                    <td>@item.Clinica</td>
+
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Empleados/modificarEmpleado/" + item.IdEmpleado)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="EliminarEmpleado(@item.IdEmpleado);" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="container mt-3">
+        <h2>No hay Empleados</h2>
+    </div>
+}
+<script>
+    function EliminarEmpleado(id) {
+        if (confirm("Esta Seguro de Eliminar A Este Usuario?????")) {
+            url = "@Url.Content("~/Empleados/eliminarEmpleado/")" + "/" + id;
+            $.get(url).done((data)=>{
+                if (data == 1) {
+                    document.location.href = "@Url.Content("~/Empleados/Index")"
+                } else {
+                    alert("Ocurrio un Error :c");
+                }
+            });
+        }
+    }
+</script>

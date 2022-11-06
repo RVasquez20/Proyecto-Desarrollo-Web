@@ -1,0 +1,33 @@
+
+﻿@model WebApplication1.Models.TblProveedor
+
+@{
+    ViewBag.Title = "Agregar Proveedor";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@using (Html.BeginForm("agregarProveedor", "Proveedor", FormMethod.Post, new { role = "form", @class = "" }))
+{
+
+
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Nombre)
+    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+</div>
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Nit)
+    @Html.TextBoxFor(m => m.Nit, new { @class = "form-control" })
+</div>
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Direccion)
+    @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control" })
+</div>
+<div class="mb-3 mt-3">
+    @Html.LabelFor(m => m.Telefono)
+    @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control" })
+</div>
+
+<button type="submit" class="btn btn-primary">Agregar Proveedor</button>
+}

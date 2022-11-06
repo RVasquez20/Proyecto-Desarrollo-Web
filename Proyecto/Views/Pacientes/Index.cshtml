@@ -10,7 +10,7 @@
     <hr />
 
 
-    @if (Model != null)
+    @if (Model.Count > 0)
 {
     <div class="container mt-3">
         <a href="~/Pacientes/newPaciente" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo paciente</a>
@@ -50,24 +50,57 @@ else
         <h2>No hay pacientes</h2>
     </div>
 }
+@section scripts{
     <script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+    function eliminarPaciente(id,nombre) {
+        swalWithBootstrapButtons.fire({
+                        title: `Desea Eliminar al Paciente ${nombre}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var url = "@Url.Content("~/Pacientes/eliminarPaciente/")" + id;
+                            $.get(url).done((data) => {
+                                if (data == "Exito") {
+                                    document.location.href = "@Url.Content("~/Pacientes/Index")";
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Cancelado',
+                                        'El Paciente NO Se Elimino :D',
+                                        'error'
+                                    )
+                                }
+                            });
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El Paciente Se Ha Eliminado Exitosamente.',
+                                'success'
+                            )
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Paciente NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    })
 
-    function eliminarPaciente(id,Pacientes) {
 
-        if (confirm(`Esta Seguro de Eliminar A Este Paciente: ${Pacientes} ?????` )) {
-            url = "@Url.Content("~/Pacientes/eliminarPaciente/")" + id;
-            $.get(url).done((data) => {
-                if (data == "Exito") {
-                    document.location.href = "@Url.Content("~/Pacientes/Index")";
-                } else {
-                    alert("Hubo un error");
-                }
-            });
-        }
+       
+
     }
     </script>
 
-
+    }
 
 
 

@@ -8,7 +8,7 @@
     <hr />
 
 
-    @if (Model != null)
+    @if (Model.Count > 0)
 {
     <div class="container mt-3">
         <a href="~/LoteProducto/newLoteProductos" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Lote Producto</a>
@@ -48,24 +48,56 @@ else
         <h2>No hay Lote de Productos</h2>
     </div>
 }
+    @section scripts{
+                   <script>
 
-    <script>
-       function eliminarLoteProducto(id,LoteProducto) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            function eliminarLoteProducto(id, LoteProducto) {
 
-        if (confirm(`Esta Seguro de Eliminar A Este Lote de Productos: ${LoteProducto} ?????` )) {
-            url = "@Url.Content("~/LoteProducto/eliminarLoteProducto/")" + id;
-            $.get(url).done((data) => {
-                if (data == "Exito") {
-                    document.location.href = "@Url.Content("~/LoteProducto/Index")";
-                } else {
-                    alert("Hubo un error");
+            swalWithBootstrapButtons.fire({
+                title: `Desea Eliminar El Lote Producto  ${LoteProducto}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/LoteProducto/eliminarLoteProducto/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/LoteProducto/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Lote Producto NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminado!',
+                        'El Lote Producto Se Ha Eliminado Exitosamente.',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'El Lote Producto NO Se Elimino :D',
+                        'error'
+                    )
                 }
-            });
-        }
+            })
+
     }
 
-    </script>
+                   </script>
+    }
 
 
-   
 

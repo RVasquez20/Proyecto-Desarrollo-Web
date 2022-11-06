@@ -2,15 +2,16 @@
 
 @model List<TblClinica>
 
-    @{
+@{
     ViewBag.Title = "Clinicas";
-    }
+}
 
-    <h2>@ViewBag.Title</h2>
-    <hr />
+<h2>@ViewBag.Title</h2>
+<hr />
 
 
-    @if (Model != null)
+@if (Model.Count > 0)
+    
 {
     <div class="container mt-3">
         <a href="~/Clinica/newClinic" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Nueva Clinica</a>
@@ -27,16 +28,16 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
+                    <tr>
 
-                    <td>@item.Nombre</td>
-                    <td>@item.Direccion</td>
-                    <td>
-                        <input onclick="document.location.href='@Url.Content("~/Clinica/modificarClinica/" + item.IdClinica)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="eliminarClinica('@item.IdClinica', '@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
+                        <td>@item.Nombre</td>
+                        <td>@item.Direccion</td>
+                        <td>
+                            <input onclick="document.location.href='@Url.Content("~/Clinica/modificarClinica/" + item.IdClinica)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="eliminarClinica('@item.IdClinica', '@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -48,17 +49,54 @@ else
         <h2>No hay usuarios</h2>
     </div>
 }
+@section scripts{
     <script>
-        function eliminarClinica(id,Clinica) {
-        if (confirm(`Esta Seguro de Eliminar A Esta Clinica : ${Clinica} ?????` )) {
-            url = "@Url.Content("~/Clinica/eliminarClinica/")" + id;
-            $.get(url).done((data) => {
-                if (data == "Exito") {
-                    document.location.href = "@Url.Content("~/Clinica/Index")";
-                } else {
-                    alert("Hubo un error");
+           const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+        function eliminarClinica(id, Clinica) {
+
+            swalWithBootstrapButtons.fire({
+                title: `Desea Eliminar La Clinica  ${Clinica}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/Clinica/eliminarClinica/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/Clinica/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'La clinica NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminada!',
+                        'La clinica Se Ha Eliminado Exitosamente.',
+                        'success'
+                   )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelada',
+                        'La clinica NO Se Elimino :D',
+                        'error'
+                   )
                 }
-            });
+           })
+
+
         }
-    }
+
     </script>
+}

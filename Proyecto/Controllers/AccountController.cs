@@ -71,7 +71,7 @@ namespace WebApplication1.Controllers
                     return View(model);
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var oUsuario = JsonConvert.DeserializeObject<UsuarioLoginViewModel>(responseString);
+                var oUsuario = JsonConvert.DeserializeObject<UsuarioViewModel>(responseString);
                 Session["User"] = oUsuario.Username;
                 Session["Empleado"] = oUsuario.IdEmpleado;
                 Session["IDClinica"] = oUsuario.IdClinica;

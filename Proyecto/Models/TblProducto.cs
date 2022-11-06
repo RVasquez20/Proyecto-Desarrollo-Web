@@ -33,9 +33,9 @@ namespace WebApplication1.Models
         public HttpPostedFileBase ImagenFile { get; set; }
         [Display(Name = "Imagen Actual")]
         public string Imagen { get; set; }
-        public string marca { get; set; }
-        public string clinica { get; set; }
-        public string lote { get; set; }
+        public string Marca { get; set; }
+        public string Clinica { get; set; }
+        public string Lote { get; set; }
         
     }
 }

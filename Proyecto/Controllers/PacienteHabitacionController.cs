@@ -186,17 +186,17 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public async Task<ActionResult> EliminarPacienteHabitacion(int? id)
+        public async Task<string> EliminarPacienteHabitacion(int? id)
         {
             using (var _http = new HttpClient())
             {
                 var response = await _http.DeleteAsync(_url + "/" + id);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return View("Error");
+                    return "Error";
                 }
                 HabitacionesHub.BroadcastData();
-                return RedirectToAction("Index");
+                return "Exito";
             }
         }
     }

@@ -466,7 +466,6 @@
     <Compile Include="Models\TblHabitacione.cs" />
     <Compile Include="Models\TblLoteProducto.cs" />
     <Compile Include="Models\TblMarca.cs" />
-    <Compile Include="Models\TblMenu.cs" />
     <Compile Include="Models\TblPaciente.cs" />
     <Compile Include="Models\TblPacientesHabitacione.cs" />
     <Compile Include="Models\TblProducto.cs" />

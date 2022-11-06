@@ -42,8 +42,9 @@
     <button type="submit" id="addReceta" class="btn btn-primary">Agregar Receta</button>
 </div>
 <div id="Examenes" class="mb-3 mt-3" hidden>
+    <label>Examen:</label>
     @Html.DropDownList("IdExamen", listadoExamenes, "Seleccionar un Examen", new { @class = "form-control" })
-
+    <br />
     <button type="submit" id="addExamen" class="btn btn-primary">Agregar Examen</button>
     <button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Consulta/Index")'">Finalizar Consulta</button>
     <div id="dataTable">
@@ -52,6 +53,7 @@
             <thead>
             <th>Examen</th>
             <th>Descripcion</th>
+            <th>Precio</th>
             </thead>
             <tbody id="data">
             </tbody>
@@ -132,10 +134,14 @@
                 IdConsulta: IdConsulta
             };
             $.post(_urlAddExamenConsulta, obj).done(data => {
-                response += "<tr class='data'>";
-                response += "<td>" + data.Nombre + "</td>";
-                response += "<td>" + data.Descripcion + "</td>";
-                response += "</tr>";
+                for (var i = 0; i < data.length; i++) {
+                    response += "<tr class='data'>";
+                    response += "<td>" + data[0].Nombre + "</td>";
+                    response += "<td>" + data[0].Descripcion + "</td>";
+                    response += "<td>" + data[0].Precio + "</td>";
+                    response += "</tr>";
+                    
+                }
                 $("#data").append(response);
                 if ($("#Save")[0].hidden) {
                     $("#Save").removeAttr('hidden');

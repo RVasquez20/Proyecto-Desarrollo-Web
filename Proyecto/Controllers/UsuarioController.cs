@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
                     return View("Error");
                 }
                 var responseString = await response.Content.ReadAsStringAsync();
-                var listadoUsuario = JsonConvert.DeserializeObject<List<UsuariosViewModel>>(responseString);
+                var listadoUsuario = JsonConvert.DeserializeObject<List<UsuarioViewModel>>(responseString);
                 return View(listadoUsuario);
             }
 

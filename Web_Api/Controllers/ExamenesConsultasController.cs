@@ -106,7 +106,7 @@ namespace Web_Api.Controllers
                     Nombre = e.Nombre,
                     Descripcion = e.Descripcion,
                     Precio = e.Precio
-                }).ToList();
+                });
 
             return Ok(listadoExamenConsulta);
         }

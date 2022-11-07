@@ -16,6 +16,6 @@ namespace Web_Api.Models
         public string? Direccion { get; set; }
         public int? Telefono { get; set; }
 
-        public virtual ICollection<TblCompra> TblCompras { get; set; }
+        public virtual ICollection<TblCompra>? TblCompras { get; set; }
     }
 }

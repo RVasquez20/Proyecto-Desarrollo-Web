@@ -17,9 +17,9 @@ namespace Web_Api.Models
         public string Nombre { get; set; }
         public string Direccion { get; set; }
 
-        public virtual ICollection<TblConsulta> TblConsulta { get; set; }
-        public virtual ICollection<TblEmpleado> TblEmpleados { get; set; }
-        public virtual ICollection<TblHabitacione> TblHabitaciones { get; set; }
-        public virtual ICollection<TblProducto> TblProductos { get; set; }
+        public virtual ICollection<TblConsulta>? TblConsulta { get; set; }
+        public virtual ICollection<TblEmpleado>? TblEmpleados { get; set; }
+        public virtual ICollection<TblHabitacione>? TblHabitaciones { get; set; }
+        public virtual ICollection<TblProducto>? TblProductos { get; set; }
     }
 }

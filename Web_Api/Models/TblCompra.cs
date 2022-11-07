@@ -15,7 +15,7 @@ namespace Web_Api.Models
         public DateTime? FechaOrden { get; set; }
         public int IdProveedor { get; set; }
 
-        public virtual TblProveedor IdProveedorNavigation { get; set; }
-        public virtual ICollection<TblComprasDetalle> TblComprasDetalles { get; set; }
+        public virtual TblProveedor? IdProveedorNavigation { get; set; }
+        public virtual ICollection<TblComprasDetalle>? TblComprasDetalles { get; set; }
     }
 }

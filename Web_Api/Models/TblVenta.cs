@@ -17,6 +17,6 @@ namespace Web_Api.Models
 
         public int? IdPaciente { get; set; }
 
-        public virtual ICollection<TblVentasDetalle> TblVentasDetalles { get; set; }
+        public virtual ICollection<TblVentasDetalle>? TblVentasDetalles { get; set; }
     }
 }

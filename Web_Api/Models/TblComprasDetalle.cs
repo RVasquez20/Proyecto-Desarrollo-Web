@@ -10,7 +10,7 @@ namespace Web_Api.Models
         public int? Cantidad { get; set; }
         public int IdCompra { get; set; }
 
-        public virtual TblCompra IdCompraNavigation { get; set; }
-        public virtual TblProducto IdProductoNavigation { get; set; }
+        public virtual TblCompra? IdCompraNavigation { get; set; }
+        public virtual TblProducto? IdProductoNavigation { get; set; }
     }
 }

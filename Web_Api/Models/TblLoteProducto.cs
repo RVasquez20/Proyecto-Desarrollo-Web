@@ -15,6 +15,6 @@ namespace Web_Api.Models
         public int NoLote { get; set; }
         public DateTime FechaExpiracion { get; set; }
 
-        public virtual ICollection<TblProducto> TblProductos { get; set; }
+        public virtual ICollection<TblProducto>? TblProductos { get; set; }
     }
 }

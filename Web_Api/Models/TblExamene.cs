@@ -15,6 +15,6 @@ namespace Web_Api.Models
         public string Descripcion { get; set; }
         public double Precio { get; set; }
 
-        public virtual ICollection<TblExamenesConsulta> TblExamenesConsulta { get; set; }
+        public virtual ICollection<TblExamenesConsulta>? TblExamenesConsulta { get; set; }
     }
 }

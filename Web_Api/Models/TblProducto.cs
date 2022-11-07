@@ -24,7 +24,7 @@ namespace Web_Api.Models
         public virtual TblClinica? IdClinicaNavigation { get; set; }
         public virtual TblLoteProducto? IdLoteProductoNavigation { get; set; }
         public virtual TblMarca? IdMarcaNavigation { get; set; }
-        public virtual ICollection<TblComprasDetalle> TblComprasDetalles { get; set; }
-        public virtual ICollection<TblVentasDetalle> TblVentasDetalles { get; set; }
+        public virtual ICollection<TblComprasDetalle>? TblComprasDetalles { get; set; }
+        public virtual ICollection<TblVentasDetalle>? TblVentasDetalles { get; set; }
     }
 }

@@ -22,6 +22,6 @@ namespace Web_Api.Models
         public virtual TblPaciente? IdPacienteNavigation { get; set; }
         public virtual TblDiagnostico? TblDiagnostico { get; set; }
         public virtual TblReceta? TblReceta { get; set; }
-        public virtual ICollection<TblExamenesConsulta> TblExamenesConsulta { get; set; }
+        public virtual ICollection<TblExamenesConsulta>? TblExamenesConsulta { get; set; }
     }
 }

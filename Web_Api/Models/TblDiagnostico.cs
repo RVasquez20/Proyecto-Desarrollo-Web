@@ -9,6 +9,6 @@ namespace Web_Api.Models
         public string Titulo { get; set; }
         public string Descripcion { get; set; }
 
-        public virtual TblConsulta IdDiagnosticoNavigation { get; set; }
+        public virtual TblConsulta? IdDiagnosticoNavigation { get; set; }
     }
 }

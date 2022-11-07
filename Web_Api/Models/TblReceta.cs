@@ -9,6 +9,6 @@ namespace Web_Api.Models
         public string Serie { get; set; }
         public DateTime FechaEmision { get; set; }
 
-        public virtual TblConsulta IdRecetaNavigation { get; set; }
+        public virtual TblConsulta? IdRecetaNavigation { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Web_Api.Models
         public int IdRol { get; set; }
         public string Rol { get; set; }
 
-        public virtual ICollection<TblAccessRole> TblAccessRoles { get; set; }
-        public virtual ICollection<TblUsuario> TblUsuarios { get; set; }
+        public virtual ICollection<TblAccessRole>? TblAccessRoles { get; set; }
+        public virtual ICollection<TblUsuario>? TblUsuarios { get; set; }
     }
 }

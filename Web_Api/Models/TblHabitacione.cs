@@ -16,6 +16,6 @@ namespace Web_Api.Models
         public int CantidadMaxPacientes { get; set; }
 
         public virtual TblClinica? IdClinicaNavigation { get; set; }
-        public virtual ICollection<TblPacientesHabitacione> TblPacientesHabitaciones { get; set; }
+        public virtual ICollection<TblPacientesHabitacione>? TblPacientesHabitaciones { get; set; }
     }
 }

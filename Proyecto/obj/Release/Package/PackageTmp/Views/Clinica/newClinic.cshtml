@@ -6,8 +6,6 @@
 <hr />
 @using (Html.BeginForm("agregarClinica", "Clinica", FormMethod.Post))
 {
-
-    @Html.HiddenFor(m=>m.IdClinica)
 <div class="mb-3 mt-3">
     @Html.LabelFor(m => m.Nombre)
     @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })

@@ -9,7 +9,7 @@
 <h2>@ViewBag.Title</h2>
 
 <hr />
-@using (Html.BeginForm("agregarUsuario", "Usuario", FormMethod.Post))
+@using (Html.BeginForm("AgregarUser", "Usuario", FormMethod.Post))
 {
     <label>Empleado:</label>
     @Html.DropDownList("IdEmpleado", listadoEmpleados, "Seleccionar un Empleado", new { @class = "form-control" })

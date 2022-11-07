@@ -11,32 +11,46 @@
 
 @using (Html.BeginForm("newPacHab","PacienteHabitacion",FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-        <div class="form-group">
-            <label>Paciente:</label>
-            <div class="col-md-10">
-                @Html.DropDownList("IdPaciente", listadoPacientes, "Seleccionar un Cargo", new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Habitacion:</label>
-            <div class="col-md-10">
-                @Html.DropDownList("IdHabitacion", listadoHabDisponibles, "Seleccionar un Cargo", new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <br />
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+    <div class="form-group">
+        <label>Paciente:</label>
+        <div class="col-md-10">
+            @Html.DropDownList("IdPaciente", listadoPacientes, "Seleccionar un Paciente", new { @class = "form-control" })
         </div>
     </div>
+
+    <div class="form-group">
+        <label>Habitacion:</label>
+        <div class="col-md-10">
+            @Html.DropDownList("IdHabitacion", listadoHabDisponibles, "Seleccionar una Habitacion", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <br />
+            <h1 id="alert" class="alert-danger" hidden>No hay Habitaciones disponibles para ingresar a un paciente</h1>
+            <input type="submit" id="create" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+@section scripts{
+
+    <script>
+        $(function () {
+            var habs = document.querySelectorAll('#IdHabitacion>option');
+            if (habs.length <= 1) {
+                $("#alert").removeAttr('hidden');
+                $("#create").attr('hidden', true);
+            }
+        })
+    </script>
+
 }

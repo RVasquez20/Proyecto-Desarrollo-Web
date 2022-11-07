@@ -1,14 +1,14 @@
 ﻿@using WebApplication1.Models
 @model List<HabitacionesViewModel>
-    @{
+@{
     ViewBag.Title = "Habitaciones";
-    }
+}
 
-    <h2>@ViewBag.Title</h2>
-    <hr />
+<h2>@ViewBag.Title</h2>
+<hr />
 
 
-    @if (Model != null)
+@if (Model.Count > 0)
 {
     <div class="container mt-3">
         <a href="~/Habitacion/newHabitaciones" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nueva Habitacion</a>
@@ -27,16 +27,16 @@
                 @foreach (var item in Model)
                 {
 
-                <tr>
-                    <td>@item.NoHabitacion</td>
-                    <td>@item.Clinica</td>
-                    <td>@item.CantidadMaxPacientes</td>
+                    <tr>
+                        <td>@item.NoHabitacion</td>
+                        <td>@item.Clinica</td>
+                        <td>@item.CantidadMaxPacientes</td>
 
-                    <td>
-                        <input onclick="document.location.href='@Url.Content("~/Habitacion/modificarHabitacion/" + item.IdHabitacion)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="eliminarHabitacion('@item.IdHabitacion','@item.NoHabitacion');" type="button" value="Eliminar" class="btn btn-danger" />
-                    </td>
-                </tr>
+                        <td>
+                            <input onclick="document.location.href='@Url.Content("~/Habitacion/modificarHabitacion/" + item.IdHabitacion)'" type="button" value="Editar" class="btn btn-warning" />
+                            <input onclick="eliminarHabitacion('@item.IdHabitacion','@item.NoHabitacion','@item.Clinica');" type="button" value="Eliminar" class="btn btn-danger" />
+                        </td>
+                    </tr>
 
                 }
             </tbody>
@@ -49,22 +49,55 @@ else
         <h2>No hay examen</h2>
     </div>
 }
-
+@section scripts{
     <script>
-        function eliminarHabitacion(id,Habitacion) {
-        if (confirm(`Esta Seguro de Eliminar Este Examen: ${Habitacion} ?????` )) {
 
-            url = "@Url.Content("~/Habitacion/eliminarHabitacion/")" + id;
-            $.get(url).done((data) => {
-                if (data == "Exito") {
-                    document.location.href = "@Url.Content("~/Habitacion/Index")";
-                } else {
-                    alert("Hubo un error");
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            function eliminarHabitacion(id, Habitacion,Clinica) {
+
+             swalWithBootstrapButtons.fire({
+                 title: `Desea Eliminar La Habitacion  ${Habitacion} de La Clinica ${Clinica}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/Habitacion/eliminarHabitacion/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/Habitacion/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelada',
+                                'La Habitacion NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminada!',
+                        'La Habitacion Se Ha Eliminado Exitosamente.',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelada',
+                        'La Habitacion NO Se Elimino :D',
+                        'error'
+                    )
                 }
-            });
-        }
+            })
+
     }
     </script>
-
+}
 
 

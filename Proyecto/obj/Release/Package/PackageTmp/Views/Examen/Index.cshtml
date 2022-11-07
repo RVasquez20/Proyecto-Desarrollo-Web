@@ -8,7 +8,7 @@
     <hr />
 
 
-    @if (Model != null)
+    @if (Model.Count > 0)
 {
     <div class="container mt-3">
         <a href="~/Examen/newExamen" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Examen</a>
@@ -19,7 +19,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Descripcion</th>
-                    <th>Precio</th>
+                                    <th>Precio</th>
                     <th>Gestion</th>
                 </tr>
             </thead>
@@ -49,20 +49,52 @@ else
         <h2>No hay examen</h2>
     </div>
 }
-           <script>
+    @section scripts{
+                   <script>
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            function eliminarExamen(id, Examen) {
 
-    function eliminarExamen(id,Examen) {
-
-        if (confirm(`Esta Seguro de Eliminar Este Examen: ${Examen} ?????` )) {
-            url = "@Url.Content("~/Examen/eliminarExamen/")" + id;
-            $.get(url).done((data) => {
-                if (data == "Exito") {
-                    document.location.href = "@Url.Content("~/Examen/Index")";
-                } else {
-                    alert("Ocurrio un Error :c");
+            swalWithBootstrapButtons.fire({
+                title: `Desea Eliminar El Examen  ${Examen}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var url = "@Url.Content("~/Examen/eliminarExamen/")" + id;
+                    $.get(url).done((data) => {
+                        if (data == "Exito") {
+                            document.location.href = "@Url.Content("~/Examen/Index")";
+                        } else {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Examen NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    });
+                    swalWithBootstrapButtons.fire(
+                        'Eliminado!',
+                        'El Examen Se Ha Eliminado Exitosamente.',
+                        'success'
+                    )
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'El Examen NO Se Elimino :D',
+                        'error'
+                    )
                 }
-            });
-        }
-    }
-           </script>
+            })
 
+    }
+                   </script>
+
+    }

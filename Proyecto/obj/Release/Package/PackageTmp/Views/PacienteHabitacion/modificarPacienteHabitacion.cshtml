@@ -15,7 +15,19 @@
 <div class="mb-3 mt-3">
     @Html.DropDownList("IdPaciente", listadoPacientes, "Seleccionar un Paciente", new { @class = "form-control" })
 </div>
-
-<button type="submit" id="add" class="btn btn-primary">Agregar Paciente</button>
+<h1 id="alert" class="alert-danger" hidden>No hay Habitaciones disponibles para modificar donde se encuentra este paciente,Puede modificar Solamente al Paciente</h1>
+<button type="submit" id="add" class="btn btn-primary">Modificar Datos</button>
 
 }
+@section scripts{
+    
+    <script>
+        $(function () {
+            var habs = document.querySelectorAll('#IdHabitacion>option');
+            if (habs.length <= 1) {
+                $("#alert").removeAttr('hidden');
+            }
+        })
+    </script>
+    
+    }

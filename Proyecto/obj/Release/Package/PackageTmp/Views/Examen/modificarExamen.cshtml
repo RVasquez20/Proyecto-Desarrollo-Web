@@ -1,11 +1,7 @@
-
-﻿@model WebApplication1.Models.TblExamene
-
-
+@model WebApplication1.Models.TblExamene
 @{
     ViewBag.Title = "Modificar Examen";
 }
-
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("modificarExamen","Examen",FormMethod.Post))
@@ -14,7 +10,6 @@
 @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Examen</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">

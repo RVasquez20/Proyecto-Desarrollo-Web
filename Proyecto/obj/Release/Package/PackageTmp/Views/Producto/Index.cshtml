@@ -1,14 +1,14 @@
 ﻿@using WebApplication1.Models
 @model List<ProductosViewModel>
-@{
+    @{
     ViewBag.Title = "Productos";
-}
+    }
 
-<h2>@ViewBag.Title</h2>
-<hr />
+    <h2>@ViewBag.Title</h2>
+    <hr />
 
 
-@if (Model != null)
+    @if (Model.Count > 0)
 {
     <div class="container mt-3">
         <a href="~/Producto/newProducto" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Nueva Producto</a>
@@ -31,20 +31,20 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.lote</td>
-                        <td>@item.clinica</td>
-                        <td>@item.Nombre</td>
-                        <td>@item.marca</td>
-                        <td>@item.Descripcion</td>
-                        <td><img src="@item.Imagen" style="width:200px;height:200px;" /></td>
-                        <td>@item.Precio</td>
-                        <td>@item.Existencia</td>
-                        <td>
-                            <input onclick="document.location.href='@Url.Content("~/Producto/ActualizarProducto/" + item.IdProducto)'" type="button" value="Editar" class="btn btn-warning" />
-                            <input onclick="document.location.href='@Url.Content("~/Producto/EliminarProducto/" + item.IdProducto)'" type="button" value="Eliminar" class="btn btn-danger" />
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@item.Lote</td>
+                    <td>@item.Clinica</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Marca</td>
+                    <td>@item.Descripcion</td>
+                    <td><img src="@item.Imagen" style="width:200px;height:200px;" /></td>
+                    <td>@item.Precio</td>
+                    <td>@item.Existencia</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Producto/ActualizarProducto/" + item.IdProducto)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="eliminarProducto('@item.IdProducto', '@item.Nombre');" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -53,20 +53,62 @@
 else
 {
     <div class="container mt-3">
-        <h2>No hay usuarios</h2>
+        <h2>No hay Productos</h2>
     </div>
 }
-<script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Este Producto ?????")) {
-            url = "@Url.Content("~/Producto/EliminarProducto/")" + "/" + id;
-            $.get(url).done();
-        }
+
+
+@section scripts{
+    <script>
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+
+
+    function eliminarProducto(id,nombre) {
+          swalWithBootstrapButtons.fire({
+                        title: `Desea Eliminar el Producto ${nombre}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var url = "@Url.Content("~/Producto/EliminarProducto/")" + id;
+                            $.get(url).done((data) => {
+                                if (data == "Exito") {
+                                    document.location.href = "@Url.Content("~/Producto/Index")";
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Cancelado',
+                                        'El Producto NO Se Elimino :D',
+                                        'error'
+                                    )
+                                }
+                            });
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El Producto Se Ha Eliminado Exitosamente.',
+                                'success'
+                            )
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Producto NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    })
     }
-</script>
+    </script>
 
 
-
+}
 
 
 

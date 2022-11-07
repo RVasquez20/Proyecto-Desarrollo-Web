@@ -4,6 +4,7 @@
     ViewBag.Title = "Detalle Venta";
     int NoFactura = ViewBag.data;
     int Total = ViewBag.total;
+    Dictionary<int, Double> Subtotales = ViewBag.Subtotales;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -16,6 +17,7 @@
         <th>Producto</th>
         <th>Cantidad</th>
         <th>Precio</th>
+        <th>Subtotal</th>
     </tr>
 
     @foreach (var item in Model)
@@ -24,10 +26,11 @@
             <td>@item.Producto</td>
             <td>@item.Cantidad</td>
             <td>@item.Precio</td>
+            <td>@Subtotales[item.IdProducto]</td>
         </tr>
     }
     <tr>
-        <td colspan="2" class="text-center">Total</td>
+        <td colspan="3" class="text-center">Total</td>
         <td>@Total</td>
     </tr>
 

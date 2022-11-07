@@ -268,16 +268,16 @@ namespace WebApplication1.Controllers
             }
         }
 
-        public async Task<ActionResult> EliminarProducto(int? id)
+        public async Task<string> EliminarProducto(int? id)
         {
             using (var _http = new HttpClient())
             {
                 var response = await _http.DeleteAsync(_urlProductos + "/" + id);
                 if (!response.IsSuccessStatusCode)
                 {
-                    return View("Error");
+                    return "Error";
                 }
-                return RedirectToAction("Index");
+                return "Exito";
             }
         }
 

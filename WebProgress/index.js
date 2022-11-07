@@ -41,7 +41,7 @@ const getTodos = async () => {
 	  <td>${todo.Apellidos}</td>
 	  <td>${todo.Fechas}</td>
 	  <td>${todo.Horas}</td>
-	  <td><button class="delete" onclick="deleteTodo(event, ${todo.id})">Delete</button></td>
+	  <td><button class="delete btn btn-danger" onclick="deleteTodo(event, ${todo.id})">Delete</button></td>
 	  </tr>
 	
 	

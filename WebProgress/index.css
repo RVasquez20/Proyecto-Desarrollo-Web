@@ -57,6 +57,7 @@ input, button {
 	margin-right: 1rem;
 	color: #EEE;
 	font-size: 1.25rem;
+	margin-top: 12px;
 }
 
 #new-task-input::placeholder {
@@ -64,11 +65,11 @@ input, button {
 }
 
 #new-task-submit {
-	color: #EC4899;
+	color: #001E3C;
 	font-size: 1.25rem;
 	font-weight: 700;
 	background-image: linear-gradient(to right, #EC4899, #8B5CF6);
-	-webkit-text-fill-color: transparent;
+	
 	cursor: pointer;
 	margin-top: 12px;
 	transition: 0.4s;
@@ -149,7 +150,7 @@ main {
 
 .task .actions .edit {
 	background-image: linear-gradient(to right, #EC4899, #8B5CF6);
-	-webkit-text-fill-color: transparent;
+	
 }
 
 .task .actions .delete {

@@ -23,7 +23,7 @@
 </head>
 
 <body class="p-3 mb-2 bg-dark text-white">
-
+	<div id="app"></div>
 	<header>
 		<h1>PWA</h1>
 		<form id="new-task-form">
@@ -55,13 +55,13 @@
 
 			<input type="time" class="Hora" name="new-task-input" id="new-task-input" placeholder="Ingrese Horario de Consulta" />
 
-			<input type="submit" id="new-task-submit" value="Agregar Consulta" />
+			<button type="submit" id="new-task-submit" class="btn btn-primary" >Agregar Cita</button>
 		</form>
 
 	</header>
 	<main>
 		<section class="task-list">
-			<h2>Consultas</h2>
+			<h1>Consultas</h1>
 			<div>
 				<table class="table table-dark table-hover">
 					<thead>
@@ -83,6 +83,7 @@
 	</main>
 
 	<script src="index.js"></script>
+
 </body>
 
 </html>

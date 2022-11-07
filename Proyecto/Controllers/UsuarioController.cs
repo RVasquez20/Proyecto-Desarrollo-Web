@@ -162,6 +162,7 @@ namespace WebApplication1.Controllers
 
                 var responseStringUser = await responseUser.Content.ReadAsStringAsync();
                 var User = JsonConvert.DeserializeObject<TblUsuario>(responseStringUser);
+                User.Password = "";
                 return View(User);
             }
 
@@ -183,7 +184,10 @@ namespace WebApplication1.Controllers
                 User.IdEmpleado = model.IdEmpleado;
                 User.IdRol = model.IdRol;
                 User.Username = model.Username;
-                User.Password = Encrypt.GetHash(model.Password);
+                if (model.Password != null)
+                {
+                    User.Password = Encrypt.GetHash(model.Password);
+                }
                 var usuarioSerializada = JsonConvert.SerializeObject(User);
                 var content = new StringContent(usuarioSerializada, Encoding.UTF8, "application/json");
                 var response = await http.PutAsync(_urlUsuario + "/" + model.IdUsuario, content);

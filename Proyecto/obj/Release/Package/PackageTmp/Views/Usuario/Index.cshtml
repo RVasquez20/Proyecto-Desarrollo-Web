@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model List<UsuariosViewModel>
+@model List<UsuarioViewModel>
     @{
     ViewBag.Title = "Vista Usuarios";
     }
@@ -8,7 +8,7 @@
     <hr />
 
 
-    @if (Model != null)
+    @if (Model.Count > 0)
 {
     <div class="container mt-3">
         <a href="~/Usuario/newUser" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nuevo usuario</a>
@@ -17,10 +17,10 @@
         <table class="table table-dark table-hover">
             <thead>
                 <tr>
+                    <th>Empleado</th>
                     <th>username</th>
                     <th>Password</th>
                     <th>Rol</th>
-                    <th>Empleado</th>
                     <th>Gestion</th>
                 </tr>
             </thead>
@@ -28,13 +28,13 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+                    <td>@item.Empleado</td>
                     <td>@item.Username</td>
                     <td>@item.Password</td>
                     <td>@item.Rol</td>
-                    <td>@item.Empleado</td>
                     <td>
                         <input onclick="document.location.href='@Url.Content("~/Usuario/modificarUsuario/" + item.IdUsuario)'" type="button" value="Editar" class="btn btn-warning" />
-                        <input onclick="EliminarUsuario(@item.IdUsuario)" type="button" value="Eliminar" class="btn btn-danger" />
+                        <input onclick="EliminarUsuario('@item.IdUsuario','@item.Username')" type="button" value="Eliminar" class="btn btn-danger" />
                     </td>
                 </tr>
                 }
@@ -48,17 +48,58 @@ else
         <h2>No hay usuarios</h2>
     </div>
 }
-    <script>
-    function EliminarUsuario(id) {
-        if (confirm("Esta Seguro de Eliminar A Este Usuario?????")) {
-            url = "@Url.Content("~/Usuario/eliminarUsuario/")" + "/" + id;
-            $.get(url).done((data)=>{
-                if (data == 1) {
-                    document.location.href = "@Url.Content("~/Usuario/Index")"
-                } else {
-                    alert("Ocurrio un Error :c");
-                }
-            });
-        }
+
+
+
+    @section scripts{
+        <script>
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+
+
+
+
+
+    function EliminarUsuario(id,username) {
+        swalWithBootstrapButtons.fire({
+                        title: `Desea Eliminar el Usuario ${username}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var url = "@Url.Content("~/Usuario/eliminarUsuario/")" + id;
+                            $.get(url).done((data) => {
+                                if (data == "Exito") {
+                                    document.location.href = "@Url.Content("~/Usuario/Index")";
+                                } else {
+                                    swalWithBootstrapButtons.fire(
+                                        'Cancelado',
+                                        'El Usuario NO Se Elimino :D',
+                                        'error'
+                                    )
+                                }
+                            });
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El Usuario Se Ha Eliminado Exitosamente.',
+                                'success'
+                            )
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Cancelado',
+                                'El Usuario NO Se Elimino :D',
+                                'error'
+                            )
+                        }
+                    })
     }
-    </script>
+        </script>
+    }

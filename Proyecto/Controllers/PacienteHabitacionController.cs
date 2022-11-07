@@ -159,6 +159,8 @@ namespace WebApplication1.Controllers
                 {
                     return View("Error");
                 }
+
+                HabitacionesHub.BroadcastData();
                 return RedirectToAction("Index");
                 
             }

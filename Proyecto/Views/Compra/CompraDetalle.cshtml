@@ -14,8 +14,11 @@
     @Html.LabelFor(m => m.Cantidad)
     @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control" })
 </div>
-<h1 id="alert" hidden>Cantidad Mayor a Stock Ingrese nueva cantidad</h1>
+<h1 id="alert" hidden>Cantidad Invalida Ingrese nueva cantidad</h1>
+<br />
+<label>Precio:</label>
 <input type="text" class="form-control" id="Precio" name="Precio" readonly />
+<br />
 <button type="submit" id="add" class="btn btn-primary">Agregar Producto</button>
 <button type="submit" id="Save" class="btn btn-primary" hidden onclick="document.location.href='@Url.Content("~/Compra/Index")'">Finalizar Compra</button>
 <div id="dataTable">

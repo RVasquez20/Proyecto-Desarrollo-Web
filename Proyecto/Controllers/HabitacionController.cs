@@ -189,9 +189,7 @@ namespace WebApplication1.Controllers
             }
 
         }
-        //elimina los datos de la bd
-        [HttpGet]
-        [Route("eliminar/(id)")]
+
         public async Task<string> eliminarHabitacion(int id)
         {
             using (var http = new HttpClient())

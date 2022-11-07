@@ -28,30 +28,33 @@
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                        <div class="card-body p-5" >
+                        <div class="card-body p-5">
                             <div class="text-center">
                                 <h3 class="mb-5">Sign in</h3>
                             </div>
-                            @using (Html.BeginForm("signIn", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
                                 @Html.AntiForgeryToken()
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                 <div class="form-outline">
 
                                     @Html.TextBoxFor(m => m.User, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User, "", new { @class = "text-danger" })
                                     @Html.LabelFor(m => m.User, new { @class = "form-label" })
                                 </div>
                                 <br />
                                 <div class="form-outline">
-                                    
+
                                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                     @Html.LabelFor(m => m.Password, new { @class = "form-label" })
                                 </div>
                                 <hr class="my-4">
                                 <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                                <br />
+                                @Html.ValidationMessageFor(m => m.User, "", new { @class = "text-danger" })
+                                <br />
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                <br />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             }
 
                         </div>
